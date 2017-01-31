@@ -39,7 +39,7 @@
 	<body>
 		<div class="container">
 			<div class="content">
-				<div class="title">Hola Mundo </div>
+				<div class="title">Hola Mundo</div>
 				<div class="quote">Inicio del proyecto</div>
 				<div class="quote">
 				<?php
