@@ -6,3 +6,8 @@
 Homestead.json
 Homestead.yaml
 .env
+/config/app.php
+/database/migrations/*.php
+/storage/logs/laravel.log
+/vendor/composer/LICENSE
+/vendor/composer/*.php
