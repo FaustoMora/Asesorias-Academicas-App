@@ -16,5 +16,9 @@
 // });
 
 Route::get('/', function () {
-    return view('hola_mundo');
+    return redirect('/home');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');

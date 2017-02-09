@@ -6,12 +6,13 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'CreateImagenTable' => $baseDir . '/database/migrations/2017_02_03_032324_create_imagen_table.php',
+    'CreateImagenTable' => $baseDir . '/database/migrations/2017_02_05_020633_create_Imagen_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
-    'CreatePreguntaTable' => $baseDir . '/database/migrations/2017_02_03_042536_create_pregunta2_table.php',
-    'CreateRespuesta2Table' => $baseDir . '/database/migrations/2017_02_03_042614_create_respuesta2_table.php',
-    'CreateRespuestaTable' => $baseDir . '/database/migrations/2017_02_03_032310_create_respuesta_table.php',
-    'CreateTemaTable' => $baseDir . '/database/migrations/2017_02_03_031519_create_tema_table.php',
+    'CreatePreguntaTable' => $baseDir . '/database/migrations/2017_02_05_020623_create_Pregunta_table.php',
+    'CreateRespuestaTable' => $baseDir . '/database/migrations/2017_02_05_020612_create_Respuesta_table.php',
+    'CreateSolucionTable' => $baseDir . '/database/migrations/2017_02_05_033234_create_Solucion_table.php',
+    'CreateTemaTable' => $baseDir . '/database/migrations/2017_02_05_020603_create_Tema_table.php',
+    'CreateUserTable' => $baseDir . '/database/migrations/2017_02_05_020551_create_User_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/src/Iterator.php',
@@ -543,4 +544,5 @@ return array(
     'SebastianBergmann\\ResourceOperations\\ResourceOperations' => $vendorDir . '/sebastian/resource-operations/src/ResourceOperations.php',
     'SebastianBergmann\\Version' => $vendorDir . '/sebastian/version/src/Version.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
+    'UpdateImagenTable' => $baseDir . '/database/migrations/2017_02_05_033251_update_Imagen_table.php',
 );
