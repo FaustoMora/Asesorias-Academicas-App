@@ -23,29 +23,31 @@
                       <li><a data-toggle="tab" href="#temas">Temas</a></li>
                       <li><a data-toggle="tab" href="#preguntas">Preguntas</a></li>
                       <li><a data-toggle="tab" href="#soluciones">Soluciones</a></li>
-                      <li><a data-toggle="tab" href="#config">Configuracion</a></li>
+                      <li><a data-toggle="tab" href="#config">Configuraci&oacute;n</a></li>
                     </ul>
 
                     <div class="tab-content">
                       <div id="overview" class="tab-pane fade in active">
-                        <h3>HOME</h3>
-                        <p>Some content.</p>
+                        <h3>Overview</h3>
+                            
                       </div>
                       <div id="temas" class="tab-pane fade">
-                        <h3>Menu 1</h3>
-                        <p>Some content in menu 1.</p>
+                      <br>
+                            @include('layouts.temas')
                       </div>
                       <div id="preguntas" class="tab-pane fade">
-                        <h3>Menu 2</h3>
-                        <p>Some content in menu 2.</p>
+                      <br>
+                        <h3>Preguntas</h3>
+                            @include('layouts.preguntas')
                       </div>
                       <div id="soluciones" class="tab-pane fade">
-                        <h3>Menu 3</h3>
-                        <p>Some content in menu 2.</p>
+                      <br>
+                        <h3>Soluciones</h3>
+                            @include('layouts.soluciones')                
                       </div>
                       <div id="config" class="tab-pane fade">
-                        <h3>Menu 4</h3>
-                        <p>Some content in menu 2.</p>
+                      <br>
+                            @include('layouts.config')    
                       </div>
                     </div>
                 </div>
