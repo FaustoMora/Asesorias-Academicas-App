@@ -58,7 +58,9 @@ tr{
 <br>
 
   <!-- Table -->
+
 <div class="table-responsive" style="margin: 15px;">
+  <h4>Lista de Preguntas</h4>
   <div class="panel panel-info" style="width: 95%; border-color: #ccc;">
     <div class="panel-heading" style="position: relative; background-color: #eee; border-color: #ccc;">
       <a style="text-decoration: none; position: relative; height: 100%; background-color: #E8E8E8;" data-toggle="collapse" data-parent="#accordion" href="#pregunta1">
@@ -93,27 +95,45 @@ tr{
         </table> 
       </div><!--Cierro el editable-body-->
     </div><!--Cierro el panel-body-->
-    <!--<table class="table">
-     <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Descripcion</th>
-        <th>Editar</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Tema 1</td>
-        <td>Desc Tema 1</td>
-        <td><button class="btn btn-default" type="button" aria-label="Left Align"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button></td>
-      </tr>
-      <tr>
-        <td>Tema 1</td>
-        <td>Desc Tema 1</td>
-        <td><button class="btn btn-default" type="button" aria-label="Left Align"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button></td>
-      </tr>
-    </tbody>
-    </table>-->
+    </div>
+  </div>
+
+
+
+  <div class="panel panel-info" style="width: 95%; border-color: #ccc;">
+    <div class="panel-heading" style="position: relative; background-color: #eee; border-color: #ccc;">
+      <a style="text-decoration: none; position: relative; height: 100%; background-color: #E8E8E8;" data-toggle="collapse" data-parent="#accordion" href="#pregunta2">
+        <h4 class="panel-title">
+           Pregunta: Pregunta2 
+        </h4>
+      </a>
+      
+    </div>
+
+    <div id="pregunta2" class="panel-collapse collapse" 
+    name="ciclo_panel_body" style = "background: white;">
+    <div class="panel-body">
+      <div id="noneditModulo1" class="nonEditModulo">
+
+      </div>
+      <div id="editable_body_1" class="editableModulo">
+        <table class="table table-striped table-bordered table-hover" id="opciones-respuestas">
+          <thead>
+            <tr>
+              <td style="width: 300px;"><b style="font-size:12px;">Opci&oacute;n A</td>
+            </tr>
+            <tr style="margin: 10px;">
+              <td style="width: 300px;"><b style="font-size:12px;">Opci&oacute;n B<div style="color:green; float:right;"align="right">Correcta!</div></td>
+            </tr>
+            <tr style="margin: 10px;">
+              <td>
+                <button style="font-size: 12px;"name="verSolucion" type="" class="btn btn-primary pull-right">Ver Solución</button>
+              </td>
+            </tr>
+          </thead>
+        </table> 
+      </div><!--Cierro el editable-body-->
+    </div><!--Cierro el panel-body-->
     </div>
   </div>
 </div>
