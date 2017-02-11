@@ -22,7 +22,7 @@
                       <li class="active"><a data-toggle="tab" href="#overview">Overview</a></li>
                       <li><a data-toggle="tab" href="#temas">Temas</a></li>
                       <li><a data-toggle="tab" href="#preguntas">Preguntas</a></li>
-                      <li><a data-toggle="tab" href="#soluciones">Soluciones</a></li>
+                      <!--<li><a data-toggle="tab" href="#soluciones">Soluciones</a></li>-->
                       <li><a data-toggle="tab" href="#config">Configuraci&oacute;n</a></li>
                     </ul>
 
@@ -40,11 +40,13 @@
                         <h3>Preguntas</h3>
                             @include('layouts.preguntas')
                       </div>
+<!--
                       <div id="soluciones" class="tab-pane fade">
                       <br>
                         <h3>Soluciones</h3>
                             @include('layouts.soluciones')                
                       </div>
+-->
                       <div id="config" class="tab-pane fade">
                       <br>
                             @include('layouts.config')    
