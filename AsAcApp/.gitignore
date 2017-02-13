@@ -11,3 +11,4 @@ Homestead.yaml
 /storage/logs/laravel.log
 /vendor/composer/LICENSE
 /vendor/composer/*.php
+/config/database.php
