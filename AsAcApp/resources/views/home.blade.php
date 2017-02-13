@@ -22,33 +22,31 @@
                       <li class="active"><a data-toggle="tab" href="#overview">Overview</a></li>
                       <li><a data-toggle="tab" href="#temas">Temas</a></li>
                       <li><a data-toggle="tab" href="#preguntas">Preguntas</a></li>
-                      <li><a data-toggle="tab" href="#soluciones">Soluciones</a></li>
                       <li><a data-toggle="tab" href="#config">Configuraci&oacute;n</a></li>
                     </ul>
 
                     <div class="tab-content">
+
                       <div id="overview" class="tab-pane fade in active">
                         <h3>Overview</h3>
                             
-                      </div>
+                      </div><!--Fin div de overview-->
+
                       <div id="temas" class="tab-pane fade">
                       <br>
                             @include('layouts.temas')
-                      </div>
+                      </div><!--Fin div de temas-->
+
                       <div id="preguntas" class="tab-pane fade">
                       <br>
-                        <h3>Preguntas</h3>
                             @include('layouts.preguntas')
-                      </div>
-                      <div id="soluciones" class="tab-pane fade">
-                      <br>
-                        <h3>Soluciones</h3>
-                            @include('layouts.soluciones')                
-                      </div>
+                      </div><!--Fin div de preguntas-->
+                      
                       <div id="config" class="tab-pane fade">
                       <br>
                             @include('layouts.config')    
-                      </div>
+                      </div><!--Fin div de configuración-->
+
                     </div>
                 </div>
             </div>
