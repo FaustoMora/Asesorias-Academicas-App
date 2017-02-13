@@ -22,3 +22,19 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+
+/// ROUTE para TEMAS
+
+Route::get('/MisTemas', 'TemaController@get_list');
+
+Route::get('/MiTema/{id_tema}', ['uses' =>'TemaController@get_detail']);
+
+Route::post('/crearTema', 'TemaController@create_detail');
+
+/// ROUTE para CONFIG
+
+Route::get('/Config', 'ConfigController@get_page');
+
+Route::post('/UpdateEmail', 'ConfigController@update_email');
+
+Route::post('/UpdatePassword', 'ConfigController@update_password');
