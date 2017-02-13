@@ -1,3 +1,9 @@
+@extends('home')
+
+@section('content')
+@parent
+
+@section('menu')
 <div class="panel panel-info">
   <!-- Default panel contents -->
   <div class="panel-heading">MENU TEMAS</div>
@@ -47,3 +53,7 @@
   </table>
 </div>
 </div>
+
+@stop
+
+@stop

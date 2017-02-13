@@ -1,3 +1,9 @@
+@extends('home')
+
+@section('content')
+@parent
+
+@section('menu')
 <div class="panel panel-danger">
   <div class="panel-heading">OPCIONES DE CUENTA</div>
   <div class="panel-body">
@@ -56,3 +62,8 @@
   	</div>
   </div>
 </div>
+
+
+@stop
+
+@stop

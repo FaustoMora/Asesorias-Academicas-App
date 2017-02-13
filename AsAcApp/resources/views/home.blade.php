@@ -18,34 +18,18 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Dashboard</div>
                 <div class="panel-body">
-                    <ul class="nav nav-tabs">
-                      <li class="active"><a data-toggle="tab" href="#overview">Overview</a></li>
-                      <li><a data-toggle="tab" href="#temas">Temas</a></li>
-                      <li><a data-toggle="tab" href="#preguntas">Preguntas</a></li>
-                      <li><a data-toggle="tab" href="#config">Configuraci&oacute;n</a></li>
+                    <ul class="nav nav-pills nav-justified">
+                      <li><a href="{{ url('/home') }}">Overview</a></li>
+                      <li><a href="{{ url('/MisTemas') }}">Temas</a></li>
+                      <li><a href="#preguntas">Preguntas</a></li>
+                      <li><a href="{{ url('/Config') }}">Configuraci&oacute;n</a></li>
                     </ul>
+                    <br>
+                    <div class="col-md-12 col-sm-12">
 
-                    <div class="tab-content">
+                    @yield('menu')
 
-                      <div id="overview" class="tab-pane fade in active">
-                        <h3>Overview</h3>
-                            
-                      </div><!--Fin div de overview-->
 
-                      <div id="temas" class="tab-pane fade">
-                      <br>
-                            @include('layouts.temas')
-                      </div><!--Fin div de temas-->
-
-                      <div id="preguntas" class="tab-pane fade">
-                      <br>
-                            @include('layouts.preguntas')
-                      </div><!--Fin div de preguntas-->
-                      
-                      <div id="config" class="tab-pane fade">
-                      <br>
-                            @include('layouts.config')    
-                      </div><!--Fin div de configuración-->
 
                     </div>
                 </div>

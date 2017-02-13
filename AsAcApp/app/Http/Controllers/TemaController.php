@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Tema;
 use Illuminate\Http\Request;
+use App\Http\Controllers\View;
 
 /**
 * 
@@ -19,13 +20,11 @@ class TemaController extends Controller
 
 	public function get_list(Request $request)
 	{
-		error_log('holi get list');
-		return redirect('/home');
+		return view('layouts.temas');
 	}
 
 	public function get_detail(Request $request, $id_tema)
 	{
-		error_log('holi get detail' + $id_tema);
 		return redirect('/home');	
 	}
 

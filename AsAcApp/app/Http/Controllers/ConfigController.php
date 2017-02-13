@@ -19,7 +19,7 @@ class ConfigController extends Controller
 
 	public function get_page(Request $request)
 	{
-		return redirect('/home');
+		return view('layouts.config');
 	}
 
 	public function update_password(Request $request)
