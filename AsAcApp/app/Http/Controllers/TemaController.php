@@ -19,16 +19,20 @@ class TemaController extends Controller
 	}
 
 	public function get_list(Request $request)
-	{
-		return view('layouts.temas');
+	{	
+		//$user = Auth::user();
+		$user = $request->user();
+		error_log($user);
+		error_log($user->temas()->count());
+		return view('layouts.temas',['temas' => $user->temas()]);
 	}
 
-	public function get_detail(Request $request, $id_tema)
+	public function get_detail($id_tema)
 	{
 		return redirect('/home');	
 	}
 
-	public function create_detail(Request $request)
+	public function create_detail()
 	{
 		
 		return redirect('/home');
