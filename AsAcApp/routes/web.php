@@ -27,7 +27,7 @@ Route::get('/home', 'HomeController@index');
 
 Route::get('/MisTemas', 'TemaController@get_list');
 
-Route::get('/MiTema/{id_tema}', ['uses' =>'TemaController@get_detail']);
+Route::post('/updateTema/{id_tema}', ['uses' =>'TemaController@update_detail']);
 
 Route::post('/crearTema', 'TemaController@create_detail');
 

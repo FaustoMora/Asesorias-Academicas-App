@@ -30,6 +30,6 @@ class User extends Authenticatable
 
     public function Temas()
     {
-        return $this->hasMany('App\Tema','user_id');
+        return $this->hasMany('App\Tema');
     }
 }

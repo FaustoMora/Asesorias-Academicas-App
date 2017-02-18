@@ -22,20 +22,42 @@ class TemaController extends Controller
 	{	
 		//$user = Auth::user();
 		$user = $request->user();
-		error_log($user);
-		error_log($user->temas()->count());
-		return view('layouts.temas',['temas' => $user->temas()]);
+		return view('layouts.temas')->with('temas',$user->temas()->get());
 	}
 
-	public function get_detail($id_tema)
+	public function update_detail(Request $request, $id_tema)
 	{
-		return redirect('/home');	
+
+		$name = $request->input('nombreTema');
+		$description = $request->input('descripcionTema');
+
+		if ( !empty ( $id_tema ) ) {
+    		$user = $request->user();
+			$tema = Tema::find($id_tema);
+			if($user->id == $tema->user()->first()->id){
+				$tema->nombre = $name;
+				$tema->descripcion = $description;
+				$tema->save();
+			}
+		}
+
+		return redirect('/MisTemas');	
 	}
 
-	public function create_detail()
+	public function create_detail(Request $request)
 	{
+		$name = $request->input('nombreTema');
+		$description = $request->input('descripcionTema');
 		
-		return redirect('/home');
+		$user = $request->user();
+
+		$tema = new Tema;
+		$tema->nombre = $name;
+		$tema->descripcion = $description;
+		$tema->user()->associate($user);
+		$tema->save();
+
+		return redirect('/MisTemas');
 	}
 
 }
