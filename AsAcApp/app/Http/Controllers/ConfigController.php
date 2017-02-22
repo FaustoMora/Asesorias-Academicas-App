@@ -30,7 +30,7 @@ class ConfigController extends Controller
 		{
 			$user = Auth::user();
 			$pass = $request->input('actualPass');
-			$newpass = $request->input('newPass');
+			$newPass = $request->input('newPass');
 
 			if ( Hash::check($pass, Auth::user()->password) ) 
 			{
@@ -47,7 +47,22 @@ class ConfigController extends Controller
 	public function update_email(Request $request)
 	{
 		
-		return redirect('/Config');
+		if (Auth::check())
+		{
+			$user = Auth::user();
+			$pass = $request->input('actualPass');
+			$newEmail = $request->input('newEmail');
+
+			if ( Hash::check($pass, Auth::user()->password) ) 
+			{
+    			$user->fill([
+            		'email' =>  $newEmail
+        		])->save();
+    			Auth::logout();
+			}
+
+		}
+		return redirect('/Config');	
 	}
 
 }
