@@ -38,3 +38,10 @@ Route::get('/Config', 'ConfigController@get_page');
 Route::post('/UpdateEmail', 'ConfigController@update_email');
 
 Route::post('/UpdatePassword', 'ConfigController@update_password');
+
+
+/// ROUTES para PREGUNTAS
+
+Route::get('/Preguntas', 'PreguntaController@home_pregunta');
+
+Route::post('/crearPregunta', 'PreguntaController@crear_pregunta');

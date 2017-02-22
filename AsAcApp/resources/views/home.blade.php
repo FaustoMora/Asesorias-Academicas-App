@@ -21,7 +21,7 @@
                     <ul class="nav nav-pills nav-justified">
                       <li><a href="{{ url('/home') }}">Overview</a></li>
                       <li><a href="{{ url('/MisTemas') }}">Temas</a></li>
-                      <li><a href="#preguntas">Preguntas</a></li>
+                      <li><a href="{{ url('/Preguntas') }}">Preguntas</a></li>
                       <li><a href="{{ url('/Config') }}">Configuraci&oacute;n</a></li>
                     </ul>
                     <br>
