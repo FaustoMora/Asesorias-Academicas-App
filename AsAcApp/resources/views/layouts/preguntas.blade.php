@@ -110,42 +110,108 @@
 
     <div class="table-responsive" style="margin: 15px;">
       <h4>Lista de Preguntas por Tema</h4>
-      <div class="panel panel-info" style="width: 95%; border-color: #ccc;">
-        <div class="panel-heading" style="position: relative; background-color: #eee; border-color: #ccc;">
-          <a style="text-decoration: none; position: relative; height: 100%; background-color: #E8E8E8;" data-toggle="collapse" data-parent="#accordion" href="#pregunta1">
-            <h4 class="panel-title">
-               Pregunta: Pregunta1 
-            </h4>
-          </a>
-          
-        </div>
 
-        <div id="pregunta1" class="panel-collapse collapse" 
-        name="ciclo_panel_body" style = "background: white;">
-        <div class="panel-body">
-          <div id="noneditModulo1" class="nonEditModulo">
 
-          </div>
-          <div id="editable_body_1" class="editableModulo">
-            <table class="table table-striped table-bordered table-hover" id="opciones-respuestas">
-              <thead>
-                <tr>
-                  <td style="width: 300px;"><b style="font-size:12px;">Opci&oacute;n A<div style="color:green; float:right;"align="right">Correcta!</div></td>
-                </tr>
-                <tr style="margin: 10px;">
-                  <td style="width: 300px;"><b style="font-size:12px;">Opci&oacute;n B</td>
-                </tr>
-                <tr style="margin: 10px;">
-                  <td>
-                    <button style="font-size: 12px;"name="verSolucion" type="" class="btn btn-primary pull-right">Ver Solución</button>
-                  </td>
-                </tr>
-              </thead>
-            </table> 
-          </div><!--Cierro el editable-body-->
-        </div><!--Cierro el panel-body-->
-        </div>
-      </div>
+      @foreach($temas as $tema)
+        <div class="panel panel-info" style="width: 95%; border-color: #ccc;">
+          <div class="panel-heading" style="position: relative; background-color: #eee; border-color: #ccc;">
+            <a style="text-decoration: none; position: relative; height: 100%; background-color: #E8E8E8;" data-toggle="collapse" data-parent="#accordion" href="#tema{{$tema->id}}">
+              <h3 class="panel-title">
+                 Tema: {{ $tema->nombre }}
+              </h3>
+            </a>
+          </div><!--Fin del panel-heading-->
+
+          <div id="tema{{$tema->id}}" class="panel-collapse collapse" 
+          name="ciclo_panel_body" style = "background: white;">
+            <div class="panel-body">
+              <div id="noneditModulo1" class="nonEditModulo">
+
+              </div>
+              <div id="editable_body_1" class="editableModulo">
+                  @foreach($preguntas as $pregunta)
+                    @if($pregunta->tema_id == $tema->id)
+                      <div class="panel panel-info" style="width: 95%; border-color: #ccc;">
+                        <div class="panel-heading" style="position: relative; background-color: #eee; border-color: #ccc;">
+                          <a style="text-decoration: none; position: relative; height: 100%; background-color: #E8E8E8;" data-toggle="collapse" data-parent="#accordion" href="#pregunta{{$pregunta->id}}">
+                            <h4 class="panel-title">
+                               <b>Pregunta: {{ $pregunta->detalle }}</b>
+                            </h4>
+                          </a>
+                        </div><!--Fin del panel-heading-->
+                        <div id="pregunta{{$pregunta->id}}" class="panel-collapse collapse" 
+                          name="ciclo_panel_body" style = "background: white;">
+                          <div class="panel-body">
+                            <div id="noneditModulo1" class="nonEditModulo">
+                              <!--NO EDITABLE-->
+                            </div>
+                            <div id="editable_body_1" class="editableModulo">
+                              <table class="table table-striped table-bordered table-hover" id="opciones-respuestas">
+                                <thead>
+                                  @foreach($respuestas as $respuesta)
+                                    @if($respuesta->pregunta->id == $pregunta->id)
+                                      <tr style="margin: 10px;">
+                                        <td style="width: 300px;"><b style="font-size:12px;">{{ $respuesta->detalle }}
+                                          @if($respuesta->es_correcta == 1)
+                                              <div style="color:green; float:right;"align="right">Correcta!</div></td>
+                                          @endif
+                                        </td>
+                                      </tr>
+                                                              
+                                    @endif
+                                  @endforeach
+                                  <tr style="margin: 10px;">
+                                    <td>
+                                      <button style="font-size: 12px;"name="verSolucion" type="" 
+                                      data-toggle="modal" data-target="#solucion{{$pregunta->id}}" 
+                                      class="btn btn-primary pull-right">Ver Solución</button>
+                                    </td>
+                                  </tr>
+                                </thead>
+                              </table> 
+                              <!-- Modal -->
+                              <div id="solucion{{$pregunta->id}}" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+
+                                  <!-- Modal content-->
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                      <h4 class="modal-title">Soluci&oacute;n</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                      <?php
+                                        $imagen = $pregunta->imagen()->first();
+                                        $decoded = base64_decode($imagen->bitmap);
+                                        echo "<img style=width:90%; alt=Solución de la Pregunta src=\"data:image/png;base64,$imagen->bitmap\" />";
+                                      ?>
+
+                                      <!--
+                                        <img id="{{$imagen->id}}" src="data:image/gif;base64,' . $decoded . '" alt="Solución de la Pregunta">
+                                      -->
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                    </div>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                          </div><!--Cierro el panel-body-->
+                        </div><!--Cierro el panel-collapse-->
+                      </div><!--Fin del panel-info-->
+                      
+                    @endif
+                  @endforeach
+              </div><!--Cierro el editable-body-->
+            </div><!--Cierro el panel-body-->
+          </div><!--Cierro el panel-collapse-->
+        </div><!--Cierro el panel-info de la ventana externa de lista de temas-->
+      @endforeach
+
+
+
     </div>
   </div>
 
