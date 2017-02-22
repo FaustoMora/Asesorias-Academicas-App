@@ -18,8 +18,12 @@ class PreguntaController extends Controller
 
 	public function home_pregunta(Request $request){
 
-		$users = $request->user();
-		return view('layouts.preguntas')->with('temas',$users->temas()->get());
+		$user = $request->user();
+		$temas = Tema::where("user_id",$user->id)->get();//Obtengo los temas
+		$preguntas = Pregunta::all();
+		$respuestas = Respuesta::all();
+		return view('layouts.preguntas')->with('temas',$temas)
+		->with('preguntas',$preguntas)->with('respuestas',$respuestas);
 
 	}
 
@@ -39,7 +43,7 @@ class PreguntaController extends Controller
 
 		//Subida de imagen de solución
 		$solucion = $request->input('subirSolución');
-		$encoded = base64_encode($solucion);
+		$encoded = base64_encode(file_get_contents("/home/ray/Descargas/".$solucion));
 
 
 		//Parte de respuestas
