@@ -82,6 +82,9 @@ class ComposerStaticInit5bc11b562d35d6dd42a0b8063652b957
         array (
             'Dotenv\\' => 7,
             'Doctrine\\Instantiator\\' => 22,
+            'Doctrine\\Common\\Cache\\' => 22,
+            'Doctrine\\Common\\Annotations\\' => 28,
+            'Doctrine\\Common\\' => 16,
             'DeepCopy\\' => 9,
         ),
         'C' => 
@@ -214,6 +217,18 @@ class ComposerStaticInit5bc11b562d35d6dd42a0b8063652b957
         array (
             0 => __DIR__ . '/..' . '/doctrine/instantiator/src/Doctrine/Instantiator',
         ),
+        'Doctrine\\Common\\Cache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/cache/lib/Doctrine/Common/Cache',
+        ),
+        'Doctrine\\Common\\Annotations\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/annotations/lib/Doctrine/Common/Annotations',
+        ),
+        'Doctrine\\Common\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/common/lib/Doctrine/Common',
+        ),
         'DeepCopy\\' => 
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
@@ -264,21 +279,29 @@ class ComposerStaticInit5bc11b562d35d6dd42a0b8063652b957
         ),
         'D' => 
         array (
+            'Doctrine\\DBAL\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/doctrine/dbal/lib',
+            ),
+            'Doctrine\\Common\\Lexer\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/doctrine/lexer/lib',
+            ),
             'Doctrine\\Common\\Inflector\\' => 
             array (
                 0 => __DIR__ . '/..' . '/doctrine/inflector/lib',
+            ),
+            'Doctrine\\Common\\Collections\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/doctrine/collections/lib',
             ),
         ),
     );
 
     public static $classMap = array (
-        'CreateImagenTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_05_020633_create_Imagen_table.php',
+        'AddColumnPregunta2' => __DIR__ . '/../..' . '/database/migrations/2017_02_28_173249_add_column_pregunta2.php',
+        'AlterImagenBitmap' => __DIR__ . '/../..' . '/database/migrations/2017_02_28_174236_alter_imagen_bitmap.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
-        'CreatePreguntaTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_05_020623_create_Pregunta_table.php',
-        'CreateRespuestaTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_05_020612_create_Respuesta_table.php',
-        'CreateSolucionTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_05_033234_create_Solucion_table.php',
-        'CreateTemaTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_05_020603_create_Tema_table.php',
-        'CreateUserTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_05_020551_create_User_table.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/DatabaseSeeder.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
@@ -810,7 +833,6 @@ class ComposerStaticInit5bc11b562d35d6dd42a0b8063652b957
         'SebastianBergmann\\ResourceOperations\\ResourceOperations' => __DIR__ . '/..' . '/sebastian/resource-operations/src/ResourceOperations.php',
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
-        'UpdateImagenTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_05_033251_update_Imagen_table.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

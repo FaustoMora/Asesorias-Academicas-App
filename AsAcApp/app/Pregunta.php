@@ -15,6 +15,6 @@ class Pregunta extends Model{
 	}
 
 	public function Imagen(){
-		return $this->hasOne('App\Imagen', 'id', 'imagen_id');
+		return $this->hasMany('App\Imagen', 'id', 'imagen_id');
 	}
 }
