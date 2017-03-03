@@ -14,7 +14,11 @@ class Pregunta extends Model{
 		return $this->hasOne('App\Tema', 'id', 'tema_id');
 	}
 
-	public function Imagen(){
-		return $this->hasOne('App\Imagen', 'id', 'imagen_id');
+	public function PreguntaImagen(){
+		return $this->hasOne('App\Imagen', 'id', 'fk_pregunta_imagen');
+	}
+
+	public function SolucionImagen(){
+		return $this->hasOne('App\Imagen', 'id', 'fk_solucion_imagen');
 	}
 }
