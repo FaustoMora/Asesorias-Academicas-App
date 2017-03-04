@@ -21,4 +21,5 @@ class Pregunta extends Model{
 	public function SolucionImagen(){
 		return $this->hasOne('App\Imagen', 'id', 'fk_solucion_imagen');
 	}
+
 }
