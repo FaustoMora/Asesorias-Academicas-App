@@ -51,7 +51,7 @@ Route::post('/crearPregunta', 'PreguntaController@crear_pregunta');
 
 Route::get('temas/{id_tema}/pregunta', 'ApiTemaController@getInitialPregunta');
 
-Route::get('temas/{id_tema}/pregunta/{p?}', 'ApiTemaController@getExcludedPregunta');
+Route::get('temas/{id_tema}/pregunta/', 'ApiTemaController@getExcludedPregunta');
 
 
 Route::resource('temas', 'ApiTemaController',['only' => [

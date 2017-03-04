@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Tema;
 use App\Pregunta;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class ApiTemaController extends Controller
 {
@@ -15,7 +16,8 @@ class ApiTemaController extends Controller
      */
     public function index()
     {
-        //
+        $temas = Tema::all();
+        return response()->json($temas, 200, [], JSON_UNESCAPED_UNICODE);
     }
 
     /**
@@ -25,9 +27,8 @@ class ApiTemaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(tema $tema)
-    {
-        //
-        error_log('holi show');
+    {   
+        return response()->json($tema, 200, [], JSON_UNESCAPED_UNICODE); 
     }
 
     
@@ -36,10 +37,21 @@ class ApiTemaController extends Controller
      * @param  \App\tema  $tema
      * @return \Illuminate\Http\Response
      */
-    public function getInitialPregunta(tema $tema)
+    public function getInitialPregunta($id_tema)
     {
-        //
-        error_log('getInitialPregunta');
+        if (!is_null($id_tema)) {
+            $tema = Tema::find($id_tema);
+            if (!is_null($tema)) {
+                $preguntas = $tema->preguntas()->pluck('id')->toArray();
+                $pk = $preguntas[array_rand($preguntas)];
+                $pregunta = $tema->preguntas()->where('id',$pk)->with('PreguntaImagen','SolucionImagen','Respuestas')->first();
+
+                return response()->json($pregunta, 200, [], JSON_UNESCAPED_UNICODE);
+            }else{
+                return response()->json(NULL, 404, [], JSON_UNESCAPED_UNICODE);
+            }
+        }
+        return response()->json(NULL, 400, [], JSON_UNESCAPED_UNICODE); 
     }
 
     /**
@@ -47,10 +59,25 @@ class ApiTemaController extends Controller
      * @param  \App\tema  $tema
      * @return \Illuminate\Http\Response
      */
-    public function getExcludedPregunta(tema $tema)
+    public function getExcludedPregunta($id_tema, Request $request)
     {
-        //
-        error_log('getExcludedPregunta');
+        if (!is_null($id_tema)) {
+            $tema = Tema::find($id_tema);
+            if (!is_null($tema)) {
+                $p = explode(',',$request->p);
+
+                $preguntas = $tema->preguntas()->pluck('id')->toArray();
+                $pk = NULL;
+                while( in_array( ($pk = $preguntas[array_rand($preguntas)]),$p));
+
+                $pregunta = $tema->preguntas()->where('id',$pk)->with('PreguntaImagen','SolucionImagen','Respuestas')->first();
+
+                return response()->json($pregunta, 200, [], JSON_UNESCAPED_UNICODE);
+            }else{
+                return response()->json(NULL, 404, [], JSON_UNESCAPED_UNICODE);
+            }
+        }
+        return response()->json(NULL, 400, [], JSON_UNESCAPED_UNICODE);
     }
 
     /**

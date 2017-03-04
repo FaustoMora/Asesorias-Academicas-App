@@ -16,4 +16,8 @@ class Tema extends Model{
 		return $this->belongsTo('App\User');
 	}
 
+	public function Preguntas(){
+		return $this->hasMany('App\Pregunta', 'tema_id', 'id');
+	}
+
 }

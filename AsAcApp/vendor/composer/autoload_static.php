@@ -299,16 +299,14 @@ class ComposerStaticInit5bc11b562d35d6dd42a0b8063652b957
     );
 
     public static $classMap = array (
-        'AlterImagenSolucionPregunta' => __DIR__ . '/../..' . '/database/migrations/2017_03_03_220155_alter_imagen_solucion_pregunta.php',
+        'AlterImagenNullable' => __DIR__ . '/../..' . '/database/migrations/2017_03_04_034514_alter_imagen_nullable.php',
         'CreateImagenTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_05_020610_create_Imagen_table.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
         'CreatePreguntaTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_05_020612_create_Pregunta_table.php',
         'CreateRespuestaTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_05_020623_create_Respuesta_table.php',
-        'CreateSolucionTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_05_033234_create_Solucion_table.php',
         'CreateTemaTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_05_020603_create_Tema_table.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/DatabaseSeeder.php',
-        'DelPregunta' => __DIR__ . '/../..' . '/database/migrations/2017_03_03_230803_del__pregunta.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
         'File_Iterator_Facade' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Facade.php',
         'File_Iterator_Factory' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Factory.php',

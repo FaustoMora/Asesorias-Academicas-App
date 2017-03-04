@@ -6,16 +6,14 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'AlterImagenSolucionPregunta' => $baseDir . '/database/migrations/2017_03_03_220155_alter_imagen_solucion_pregunta.php',
+    'AlterImagenNullable' => $baseDir . '/database/migrations/2017_03_04_034514_alter_imagen_nullable.php',
     'CreateImagenTable' => $baseDir . '/database/migrations/2017_02_05_020610_create_Imagen_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreatePreguntaTable' => $baseDir . '/database/migrations/2017_02_05_020612_create_Pregunta_table.php',
     'CreateRespuestaTable' => $baseDir . '/database/migrations/2017_02_05_020623_create_Respuesta_table.php',
-    'CreateSolucionTable' => $baseDir . '/database/migrations/2017_02_05_033234_create_Solucion_table.php',
     'CreateTemaTable' => $baseDir . '/database/migrations/2017_02_05_020603_create_Tema_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
-    'DelPregunta' => $baseDir . '/database/migrations/2017_03_03_230803_del__pregunta.php',
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/src/Iterator.php',
     'File_Iterator_Facade' => $vendorDir . '/phpunit/php-file-iterator/src/Facade.php',
     'File_Iterator_Factory' => $vendorDir . '/phpunit/php-file-iterator/src/Factory.php',
