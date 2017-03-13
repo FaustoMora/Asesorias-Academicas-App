@@ -299,9 +299,18 @@ class ComposerStaticInit5bc11b562d35d6dd42a0b8063652b957
     );
 
     public static $classMap = array (
+<<<<<<< HEAD
         'AddColumnPregunta2' => __DIR__ . '/../..' . '/database/migrations/2017_02_28_173249_add_column_pregunta2.php',
         'AlterImagenBitmap' => __DIR__ . '/../..' . '/database/migrations/2017_02_28_174236_alter_imagen_bitmap.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
+=======
+        'AlterImagenNullable' => __DIR__ . '/../..' . '/database/migrations/2017_03_04_034514_alter_imagen_nullable.php',
+        'CreateImagenTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_05_020610_create_Imagen_table.php',
+        'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
+        'CreatePreguntaTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_05_020612_create_Pregunta_table.php',
+        'CreateRespuestaTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_05_020623_create_Respuesta_table.php',
+        'CreateTemaTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_05_020603_create_Tema_table.php',
+>>>>>>> 53bca557e6c137028fc1f2756bfa5cc43d4a86ce
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/DatabaseSeeder.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',

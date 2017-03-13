@@ -45,3 +45,15 @@ Route::post('/UpdatePassword', 'ConfigController@update_password');
 Route::get('/Preguntas', 'PreguntaController@home_pregunta');
 
 Route::post('/crearPregunta', 'PreguntaController@crear_pregunta');
+
+
+//ROUTES PARA API
+
+Route::get('temas/{id_tema}/pregunta', 'ApiTemaController@getInitialPregunta');
+
+Route::get('temas/{id_tema}/pregunta/', 'ApiTemaController@getExcludedPregunta');
+
+
+Route::resource('temas', 'ApiTemaController',['only' => [
+    'index', 'show'
+]]);

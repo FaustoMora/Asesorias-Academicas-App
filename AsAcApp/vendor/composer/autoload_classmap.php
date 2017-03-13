@@ -6,9 +6,18 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+<<<<<<< HEAD
     'AddColumnPregunta2' => $baseDir . '/database/migrations/2017_02_28_173249_add_column_pregunta2.php',
     'AlterImagenBitmap' => $baseDir . '/database/migrations/2017_02_28_174236_alter_imagen_bitmap.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
+=======
+    'AlterImagenNullable' => $baseDir . '/database/migrations/2017_03_04_034514_alter_imagen_nullable.php',
+    'CreateImagenTable' => $baseDir . '/database/migrations/2017_02_05_020610_create_Imagen_table.php',
+    'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
+    'CreatePreguntaTable' => $baseDir . '/database/migrations/2017_02_05_020612_create_Pregunta_table.php',
+    'CreateRespuestaTable' => $baseDir . '/database/migrations/2017_02_05_020623_create_Respuesta_table.php',
+    'CreateTemaTable' => $baseDir . '/database/migrations/2017_02_05_020603_create_Tema_table.php',
+>>>>>>> 53bca557e6c137028fc1f2756bfa5cc43d4a86ce
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/src/Iterator.php',

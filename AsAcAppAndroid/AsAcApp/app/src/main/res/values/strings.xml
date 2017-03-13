@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Asesorias Academicas</string>
+    <string name="lblSelectTema">Seleccione un Tema:</string>
+    <string name="lblShowSolution">Ver Solucion</string>
+    <string name="lblNextQuestion">Siguiente</string>
+</resources>
