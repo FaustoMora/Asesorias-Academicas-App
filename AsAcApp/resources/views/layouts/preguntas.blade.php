@@ -30,13 +30,20 @@
             </div>
           </div><!--Fin de seleccion de tema-->
           <!--Descripción de la pregunta-->
+
           <div class="col-md-12 col-sm-12 form-group row">
         		<label class=" col-md-2 col-form-label">Descripci&oacute;n</label>
         		<div class="col-md-10">
         			<input type="text" name="descPreg" placeholder="Descripción/Enunciado de la Pregunta" class="form-control" required>
         		</div>
         	</div>
-
+          <div class="col-md-12 col-sm-12 form-group row">
+              <label style="float: left" class=" col-md-2">Imagen Enunciado</label>
+              <div class="col-md-10">
+                <input onchange="readURL(this);" class="form-control" id="subirImgPreg" name="subirImgPreg"  type="file" data-show-preview="true" data-show-caption="true">
+                <img id="preg" hidden="true" src="#" alt="Enunciado de la Pregunta">
+              </div>
+            </div>
         	<div class="col-md-12 col-sm-12 form-group row">
         		<label class=" col-md-2 col-form-label">Opciones</label>
         		<div class="col-md-10 col-sm-10 form-group row"><!--Div interno para las opciones-->
@@ -89,6 +96,7 @@
                 </div>
               </div>
             </div>
+
             <div class="col-md-12 col-sm-12 form-group row">
               <label style="float: left" class=" col-md-2">Solución</label>
               <div class="col-md-10">
@@ -146,6 +154,13 @@
                               <!--NO EDITABLE-->
                             </div>
                             <div id="editable_body_1" class="editableModulo">
+                              <div style="text-align:center;">
+                                <?php
+                                  $imagenpreg = $pregunta->preguntaimagen()->first();
+                                  $decoded = base64_decode($imagenpreg->bitmap);
+                                  echo "<img style=width:500px; alt=Solución de la Pregunta src=\"data:image/png;base64,$imagenpreg->bitmap\" />";
+                                ?>
+                              </div>
                               <table class="table table-striped table-bordered table-hover" id="opciones-respuestas">
                                 <thead>
                                   @foreach($respuestas as $respuesta)
@@ -179,15 +194,15 @@
                                       <button type="button" class="close" data-dismiss="modal">&times;</button>
                                       <h4 class="modal-title">Soluci&oacute;n</h4>
                                     </div>
-                                    <div class="modal-body">
+                                    <div style="text-align:center;"class="modal-body">
                                       <?php
-                                        $imagen = $pregunta->imagen()->first();
-                                        $decoded = base64_decode($imagen->bitmap);
-                                        echo "<img style=width:90%; alt=Solución de la Pregunta src=\"data:image/png;base64,$imagen->bitmap\" />";
+                                        $imagensol = $pregunta->solucionimagen()->first();
+                                        $decoded = base64_decode($imagensol->bitmap);
+                                        echo "<img style=width:300px; alt=Solución de la Pregunta src=\"data:image/png;base64,$imagensol->bitmap\" />";
                                       ?>
 
                                       <!--
-                                        <img id="{{$imagen->id}}" src="data:image/gif;base64,' . $decoded . '" alt="Solución de la Pregunta">
+                                        <img id="{{$imagensol->id}}" src="data:image/gif;base64,' . $decoded . '" alt="Solución de la Pregunta">
                                       -->
                                     </div>
                                     <div class="modal-footer">

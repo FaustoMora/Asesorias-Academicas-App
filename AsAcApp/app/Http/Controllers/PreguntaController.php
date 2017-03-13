@@ -39,11 +39,13 @@ class PreguntaController extends Controller
 		}//Fin del if de seleccion
 		$desc = $request->input('descPreg');
 
-
+		//Subida de imagen de pregunta
+		$solucion = $request->input('subirImgPreg');
+		$encoded_preg = base64_encode(file_get_contents("/home/ray/Descargas/".$solucion));
 
 		//Subida de imagen de solución
 		$solucion = $request->input('subirSolución');
-		$encoded = base64_encode(file_get_contents("/home/ray/Descargas/".$solucion));
+		$encoded_sol = base64_encode(file_get_contents("/home/ray/Descargas/".$solucion));
 
 
 		//Parte de respuestas
@@ -62,13 +64,13 @@ class PreguntaController extends Controller
 
 		//Imagen de pregunta
 		$imgprg = new Imagen;
-		$imgprg->bitmap = "asd";
+		$imgprg->bitmap = $encoded_preg;
 		$imgprg->save();
-		$imagen = Imagen::where("id",$imgprg->id)->first();
+		$imagen_preg = Imagen::where("id",$imgprg->id)->first();
 
 		//Imagen de la solución
 		$imgsol = new Imagen;
-		$imgsol->bitmap = $encoded;
+		$imgsol->bitmap = $encoded_sol;
 		$imgsol->save();
 		$imagen_solucion = Imagen::where("id", $imgsol->id)->first();
 
@@ -76,7 +78,8 @@ class PreguntaController extends Controller
 		$preg = new Pregunta;
 		$preg->detalle = $desc;
 		$preg->tema_id = $tema->id;
-		$preg->imagen_id = $imagen_solucion->id;
+		$preg->fk_pregunta_imagen = $imagen_preg->id;
+		$preg->fk_solucion_imagen = $imagen_solucion->id;
 		$preg->save();
 		$pregunta = Pregunta::where("id",$preg->id)->first();
 
@@ -86,25 +89,25 @@ class PreguntaController extends Controller
 		$r1->detalle = $resp1;
 		$r1->es_correcta = $corr1;
 		$r1->pregunta_id = $pregunta->id;
-		$r1->imagen_id = $imagen->id;
+		$r1->imagen_id = $imagen_solucion->id;
 
 		$r2 = new Respuesta;
 		$r2->detalle = $resp2;
 		$r2->es_correcta = $corr2;
 		$r2->pregunta_id = $pregunta->id;
-		$r2->imagen_id = $imagen->id;
+		$r2->imagen_id = $imagen_solucion->id;
 		
 		$r3 = new Respuesta;
 		$r3->detalle = $resp3;
 		$r3->es_correcta = $corr3;
 		$r3->pregunta_id = $pregunta->id;
-		$r3->imagen_id = $imagen->id;
+		$r3->imagen_id = $imagen_solucion->id;
 		
 		$r4 = new Respuesta;
 		$r4->detalle = $resp4;
 		$r4->es_correcta = $corr4;
 		$r4->pregunta_id = $pregunta->id;
-		$r4->imagen_id = $imagen->id;
+		$r4->imagen_id = $imagen_solucion->id;
 
 		
 		$r1->save();
