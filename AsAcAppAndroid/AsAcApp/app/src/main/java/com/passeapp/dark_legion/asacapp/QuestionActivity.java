@@ -60,33 +60,37 @@ public class QuestionActivity extends AppCompatActivity {
 
 
     public void buildCustomDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getBaseContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         // Get the layout inflater
         LayoutInflater inflater = getLayoutInflater();
+        View promptView = inflater.inflate(R.layout.custom_next_dialog, null);
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
-        builder.setView(inflater.inflate(R.layout.custom_next_dialog, null));
+        builder.setView(promptView);
 
         customDialog = builder.create();
 
-        Button showSolutionBtn = (Button)customDialog.findViewById(R.id.showSolutionBtn);
+        Button showSolutionBtn = (Button)promptView.findViewById(R.id.showSolutionBtn);
         showSolutionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                customDialog.cancel();
+                customDialog.dismiss();
                 startActivity(new Intent(getApplicationContext(), SolutionActivity.class));
+                finish();
             }
         });
-        Button nextQuestionBtn = (Button)customDialog.findViewById(R.id.nextQuestionBtn);
+        Button nextQuestionBtn = (Button)promptView.findViewById(R.id.nextQuestionBtn);
         nextQuestionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                customDialog.cancel();
+                customDialog.dismiss();
                 startActivity(new Intent(getApplicationContext(), QuestionClass.class));
+                finish();
             }
         });
 
+        customDialog.setTitle("");
         customDialog.show();
 
     }
