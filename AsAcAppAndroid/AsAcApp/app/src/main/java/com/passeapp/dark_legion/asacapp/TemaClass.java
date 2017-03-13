@@ -1,9 +1,5 @@
 package com.passeapp.dark_legion.asacapp;
 
-/**
- * Created by dark-legion on 3/10/17.
- */
-
 public class TemaClass {
     private Integer _id;
     private String nombre;
