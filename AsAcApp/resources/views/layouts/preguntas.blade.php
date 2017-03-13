@@ -40,8 +40,8 @@
           <div class="col-md-12 col-sm-12 form-group row">
               <label style="float: left" class=" col-md-2">Imagen Enunciado</label>
               <div class="col-md-10">
-                <input onchange="readURL(this);" class="form-control" id="subirImgPreg" name="subirImgPreg"  type="file" data-show-preview="true" data-show-caption="true">
-                <img id="preg" hidden="true" src="#" alt="Enunciado de la Pregunta">
+                <input onchange="read2URL(this);" class="form-control" id="subirImgPreg" name="subirImgPreg"  type="file" data-show-preview="true" data-show-caption="true">
+                <img id="preg" name="preg" hidden="true" src="#" alt="Enunciado de la Pregunta">
               </div>
             </div>
         	<div class="col-md-12 col-sm-12 form-group row">
@@ -101,7 +101,7 @@
               <label style="float: left" class=" col-md-2">Solución</label>
               <div class="col-md-10">
                 <input onchange="readURL(this);" class="form-control" id="subirSolución" name="subirSolución"  type="file" data-show-preview="true" data-show-caption="true">
-                <img id="solc" hidden="true" src="#" alt="Solución de la Pregunta">
+                <img id="solc" name="solc"hidden="true" src="#" alt="Solución de la Pregunta">
               </div>
             </div>
             
@@ -237,8 +237,22 @@
       reader.onload = function (e) {
         $('#solc')
           .attr('src', e.target.result)
-          .width(450)
-          .height(300)
+          .width(300)
+          .height(200)
+          .removeAttr("hidden");
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  function read2URL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        $('#preg')
+          .attr('src', e.target.result)
+          .width(300)
+          .height(200)
           .removeAttr("hidden");
       };
       reader.readAsDataURL(input.files[0]);
