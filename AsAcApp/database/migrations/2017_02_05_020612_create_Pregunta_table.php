@@ -19,6 +19,7 @@ class CreatePreguntaTable extends Migration
             $table->integer('tema_id')->unsigned();
             $table->integer('fk_pregunta_imagen')->unsigned();
             $table->integer('fk_solucion_imagen')->unsigned();
+            $table->timestamps();
         });
         Schema::table('pregunta', function(Blueprint $table){
             $table->foreign('fk_pregunta_imagen')->references('id')->on('imagen');
