@@ -27,7 +27,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:srcCompat="@mipmap/ic_launcher"
-                    android:id="@+id/imageView"
+                    android:id="@+id/solutionQuestionImage"
                     android:layout_weight="1"/>
 
             </TableRow>
@@ -36,59 +36,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
-                <TableLayout
+                <ListView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" >
-
-                        <RadioButton
-                            android:text="RadioButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/radioButton"
-                            android:layout_weight="1"/>
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" >
-
-                        <RadioButton
-                            android:text="RadioButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/radioButton2"
-                            android:layout_weight="1"/>
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" >
-
-                        <RadioButton
-                            android:text="RadioButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/radioButton3"
-                            android:layout_weight="1"/>
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" >
-
-                        <RadioButton
-                            android:text="RadioButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/radioButton4"
-                            android:layout_weight="1"/>
-                    </TableRow>
-                </TableLayout>
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="15dp"
+                    android:layout_weight="1"
+                    android:id="@+id/solutionList"
+                    android:choiceMode="singleChoice"
+                    android:minHeight="200dp"/>
             </TableRow>
 
             <TableRow
@@ -102,7 +60,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:srcCompat="@mipmap/ic_launcher"
-                    android:id="@+id/imageView2"
+                    android:id="@+id/solutionImage"
                     android:layout_weight="1"/>
 
             </TableRow>
@@ -118,7 +76,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:srcCompat="@android:drawable/ic_media_play"
-                    android:id="@+id/imageButton"
+                    android:id="@+id/nextExcludeQuestionBtn"
                     android:layout_gravity="center"
 
                     />

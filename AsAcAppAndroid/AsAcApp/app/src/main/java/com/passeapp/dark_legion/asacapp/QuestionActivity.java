@@ -2,17 +2,19 @@ package com.passeapp.dark_legion.asacapp;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -22,10 +24,14 @@ public class QuestionActivity extends AppCompatActivity {
     protected ListView optionsList;
     public ArrayAdapter<OptionClass> adapterOptions;
     public static QuestionClass actualQuestion;
-    public static String usedExcludesQuestions;
-    public OptionClass exampleArray[] = {new OptionClass(1,"Opcion 1",true,1), new OptionClass(2,"Opcion 2",true,1), new OptionClass(3,"Opcion 3",true,1), new OptionClass(4,"Opcion 4",true,1)};
-    public ArrayList<OptionClass> arrayList = new ArrayList<OptionClass>(Arrays.asList(exampleArray));
+    public static String excludesQuestions;
+    public static OptionClass exampleArray[] = {new OptionClass(1,"Opcion 1",true,1), new OptionClass(2,"Opcion 2",false,1), new OptionClass(3,"Opcion 3",false,1), new OptionClass(4,"Opcion 4",false,1)};
+    public static ArrayList<OptionClass> arrayList = new ArrayList<OptionClass>(Arrays.asList(exampleArray));
     public Dialog customDialog;
+    private ImageView questionImage;
+    public static int selectedPosOption;
+    public boolean hasSelectedOption = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +42,7 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     protected void init(){
-
+        this.questionImage = (ImageView)findViewById(R.id.questionImage);
         this.continueTestBtn = (ImageButton)findViewById(R.id.questionPlayBtn);
         this.continueTestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,7 +52,6 @@ public class QuestionActivity extends AppCompatActivity {
                     OptionClass aux = arrayList.get(pos);
                     Toast.makeText(getApplicationContext(),"Seleccionaste: "+aux.toString(),Toast.LENGTH_SHORT).show();
                     buildCustomDialog();
-
                 }else{
                     Toast.makeText(getApplicationContext(),"Seleccione un tema para continuar",Toast.LENGTH_SHORT).show();
                 }
@@ -54,19 +59,41 @@ public class QuestionActivity extends AppCompatActivity {
         });
 
         this.optionsList = (ListView)findViewById(R.id.optionsList);
-        this.adapterOptions = new ArrayAdapter<OptionClass>(this,android.R.layout.simple_list_item_single_choice,this.arrayList);
+        this.adapterOptions = new ArrayAdapter<OptionClass>(this,android.R.layout.simple_list_item_single_choice,QuestionActivity.arrayList){
+            @Override
+            public boolean isEnabled(int position) {
+                return !hasSelectedOption;
+            }
+        };
+
         this.optionsList.setAdapter(this.adapterOptions);
+        this.optionsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                OptionClass op = (OptionClass) adapterView.getItemAtPosition(i);
+                hasSelectedOption = true;
+                if (op.getEs_correcta()){
+                    view.setBackgroundColor(Color.GREEN);
+                }else{
+                    view.setBackgroundColor(Color.RED);
+                    selectedPosOption = i;
+                }
+            }
+        });
+        initialiceImage();
+    }
+
+    protected void initialiceImage(){
+
     }
 
 
     public void buildCustomDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        // Get the layout inflater
         LayoutInflater inflater = getLayoutInflater();
         View promptView = inflater.inflate(R.layout.custom_next_dialog, null);
 
-        // Inflate and set the layout for the dialog
-        // Pass null as the parent view because its going in the dialog layout
+
         builder.setView(promptView);
 
         customDialog = builder.create();
@@ -84,6 +111,12 @@ public class QuestionActivity extends AppCompatActivity {
         nextQuestionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String excludedId = QuestionActivity.actualQuestion.get_id().toString();
+                if(QuestionActivity.excludesQuestions != null && !QuestionActivity.excludesQuestions.isEmpty()){
+                    QuestionActivity.excludesQuestions = QuestionActivity.excludesQuestions + "," + excludedId;
+                }else{
+                    QuestionActivity.excludesQuestions = "?p=" + excludedId;
+                }
                 customDialog.dismiss();
                 startActivity(new Intent(getApplicationContext(), QuestionClass.class));
                 finish();
