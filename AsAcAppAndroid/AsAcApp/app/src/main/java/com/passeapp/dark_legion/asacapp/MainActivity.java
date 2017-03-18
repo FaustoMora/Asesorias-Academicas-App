@@ -10,9 +10,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
-
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.protocol.HttpContext;
 import org.json.JSONArray;
-
+import org.json.JSONObject;
+import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -29,8 +36,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        try {
+            this.arrayList = new HttpGET_TemasTask().execute().get();
+        }catch (Exception e){
+            Toast.makeText(getApplicationContext(),"CONEXION A INTERNET NO DISPONIBLE",Toast.LENGTH_LONG).show();
+        }
         init();
+
     }
 
     protected void init(){
@@ -58,13 +70,13 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    private class HttpGET_TemasTask extends AsyncTask<String,Integer,ArrayList<TemaClass>>{
+    private class HttpGET_TemasTask extends AsyncTask<Void,Integer,ArrayList<TemaClass>>{
         String SERVER = "http://174.138.80.160/";
         String RESOURCE = "temas/";
 
         @Override
-        protected ArrayList<TemaClass> doInBackground(String... strings) {
-            return this.getTemas();
+        protected ArrayList<TemaClass> doInBackground(Void... voids) {
+            return getTemas();
         }
 
         private ArrayList<TemaClass> getTemas() {

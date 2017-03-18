@@ -1,6 +1,7 @@
 package com.passeapp.dark_legion.asacapp;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -17,10 +18,19 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.protocol.HttpContext;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
+
 
 public class QuestionActivity extends AppCompatActivity {
 
@@ -30,19 +40,26 @@ public class QuestionActivity extends AppCompatActivity {
     public static TemaClass actualTema;
     public static QuestionClass actualQuestion;
     public static String excludesQuestions;
-    public static OptionClass exampleArray[] = {new OptionClass(1,"Opcion 1",true,1), new OptionClass(2,"Opcion 2",false,1), new OptionClass(3,"Opcion 3",false,1), new OptionClass(4,"Opcion 4",false,1)};
+    public static OptionClass exampleArray[] = {new OptionClass(1,"Opcion 1",true), new OptionClass(2,"Opcion 2",false), new OptionClass(3,"Opcion 3",false), new OptionClass(4,"Opcion 4",false)};
     public static ArrayList<OptionClass> arrayList = new ArrayList<OptionClass>(Arrays.asList(exampleArray));
     public Dialog customDialog;
     private ImageView questionImage;
     public static int selectedPosOption;
     public boolean hasSelectedOption = false;
+    public ProgressDialog progressDialog;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
-
+        try{
+            AsyncTask  task = new HttpGET_QuestionTask().execute();
+            this.actualQuestion = (QuestionClass) task.get();
+        }catch (Exception e){
+            Log.e("error api",e.getLocalizedMessage());
+            Toast.makeText(getApplicationContext(),"CONEXION A INTERNET NO DISPONIBLE",Toast.LENGTH_LONG).show();
+        }
         init();
     }
 
@@ -133,12 +150,38 @@ public class QuestionActivity extends AppCompatActivity {
 
     }
 
+    public ProgressDialog createDialog(){
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Cargando...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        return  progressDialog;
+    }
+
     private class HttpGET_QuestionTask extends AsyncTask<String,Integer,QuestionClass> {
         String SERVER = "http://174.138.80.160/";
         String RESOURCE = "temas/"+QuestionActivity.actualTema.get_id()+"pregunta/"+QuestionActivity.excludesQuestions;
 
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = createDialog();
+        }
+
+        @Override
+        protected void onPostExecute(QuestionClass questionClass) {
+            progressDialog.dismiss();
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            progressDialog.setProgress(values[0]);
+        }
+
         @Override
         protected QuestionClass doInBackground(String... strings) {
+            publishProgress(0);
             return getPregunta();
         }
 
