@@ -1,11 +1,14 @@
 package com.passeapp.dark_legion.asacapp;
 
+import java.util.ArrayList;
+
 public class QuestionClass {
     private Integer _id;
     private String detalle;
     private Integer tema_id;
     private String pregunta_imagen;
     private String solucion_imagen;
+    private ArrayList<OptionClass> opciones;
 
     public QuestionClass(Integer _id, String detalle, Integer tema_id, String pregunta_imagen, String solucion_imagen) {
         this._id = _id;
@@ -53,5 +56,13 @@ public class QuestionClass {
 
     public void setSolucion_imagen(String solucion_imagen) {
         this.solucion_imagen = solucion_imagen;
+    }
+
+    public ArrayList<OptionClass> getOpciones() {
+        return opciones;
+    }
+
+    public void setOpciones(ArrayList<OptionClass> opciones) {
+        this.opciones = opciones;
     }
 }
