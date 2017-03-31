@@ -29,13 +29,14 @@ class ConfigController extends Controller
 		if (Auth::check())
 		{
 			$user = Auth::user();
+			$user = User::find($user->id);
 			$pass = $request->input('actualPass');
 			$newPass = $request->input('newPass');
 
 			if ( Hash::check($pass, Auth::user()->password) ) 
 			{
     			$user->fill([
-            		'password' =>  Hash::make($newpass)
+            		'password' =>  Hash::make($newPass)
         		])->save();
     			Auth::logout();
 			}
@@ -50,6 +51,7 @@ class ConfigController extends Controller
 		if (Auth::check())
 		{
 			$user = Auth::user();
+			$user = User::find($user->id);
 			$pass = $request->input('actualPass');
 			$newEmail = $request->input('newEmail');
 

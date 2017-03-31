@@ -6,6 +6,7 @@ use App\User;
 use App\Tema;
 use Illuminate\Http\Request;
 use App\Http\Controllers\View;
+use Illuminate\Support\Facades\Auth;
 
 /**
 * 
@@ -22,6 +23,7 @@ class TemaController extends Controller
 	{	
 		//$user = Auth::user();
 		$user = $request->user();
+		$user = User::find($user->id);
 		return view('layouts.temas')->with('temas',$user->temas()->get());
 	}
 
@@ -33,6 +35,7 @@ class TemaController extends Controller
 
 		if ( !empty ( $id_tema ) ) {
     		$user = $request->user();
+    		$user = User::find($user->id);
 			$tema = Tema::find($id_tema);
 			if($user->id == $tema->user()->first()->id){
 				$tema->nombre = $name;
@@ -50,7 +53,7 @@ class TemaController extends Controller
 		$description = $request->input('descripcionTema');
 		
 		$user = $request->user();
-
+		$user = User::find($user->id);
 		$tema = new Tema;
 		$tema->nombre = $name;
 		$tema->descripcion = $description;
