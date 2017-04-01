@@ -43,7 +43,7 @@ public class QuestionClass {
     }
 
     public String getPregunta_imagen() {
-        return pregunta_imagen;
+        return pregunta_imagen.replace("data:image/png;base64,","");
     }
 
     public void setPregunta_imagen(String pregunta_imagen) {
@@ -51,7 +51,7 @@ public class QuestionClass {
     }
 
     public String getSolucion_imagen() {
-        return solucion_imagen;
+        return solucion_imagen.replace("data:image/png;base64,","");
     }
 
     public void setSolucion_imagen(String solucion_imagen) {

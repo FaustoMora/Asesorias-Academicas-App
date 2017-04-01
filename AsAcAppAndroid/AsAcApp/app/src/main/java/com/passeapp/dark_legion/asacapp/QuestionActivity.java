@@ -1,19 +1,28 @@
 package com.passeapp.dark_legion.asacapp;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckedTextView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -29,7 +38,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 public class QuestionActivity extends AppCompatActivity {
@@ -40,30 +48,39 @@ public class QuestionActivity extends AppCompatActivity {
     public static TemaClass actualTema;
     public static QuestionClass actualQuestion;
     public static String excludesQuestions;
-    public static OptionClass exampleArray[] = {new OptionClass(1,"Opcion 1",true), new OptionClass(2,"Opcion 2",false), new OptionClass(3,"Opcion 3",false), new OptionClass(4,"Opcion 4",false)};
-    public static ArrayList<OptionClass> arrayList = new ArrayList<OptionClass>(Arrays.asList(exampleArray));
     public Dialog customDialog;
     private ImageView questionImage;
     public static int selectedPosOption;
+    public static int selectedColorOption;
     public boolean hasSelectedOption = false;
     public ProgressDialog progressDialog;
+
+    static class ViewHolderItem {
+        CheckedTextView textViewItem;
+    }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
+        //recreate();
         try{
-            AsyncTask  task = new HttpGET_QuestionTask().execute();
-            this.actualQuestion = (QuestionClass) task.get();
+            new HttpGET_QuestionTask().execute();
         }catch (Exception e){
             Log.e("error api",e.getLocalizedMessage());
             Toast.makeText(getApplicationContext(),"CONEXION A INTERNET NO DISPONIBLE",Toast.LENGTH_LONG).show();
         }
-        init();
+    }
+
+    protected void reset_variables(){
+        selectedPosOption = -1;
+        selectedColorOption = -1;
     }
 
     protected void init(){
+        //final LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
+        this.hasSelectedOption = false;
         this.questionImage = (ImageView)findViewById(R.id.questionImage);
         this.continueTestBtn = (ImageButton)findViewById(R.id.questionPlayBtn);
         this.continueTestBtn.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +88,7 @@ public class QuestionActivity extends AppCompatActivity {
             public void onClick(View view) {
                 int pos = optionsList.getCheckedItemPosition();
                 if(pos > -1){
-                    OptionClass aux = arrayList.get(pos);
+                    OptionClass aux = QuestionActivity.actualQuestion.getOpciones().get(pos);
                     Toast.makeText(getApplicationContext(),"Seleccionaste: "+aux.toString(),Toast.LENGTH_SHORT).show();
                     buildCustomDialog();
                 }else{
@@ -81,32 +98,56 @@ public class QuestionActivity extends AppCompatActivity {
         });
 
         this.optionsList = (ListView)findViewById(R.id.optionsList);
-        this.adapterOptions = new ArrayAdapter<OptionClass>(this,android.R.layout.simple_list_item_single_choice,QuestionActivity.arrayList){
+        this.adapterOptions = new ArrayAdapter<OptionClass>(this,android.R.layout.simple_list_item_single_choice,QuestionActivity.actualQuestion.getOpciones()){
             @Override
             public boolean isEnabled(int position) {
                 return !hasSelectedOption;
             }
-        };
 
+            @NonNull
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+
+                View view = super.getView(position, convertView, parent);
+                if (position != selectedPosOption) {
+                    view.setBackgroundColor(Color.WHITE);
+                } else {
+                    view.setBackgroundColor(selectedColorOption);
+                }
+                return view;
+            }
+        };
+        this.optionsList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         this.optionsList.setAdapter(this.adapterOptions);
         this.optionsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 OptionClass op = (OptionClass) adapterView.getItemAtPosition(i);
-                hasSelectedOption = true;
-                if (op.getEs_correcta()){
-                    view.setBackgroundColor(Color.GREEN);
-                }else{
-                    view.setBackgroundColor(Color.RED);
+
+                if(!hasSelectedOption){
+                    optionsList.setItemChecked(i, true);
+                    view.setSelected(true);
                     selectedPosOption = i;
+                    if(view.isSelected() ){
+                        if (op.getEs_correcta()){
+                            selectedColorOption = Color.GREEN;
+                        }else{
+                            selectedColorOption = Color.RED;
+                        }
+                    }
+                    hasSelectedOption = true;
+                    adapterOptions.notifyDataSetChanged();
                 }
+
             }
         });
         initialiceImage();
     }
 
     protected void initialiceImage(){
-
+        byte[] decodedString = Base64.decode(QuestionActivity.actualQuestion.getPregunta_imagen(), Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        this.questionImage.setImageBitmap(Bitmap.createScaledBitmap(decodedByte, 700, 420, false));
     }
 
 
@@ -125,8 +166,9 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 customDialog.dismiss();
-                startActivity(new Intent(getApplicationContext(), SolutionActivity.class));
                 finish();
+                startActivity(new Intent(getApplicationContext(), SolutionActivity.class));
+//                finish();
             }
         });
         Button nextQuestionBtn = (Button)promptView.findViewById(R.id.nextQuestionBtn);
@@ -161,8 +203,13 @@ public class QuestionActivity extends AppCompatActivity {
 
     private class HttpGET_QuestionTask extends AsyncTask<String,Integer,QuestionClass> {
         String SERVER = "http://174.138.80.160/";
-        String RESOURCE = "temas/"+QuestionActivity.actualTema.get_id()+"pregunta/"+QuestionActivity.excludesQuestions;
+        String RESOURCE = "temas/"+QuestionActivity.actualTema.get_id()+"/pregunta/";
 
+        public HttpGET_QuestionTask() {
+            if(QuestionActivity.excludesQuestions != null){
+                this.RESOURCE = this.RESOURCE + QuestionActivity.excludesQuestions;
+            }
+        }
 
         @Override
         protected void onPreExecute() {
@@ -171,6 +218,9 @@ public class QuestionActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(QuestionClass questionClass) {
+            actualQuestion = questionClass;
+            init();
+            reset_variables();
             progressDialog.dismiss();
         }
 
@@ -185,6 +235,7 @@ public class QuestionActivity extends AppCompatActivity {
             return getPregunta();
         }
 
+        @Nullable
         private QuestionClass getPregunta() {
 
             ArrayList<OptionClass> opList = new ArrayList<OptionClass>();
@@ -203,7 +254,7 @@ public class QuestionActivity extends AppCompatActivity {
                 JSONArray opcionesJSON = jsonObject.getJSONArray("respuestas");
                 for(int i=0;i<opcionesJSON.length();i++){
                     JSONObject opJSON = opcionesJSON.getJSONObject(i);
-                    OptionClass auxTema = new OptionClass(opJSON.getInt("id"),opJSON.getString("detalle"),opJSON.getBoolean("es_correcta"));
+                    OptionClass auxTema = new OptionClass(opJSON.getInt("id"),opJSON.getString("detalle"),opJSON.getInt("es_correcta"));
                     opList.add(auxTema);
                 }
                 auxQuestion.setOpciones(opList);

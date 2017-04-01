@@ -7,10 +7,10 @@ public class OptionClass {
     private Boolean es_correcta;
     private Integer pregunta_id;
 
-    public OptionClass(Integer _id, String detalle, Boolean es_correcta) {
+    public OptionClass(Integer _id, String detalle, Integer es_correcta) {
         this._id = _id;
         this.detalle = detalle;
-        this.es_correcta = es_correcta;
+        this.es_correcta = (es_correcta==1);
     }
 
     public Integer get_id() {

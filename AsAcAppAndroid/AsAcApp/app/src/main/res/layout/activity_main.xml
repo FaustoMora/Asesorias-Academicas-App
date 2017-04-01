@@ -41,7 +41,8 @@
                 android:paddingTop="15dp"
                 android:layout_weight="1"
                 android:choiceMode="singleChoice"
-                android:id="@+id/listTemas"/>
+                android:id="@+id/listTemas"
+                android:listSelector="@drawable/selector"/>
         </TableRow>
 
 

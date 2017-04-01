@@ -66,13 +66,16 @@ class ApiTemaController extends Controller
             if (!is_null($tema)) {
                 $p = explode(',',$request->p);
 
-                $preguntas = $tema->preguntas()->pluck('id')->toArray();
-                $pk = NULL;
-                while( in_array( ($pk = $preguntas[array_rand($preguntas)]),$p));
+                if($tema->preguntas()->count()>0){
+                    $preguntas = $tema->preguntas()->pluck('id')->toArray();
+                    $pk = NULL;
+                    while( in_array( ($pk = $preguntas[array_rand($preguntas)]),$p));
 
-                $pregunta = $tema->preguntas()->where('id',$pk)->with('PreguntaImagen','SolucionImagen','Respuestas')->first();
+                    $pregunta = $tema->preguntas()->where('id',$pk)->with('PreguntaImagen','SolucionImagen','Respuestas')->first();
 
-                return response()->json($pregunta, 200, [], JSON_UNESCAPED_UNICODE);
+                    return response()->json($pregunta, 200, [], JSON_UNESCAPED_UNICODE);
+                }
+                return response()->json(NULL, 200, [], JSON_UNESCAPED_UNICODE);
             }else{
                 return response()->json(NULL, 404, [], JSON_UNESCAPED_UNICODE);
             }

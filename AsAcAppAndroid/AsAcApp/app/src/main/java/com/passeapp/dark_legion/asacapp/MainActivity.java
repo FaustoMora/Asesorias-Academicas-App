@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -21,16 +22,14 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 
     protected ImageButton startTestBtn;
     protected ListView listTemas;
     public ArrayAdapter<TemaClass> adapterTemas;
-
-    public TemaClass exampleArray[] = {new TemaClass(1,"Tema 1","Tema 1"), new TemaClass(2,"Tema DOS","Tema DOS"), new TemaClass(2,"Tema Tres","Tema Tres")};
-    public ArrayList<TemaClass> arrayList = new ArrayList<TemaClass>(Arrays.asList(exampleArray));
+    public ArrayList<TemaClass> arrayList;
+    public static int selectedListPos = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +41,13 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"CONEXION A INTERNET NO DISPONIBLE",Toast.LENGTH_LONG).show();
         }
         init();
+        reset_variables();
 
+    }
+
+    protected void reset_variables(){
+        selectedListPos = -1;
+        QuestionActivity.excludesQuestions = null;
     }
 
     protected void init(){
@@ -51,9 +56,10 @@ public class MainActivity extends AppCompatActivity {
         this.startTestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int posTema = listTemas.getCheckedItemPosition();
-                if(posTema > -1){
-                    TemaClass auxTema = arrayList.get(posTema);
+                TemaClass aux = (TemaClass) listTemas.getSelectedItem();
+                TemaClass auxTema = (TemaClass) listTemas.getItemAtPosition(selectedListPos);
+                if(auxTema != null ){
+                    //TemaClass auxTema = arrayList.get(posTema);
                     QuestionActivity.actualTema = auxTema;
                     Toast.makeText(getApplicationContext(),"Seleccionaste: "+auxTema.toString(),Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getApplicationContext(), QuestionActivity.class));
@@ -64,15 +70,26 @@ public class MainActivity extends AppCompatActivity {
         });
 
         this.listTemas = (ListView)findViewById(R.id.listTemas);
-        this.adapterTemas = new ArrayAdapter<TemaClass>(this,android.R.layout.simple_list_item_single_choice,this.arrayList);
+        this.adapterTemas = new TemaCustomAdapter(this,this.arrayList);
         this.listTemas.setAdapter(this.adapterTemas);
+        this.listTemas.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        this.listTemas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                adapterView.setSelected(true);
+                view.setSelected(true);
+
+                listTemas.setSelection(i);
+                listTemas.setItemChecked(i,true);
+                selectedListPos = i;
+            }
+        });
     }
 
 
-
     private class HttpGET_TemasTask extends AsyncTask<Void,Integer,ArrayList<TemaClass>>{
-        String SERVER = "http://174.138.80.160/";
-        String RESOURCE = "temas/";
+        String SERVER = "http://174.138.80.160";
+        String RESOURCE = "/temas";
 
         @Override
         protected ArrayList<TemaClass> doInBackground(Void... voids) {

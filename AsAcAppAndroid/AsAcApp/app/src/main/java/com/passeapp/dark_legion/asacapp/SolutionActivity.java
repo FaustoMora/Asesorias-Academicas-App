@@ -1,9 +1,12 @@
 package com.passeapp.dark_legion.asacapp;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -40,12 +43,12 @@ public class SolutionActivity extends AppCompatActivity {
                 }else{
                     QuestionActivity.excludesQuestions = "?p=" + excludedId;
                 }
-                startActivity(new Intent(getApplicationContext(), QuestionClass.class));
+                startActivity(new Intent(getApplicationContext(), QuestionActivity.class));
             }
         });
 
         this.solutionList = (ListView)findViewById(R.id.solutionList);
-        this.solutionList.setAdapter(new ArrayAdapter<OptionClass>(this, android.R.layout.simple_list_item_1, QuestionActivity.arrayList) {
+        this.solutionList.setAdapter(new ArrayAdapter<OptionClass>(this, android.R.layout.simple_list_item_1, QuestionActivity.actualQuestion.getOpciones()) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View row = super.getView(position, convertView, parent);
@@ -70,6 +73,13 @@ public class SolutionActivity extends AppCompatActivity {
     }
 
     protected void initialiceImage(){
+        byte[] decodedString = Base64.decode(QuestionActivity.actualQuestion.getPregunta_imagen(), Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        this.solutionQuestionImage.setImageBitmap(Bitmap.createScaledBitmap(decodedByte, 700, 420, false));
+
+        decodedString = Base64.decode(QuestionActivity.actualQuestion.getSolucion_imagen(), Base64.DEFAULT);
+        decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        this.solutionImage.setImageBitmap(Bitmap.createScaledBitmap(decodedByte, 700, 420, false));
 
     }
 }
