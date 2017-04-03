@@ -32,8 +32,8 @@ class Collection implements ArrayAccess, Arrayable, Countable, IteratorAggregate
      * @var array
      */
     protected static $proxies = [
-        'contains', 'each', 'every', 'filter', 'first', 'map',
-        'partition', 'reject', 'sortBy', 'sortByDesc', 'sum',
+        'contains', 'each', 'every', 'filter', 'first', 'flatMap',
+        'map', 'partition', 'reject', 'sortBy', 'sortByDesc', 'sum',
     ];
 
     /**
@@ -56,6 +56,22 @@ class Collection implements ArrayAccess, Arrayable, Countable, IteratorAggregate
     public static function make($items = [])
     {
         return new static($items);
+    }
+
+    /**
+     * Create a new collection by invoking the callback a given amount of times.
+     *
+     * @param  int  $amount
+     * @param  callable  $callback
+     * @return static
+     */
+    public static function times($amount, callable $callback)
+    {
+        if ($amount < 1) {
+            return new static;
+        }
+
+        return (new static(range(1, $amount)))->map($callback);
     }
 
     /**
@@ -309,6 +325,25 @@ class Collection implements ArrayAccess, Arrayable, Countable, IteratorAggregate
     }
 
     /**
+     * Apply the callback if the value is truthy.
+     *
+     * @param  bool  $value
+     * @param  callable  $callback
+     * @param  callable  $default
+     * @return mixed
+     */
+    public function when($value, callable $callback, callable $default = null)
+    {
+        if ($value) {
+            return $callback($this);
+        } elseif ($default) {
+            return $default($this);
+        }
+
+        return $this;
+    }
+
+    /**
      * Filter items by the given key value pair.
      *
      * @param  string  $key
@@ -395,6 +430,35 @@ class Collection implements ArrayAccess, Arrayable, Countable, IteratorAggregate
     public function whereInStrict($key, $values)
     {
         return $this->whereIn($key, $values, true);
+    }
+
+    /**
+     * Filter items by the given key value pair.
+     *
+     * @param  string  $key
+     * @param  mixed  $values
+     * @param  bool  $strict
+     * @return static
+     */
+    public function whereNotIn($key, $values, $strict = false)
+    {
+        $values = $this->getArrayableItems($values);
+
+        return $this->reject(function ($item) use ($key, $values, $strict) {
+            return in_array(data_get($item, $key), $values, $strict);
+        });
+    }
+
+    /**
+     * Filter items by the given key value pair using strict comparison.
+     *
+     * @param  string  $key
+     * @param  mixed  $values
+     * @return static
+     */
+    public function whereNotInStrict($key, $values)
+    {
+        return $this->whereNotIn($key, $values, true);
     }
 
     /**
@@ -614,7 +678,7 @@ class Collection implements ArrayAccess, Arrayable, Countable, IteratorAggregate
     /**
      * Get the values of a given key.
      *
-     * @param  string  $value
+     * @param  string|array  $value
      * @param  string|null  $key
      * @return static
      */
@@ -1172,6 +1236,19 @@ class Collection implements ArrayAccess, Arrayable, Countable, IteratorAggregate
         }
 
         return $this->slice(0, $limit);
+    }
+
+    /**
+     * Pass the collection to the given callback and then return it.
+     *
+     * @param  callable  $callback
+     * @return $this
+     */
+    public function tap(callable $callback)
+    {
+        $callback(new static($this->items));
+
+        return $this;
     }
 
     /**

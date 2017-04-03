@@ -568,7 +568,7 @@ abstract class Model implements ArrayAccess, Arrayable, Jsonable, JsonSerializab
         // First we need to create a fresh query instance and touch the creation and
         // update timestamp on the model which are maintained by us for developer
         // convenience. Then we will just continue saving the model instances.
-        if ($this->timestamps) {
+        if ($this->usesTimestamps()) {
             $this->updateTimestamps();
         }
 
@@ -626,7 +626,7 @@ abstract class Model implements ArrayAccess, Arrayable, Jsonable, JsonSerializab
         // First we'll need to create a fresh query instance and touch the creation and
         // update timestamps on this model, which are maintained by us for developer
         // convenience. After, we will just continue saving these model instances.
-        if ($this->timestamps) {
+        if ($this->usesTimestamps()) {
             $this->updateTimestamps();
         }
 
@@ -870,7 +870,7 @@ abstract class Model implements ArrayAccess, Arrayable, Jsonable, JsonSerializab
      */
     public function newPivot(Model $parent, array $attributes, $table, $exists, $using = null)
     {
-        return $using ? new $using($parent, $attributes, $table, $exists)
+        return $using ? $using::fromRawAttributes($parent, $attributes, $table, $exists)
                       : new Pivot($parent, $attributes, $table, $exists);
     }
 
@@ -1105,13 +1105,26 @@ abstract class Model implements ArrayAccess, Arrayable, Jsonable, JsonSerializab
     }
 
     /**
-     * Get the auto incrementing key type.
+     * Get the auto-incrementing key type.
      *
      * @return string
      */
     public function getKeyType()
     {
         return $this->keyType;
+    }
+
+    /**
+     * Set the data type for the primary key.
+     *
+     * @param  string  $type
+     * @return $this
+     */
+    public function setKeyType($type)
+    {
+        $this->keyType = $type;
+
+        return $this;
     }
 
     /**

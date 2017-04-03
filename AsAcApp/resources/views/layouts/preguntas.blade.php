@@ -165,7 +165,7 @@
                                           <?php
                                             $imagenpreg = $pregunta->preguntaimagen()->first();
                                             $decoded = base64_decode($imagenpreg->bitmap);
-                                            echo "<img style=width:500px; alt=Solución de la Pregunta src=\"data:image/png;base64,$imagenpreg->bitmap\" />";
+                                            echo "<img style=width:400px; alt=Solución de la Pregunta src=\"data:image/png;base64,$imagenpreg->bitmap\" />";
                                           ?>
                                         </div>
                                         <table class="table table-striped table-bordered table-hover" id="opciones-respuestas">

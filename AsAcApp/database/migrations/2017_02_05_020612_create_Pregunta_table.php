@@ -22,10 +22,10 @@ class CreatePreguntaTable extends Migration
             $table->timestamps();
         });
         Schema::table('pregunta', function(Blueprint $table){
-            $table->foreign('fk_pregunta_imagen')->references('id')->on('imagen');
+            $table->foreign('fk_pregunta_imagen')->references('id')->on('imagen')->onDelete('cascade');
         });
         Schema::table('pregunta', function(Blueprint $table){
-            $table->foreign('fk_solucion_imagen')->references('id')->on('imagen');
+            $table->foreign('fk_solucion_imagen')->references('id')->on('imagen')->onDelete('cascade');
             
         });
     }
