@@ -16,7 +16,7 @@ class ApiTemaController extends Controller
      */
     public function index()
     {
-        $temas = Tema::all();
+        $temas = Tema::has('preguntas','>=', 5)->get();
         return response()->json($temas, 200, [], JSON_UNESCAPED_UNICODE);
     }
 

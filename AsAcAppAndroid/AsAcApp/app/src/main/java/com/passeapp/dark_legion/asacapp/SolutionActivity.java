@@ -1,9 +1,11 @@
 package com.passeapp.dark_legion.asacapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -21,6 +23,7 @@ public class SolutionActivity extends AppCompatActivity {
     protected ListView solutionList;
     private ImageView solutionImage;
     private ImageView solutionQuestionImage;
+    public AlertDialog scoreDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +40,27 @@ public class SolutionActivity extends AppCompatActivity {
         this.nextExcludeQuestionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String excludedId = QuestionActivity.actualQuestion.get_id().toString();
-                if(QuestionActivity.excludesQuestions != null && !QuestionActivity.excludesQuestions.isEmpty()){
-                    QuestionActivity.excludesQuestions = QuestionActivity.excludesQuestions + "," + excludedId;
+                if(MainActivity.scores.size()==5){
+                    scoreDialog = new AlertDialog.Builder(SolutionActivity.this).create();
+                    scoreDialog.setTitle("Tu score es: " + MainActivity.sumScore());
+                    scoreDialog.setButton(DialogInterface.BUTTON_NEUTRAL,"OK",new DialogInterface.OnClickListener(){
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            scoreDialog.dismiss();
+                            finish();
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        }
+                    });
+                    scoreDialog.show();
                 }else{
-                    QuestionActivity.excludesQuestions = "?p=" + excludedId;
+                    String excludedId = QuestionActivity.actualQuestion.get_id().toString();
+                    if(QuestionActivity.excludesQuestions != null && !QuestionActivity.excludesQuestions.isEmpty()){
+                        QuestionActivity.excludesQuestions = QuestionActivity.excludesQuestions + "," + excludedId;
+                    }else{
+                        QuestionActivity.excludesQuestions = "?p=" + excludedId;
+                    }
+                    startActivity(new Intent(getApplicationContext(), QuestionActivity.class));
                 }
-                startActivity(new Intent(getApplicationContext(), QuestionActivity.class));
             }
         });
 

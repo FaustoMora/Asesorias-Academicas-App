@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -48,16 +49,13 @@ public class QuestionActivity extends AppCompatActivity {
     public static TemaClass actualTema;
     public static QuestionClass actualQuestion;
     public static String excludesQuestions;
-    public Dialog customDialog;
+    public AlertDialog scoreDialog;
     private ImageView questionImage;
     public static int selectedPosOption;
     public static int selectedColorOption;
     public boolean hasSelectedOption = false;
     public ProgressDialog progressDialog;
-
-    static class ViewHolderItem {
-        CheckedTextView textViewItem;
-    }
+    public Dialog customDialog;
 
 
     @Override
@@ -89,6 +87,7 @@ public class QuestionActivity extends AppCompatActivity {
                 int pos = optionsList.getCheckedItemPosition();
                 if(pos > -1){
                     OptionClass aux = QuestionActivity.actualQuestion.getOpciones().get(pos);
+                    MainActivity.scores.add(1);
                     Toast.makeText(getApplicationContext(),"Seleccionaste: "+aux.toString(),Toast.LENGTH_SHORT).show();
                     buildCustomDialog();
                 }else{
@@ -175,15 +174,30 @@ public class QuestionActivity extends AppCompatActivity {
         nextQuestionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String excludedId = QuestionActivity.actualQuestion.get_id().toString();
-                if(QuestionActivity.excludesQuestions != null && !QuestionActivity.excludesQuestions.isEmpty()){
-                    QuestionActivity.excludesQuestions = QuestionActivity.excludesQuestions + "," + excludedId;
+                if(MainActivity.scores.size()==5){
+                    scoreDialog = new AlertDialog.Builder(QuestionActivity.this).create();
+                    scoreDialog.setTitle("Tu score es: " + MainActivity.sumScore());
+                    scoreDialog.setButton(DialogInterface.BUTTON_NEUTRAL,"OK",new DialogInterface.OnClickListener(){
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            scoreDialog.dismiss();
+                            finish();
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        }
+                    });
+                    customDialog.dismiss();
+                    scoreDialog.show();
                 }else{
-                    QuestionActivity.excludesQuestions = "?p=" + excludedId;
+                    String excludedId = QuestionActivity.actualQuestion.get_id().toString();
+                    if(QuestionActivity.excludesQuestions != null && !QuestionActivity.excludesQuestions.isEmpty()){
+                        QuestionActivity.excludesQuestions = QuestionActivity.excludesQuestions + "," + excludedId;
+                    }else{
+                        QuestionActivity.excludesQuestions = "?p=" + excludedId;
+                    }
+                    customDialog.dismiss();
+                    finish();
+                    startActivity(new Intent(getApplicationContext(), QuestionActivity.class));
                 }
-                customDialog.dismiss();
-                startActivity(new Intent(getApplicationContext(), QuestionClass.class));
-                finish();
             }
         });
 

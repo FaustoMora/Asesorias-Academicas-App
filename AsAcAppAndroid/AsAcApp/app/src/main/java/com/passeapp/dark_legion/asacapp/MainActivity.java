@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     public ArrayAdapter<TemaClass> adapterTemas;
     public ArrayList<TemaClass> arrayList;
     public static int selectedListPos = -1;
+    public static ArrayList<Integer> scores = new ArrayList<Integer>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
                     //TemaClass auxTema = arrayList.get(posTema);
                     QuestionActivity.actualTema = auxTema;
                     Toast.makeText(getApplicationContext(),"Seleccionaste: "+auxTema.toString(),Toast.LENGTH_SHORT).show();
+                    scores.clear();
                     startActivity(new Intent(getApplicationContext(), QuestionActivity.class));
                 }else{
                     Toast.makeText(getApplicationContext(),"Seleccione un tema para continuar",Toast.LENGTH_SHORT).show();
@@ -126,5 +128,13 @@ public class MainActivity extends AppCompatActivity {
             }
             return temasList;
         }
+    }
+
+    public static int sumScore(){
+        int aux=0;
+        for (int i: scores ) {
+            aux = aux + scores.get(i);
+        }
+        return aux;
     }
 }
