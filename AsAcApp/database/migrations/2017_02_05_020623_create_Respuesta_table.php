@@ -22,10 +22,10 @@ class CreateRespuestaTable extends Migration
             $table->timestamps();
         });
         Schema::table('respuesta', function(Blueprint $table){
-            $table->foreign('pregunta_id')->references('id')->on('pregunta');
+            $table->foreign('pregunta_id')->references('id')->on('pregunta')->onDelete('cascade');
         });
         Schema::table('respuesta', function(Blueprint $table){
-            $table->foreign('imagen_id')->references('id')->on('imagen');
+            $table->foreign('imagen_id')->references('id')->on('imagen')->onDelete('cascade');
             
         });
     }

@@ -28,6 +28,7 @@ class Pluralizer
         'furniture',
         'gold',
         'information',
+        'jedi',
         'knowledge',
         'love',
         'metadata',
@@ -61,9 +62,9 @@ class Pluralizer
             return $value;
         }
 
-        //$plural = Inflector::pluralize($value);
+        $plural = Inflector::pluralize($value);
 
-        //return static::matchCase($plural, $value);
+        return static::matchCase($plural, $value);
     }
 
     /**
@@ -74,9 +75,9 @@ class Pluralizer
      */
     public static function singular($value)
     {
-        //$singular = Inflector::singularize($value);
+        $singular = Inflector::singularize($value);
 
-        //return static::matchCase($singular, $value);
+        return static::matchCase($singular, $value);
     }
 
     /**

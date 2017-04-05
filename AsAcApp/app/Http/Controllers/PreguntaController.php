@@ -41,11 +41,11 @@ class PreguntaController extends Controller
 
 		//Subida de imagen de pregunta
 		$solucion = $request->input('subirImgPreg');
-		$encoded_preg = base64_encode(file_get_contents("/home/ray/Descargas/".$solucion));
+		$encoded_preg = base64_encode(file_get_contents("../".$solucion));
 
 		//Subida de imagen de solución
 		$solucion = $request->input('subirSolución');
-		$encoded_sol = base64_encode(file_get_contents("/home/ray/Descargas/".$solucion));
+		$encoded_sol = base64_encode(file_get_contents("../".$solucion));
 
 
 		//Parte de respuestas
