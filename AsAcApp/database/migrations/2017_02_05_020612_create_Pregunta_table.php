@@ -16,6 +16,7 @@ class CreatePreguntaTable extends Migration
         Schema::create('pregunta', function (Blueprint $table) {
             $table->increments('id');
             $table->string('detalle');
+            $table->string('link_youtube')->nullable;
             $table->integer('tema_id')->unsigned();
             $table->integer('fk_pregunta_imagen')->unsigned();
             $table->integer('fk_solucion_imagen')->unsigned();

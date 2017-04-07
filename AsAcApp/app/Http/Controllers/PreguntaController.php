@@ -28,7 +28,7 @@ class PreguntaController extends Controller
 	}
 
 	public function crear_pregunta(Request $request){
-
+		set_include_path(get_include_path() . PATH_SEPARATOR . '/home/ray/');
 		$seleccion = $_POST['lista_temas'];
 		if($seleccion != '0'){
 			try{
@@ -41,11 +41,11 @@ class PreguntaController extends Controller
 
 		//Subida de imagen de pregunta
 		$solucion = $request->input('subirImgPreg');
-		$encoded_preg = base64_encode(file_get_contents("../".$solucion));
+		$encoded_preg = base64_encode(file_get_contents("/".$solucion, FILE_USE_INCLUDE_PATH,NULL));
 
 		//Subida de imagen de solución
 		$solucion = $request->input('subirSolución');
-		$encoded_sol = base64_encode(file_get_contents("../".$solucion));
+		$encoded_sol = base64_encode(file_get_contents("/".$solucion, FILE_USE_INCLUDE_PATH,NULL));
 
 
 		//Parte de respuestas
