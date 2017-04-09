@@ -15333,3 +15333,6 @@ Stack trace:
 #49 /home/ray/Asesorias-Academicas-App/AsAcApp/public/index.php(54): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
 #50 /home/ray/Asesorias-Academicas-App/AsAcApp/server.php(21): require_once('/home/ray/Aseso...')
 #51 {main}  
+[2017-04-09 20:12:52] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'syntax error, unexpected '<<' (T_SL)' in /home/ray/Asesorias-Academicas-App/AsAcApp/database/migrations/2017_02_05_020600_create_materia_table.php:19
+Stack trace:
+#0 {main}  
