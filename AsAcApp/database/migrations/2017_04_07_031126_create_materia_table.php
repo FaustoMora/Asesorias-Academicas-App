@@ -17,11 +17,11 @@ class CreateMateriaTable extends Migration
             $table->increments('id');
             $table->string('nombre_materia');
             $table->string('icono_materia')->nullable;
-            $table->integer('users_id')->unsigned();
+            $table->integer('user_id')->unsigned();
             $table->timestamps();
         });
          Schema::table('materia', function(Blueprint $table){
-            $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

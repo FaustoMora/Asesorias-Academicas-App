@@ -23,8 +23,13 @@
             <div class="col-md-10">
               <select class="form-control" required name="lista_temas">
                 <option value="0">--Seleccione un tema--</option>
-                @foreach($temas as $tema)
-                  <option value="{{$tema->id}}">{{$tema->nombre}}</option>
+                @foreach($materias as $materia)
+                  <option><b>{{$materia->nombre_materia}}</b></option>
+                  @foreach($temas as $tema)
+                    @if($tema->materia_id == $materia->id)
+                      <option value="{{$tema->id}}">{{$tema->nombre}}</option>
+                    @endif  
+                  @endforeach
                 @endforeach
               </select>
             </div>
@@ -105,6 +110,14 @@
               </div>
             </div>
             
+            <div class="col-md-12 col-sm-12 form-group row">
+              <label style="float: left" class=" col-md-2">Video Solución</label>
+              <div class="col-md-10">
+                <input type="text" name="youtube" placeholder="Link del video de Youtube" class="form-control" required>
+              </div>
+            </div>
+
+
         	</div><!--Fin del div de todas las opciones-->
         	<div style="margin-bottom: 40px; clear:both;"></div>
         	<div style="text-align: center" class="col-md-11 col-sm-11 form-group">
@@ -116,12 +129,13 @@
 
       <!-- Table -->
     <div class="table-responsive" style="margin: 15px;">
-      <h3>Lista de Preguntas por Tema</h3>
+      <h3>Lista de Preguntas por Materia</h3>
         <table class="table" id="table_id" style="text-align: center;">
            <thead >
             <tr>
               <th style="text-align: center;">Nombre</th>
               <th style="text-align: center;">Descripcion</th>
+              <th style="text-align: center;">Editar</th>
            </tr>
           </thead>
           <tbody>
@@ -232,6 +246,7 @@
                   </div><!--Cierro el panel-info de la ventana externa de lista de temas-->
                 </td>
                 <td>{{ $tema->descripcion }}</td>
+                <td>Editar</td>
               </tr>
               <!-- Modal -->
               @endforeach

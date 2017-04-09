@@ -10,10 +10,10 @@ class Tema extends Model{
 	protected $fillable = [
         'nombre','descripcion',
     ];
-    protected $hidden = ['user_id'];
+    protected $hidden = ['materia_id'];
 
-	public function User(){
-		return $this->belongsTo('App\User');
+	public function Materia(){
+		return $this->belongsTo('App\Materia');
 	}
 
 	public function Preguntas(){

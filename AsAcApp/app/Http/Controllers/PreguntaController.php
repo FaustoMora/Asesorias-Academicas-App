@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Materia;
 use App\Tema;
 use App\Pregunta;
 use App\Respuesta;
@@ -19,10 +20,11 @@ class PreguntaController extends Controller
 	public function home_pregunta(Request $request){
 
 		$user = $request->user();
-		$temas = Tema::where("user_id",$user->id)->get();//Obtengo los temas
+		$materias = Materia::where("user_id",$user->id)->get();
+		$temas = Tema::all();//Obtengo los temas
 		$preguntas = Pregunta::all();
 		$respuestas = Respuesta::all();
-		return view('layouts.preguntas')->with('temas',$temas)
+		return view('layouts.preguntas')->with('materias',$materias)->with('temas',$temas)
 		->with('preguntas',$preguntas)->with('respuestas',$respuestas);
 
 	}
@@ -47,7 +49,7 @@ class PreguntaController extends Controller
 		$solucion = $request->input('subirSolución');
 		$encoded_sol = base64_encode(file_get_contents("/".$solucion, FILE_USE_INCLUDE_PATH,NULL));
 
-
+		$youtube = $request->input('youtube');
 		//Parte de respuestas
 		$resp1 = $request->input('opc1');
 		$resp2 = $request->input('opc2');
@@ -77,6 +79,7 @@ class PreguntaController extends Controller
 		//Creo la pregunta en base
 		$preg = new Pregunta;
 		$preg->detalle = $desc;
+		$preg->link_youtube = $youtube;
 		$preg->tema_id = $tema->id;
 		$preg->fk_pregunta_imagen = $imagen_preg->id;
 		$preg->fk_solucion_imagen = $imagen_solucion->id;
