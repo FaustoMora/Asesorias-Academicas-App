@@ -1,4 +1,4 @@
-@extends('home')
+@extends('prehome')
 
 @section('content')
 @parent
@@ -24,7 +24,7 @@
               <select class="form-control" required name="lista_temas">
                 <option value="0">--Seleccione un tema--</option>
                 @foreach($materias as $materia)
-                  <option><b>{{$materia->nombre_materia}}</b></option>
+                  <option>{{$materia->nombre_materia}}</option>
                   @foreach($temas as $tema)
                     @if($tema->materia_id == $materia->id)
                       <option value="{{$tema->id}}">{{$tema->nombre}}</option>
@@ -45,7 +45,7 @@
           <div class="col-md-12 col-sm-12 form-group row">
               <label style="float: left" class=" col-md-2">Imagen Enunciado</label>
               <div class="col-md-10">
-                <input onchange="read2URL(this);" class="form-control" id="subirImgPreg" name="subirImgPreg"  type="file" data-show-preview="true" data-show-caption="true">
+                <input type="file" onchange="read2URL(this);" accept="image/png" class="form-control" id="subirImgPreg" name="subirImgPreg" data-show-preview="true" data-show-caption="true">
                 <img id="preg" name="preg" hidden="true" src="#" alt="Enunciado de la Pregunta">
               </div>
             </div>
@@ -105,7 +105,7 @@
             <div class="col-md-12 col-sm-12 form-group row">
               <label style="float: left" class=" col-md-2">Solución</label>
               <div class="col-md-10">
-                <input onchange="readURL(this);" class="form-control" id="subirSolución" name="subirSolución"  type="file" data-show-preview="true" data-show-caption="true">
+                <input type="file" onchange="readURL(this);" accept="image/png" class="form-control" id="subirSolución" name="subirSolución" data-show-preview="true" data-show-caption="true">
                 <img id="solc" name="solc"hidden="true" src="#" alt="Solución de la Pregunta">
               </div>
             </div>
