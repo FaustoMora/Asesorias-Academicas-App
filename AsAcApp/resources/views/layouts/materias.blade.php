@@ -102,7 +102,7 @@
 	{{csrf_field()}}
 	  <div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal">&times;</button>
-		<h4 class="modal-title">Editar Tema</h4>
+		<h4 class="modal-title">Eliminar Materia</h4>
 	  </div>
 	  <div class="modal-body">
 			<p ><strong class="text-warning">Al eliminar la materia {{ $materia->nombre_materia }} se eliminara todo contenido relacionado con ella. </strong> <br><strong class="text-danger">

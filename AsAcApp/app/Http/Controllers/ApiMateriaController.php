@@ -47,7 +47,7 @@ class ApiMateriaController extends Controller
      */
     public function show(Materia $materia)
     {
-        return response()->json($materia, 200, [], JSON_UNESCAPED_UNICODE); 
+        return response()->json(Materia::where('id',$materia->id)->with('temas')->first(), 200, [], JSON_UNESCAPED_UNICODE); 
     }
 
     /**
