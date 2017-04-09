@@ -1,4 +1,4 @@
-@extends('home')
+@extends('prehome')
 
 @section('content')
 @parent

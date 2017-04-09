@@ -14,7 +14,7 @@ class Pregunta extends Model{
     protected $hidden = ['fk_pregunta_imagen','fk_solucion_imagen'];
 
 	public function Tema(){
-		return $this->hasOne('App\Tema', 'id', 'tema_id');
+		return $this->belongsTo('App\Tema', 'id', 'tema_id');
 	}
 
 

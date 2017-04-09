@@ -23,6 +23,16 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
+/// ROUTE para Materias
+
+Route::get('/MisMaterias', 'MateriaController@get_list');
+
+Route::post('/updateMateria/{id_tema}', ['uses' =>'MateriaController@update_detail']);
+
+Route::post('/crearMateria', 'MateriaController@create_detail');
+
+Route::post('/deleteMateria/{id_tema}', ['uses' =>'MateriaController@delete_detail']);
+
 /// ROUTE para TEMAS
 
 Route::get('/MisTemas', 'TemaController@get_list');
@@ -30,6 +40,8 @@ Route::get('/MisTemas', 'TemaController@get_list');
 Route::post('/updateTema/{id_tema}', ['uses' =>'TemaController@update_detail']);
 
 Route::post('/crearTema', 'TemaController@create_detail');
+
+Route::post('/deleteTema/{id_tema}', ['uses' =>'TemaController@delete_detail']);
 
 /// ROUTE para CONFIG
 

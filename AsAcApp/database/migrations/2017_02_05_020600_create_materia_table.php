@@ -16,8 +16,8 @@ class CreateMateriaTable extends Migration
         Schema::create('materia', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre_materia');
-            $table->string('icono_materia')->nullable;
-            $table->integer('users_id')->unsigned();
+            $table->string('icono_materia')->nullable();
+            $table->integer('user_id')->unsigned()->nullable();
             $table->timestamps();
         });
          Schema::table('materia', function(Blueprint $table){

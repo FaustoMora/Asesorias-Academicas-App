@@ -28,8 +28,8 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function Temas()
+    public function Materias()
     {
-        return $this->hasMany('App\Tema');
+        return $this->hasMany('App\Materia','user_id','id');
     }
 }

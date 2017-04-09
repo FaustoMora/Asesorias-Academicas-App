@@ -24,7 +24,7 @@ class TemaController extends Controller
 		//$user = Auth::user();
 		$user = $request->user();
 		$user = User::find($user->id);
-		return view('layouts.temas')->with('temas',$user->temas()->get());
+		return view('layouts.temas')->with('temas',$user->materias()->with('temas')->get());
 	}
 
 	public function update_detail(Request $request, $id_tema)
