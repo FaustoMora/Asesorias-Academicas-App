@@ -8,7 +8,8 @@ class Materia extends Model{
 	protected $table = 'materia';
 	protected $columns = array('id','nombre_materia','icono_materia','user_id');
 	protected $fillable = [
-        'nombre','descripcion',
+        'nombre_materia','icono_materia',
+
     ];
     protected $hidden = ['user_id'];
 

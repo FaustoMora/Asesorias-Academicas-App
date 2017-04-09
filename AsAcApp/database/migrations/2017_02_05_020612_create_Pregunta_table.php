@@ -23,6 +23,9 @@ class CreatePreguntaTable extends Migration
             $table->timestamps();
         });
         Schema::table('pregunta', function(Blueprint $table){
+            $table->foreign('tema_id')->references('id')->on('tema')->onDelete('cascade');
+        });
+        Schema::table('pregunta', function(Blueprint $table){
             $table->foreign('fk_pregunta_imagen')->references('id')->on('imagen')->onDelete('cascade');
         });
         Schema::table('pregunta', function(Blueprint $table){
