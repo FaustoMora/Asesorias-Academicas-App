@@ -32,10 +32,10 @@ class HomeController extends Controller
         $temas = null;
         $preguntas = null;
         if($user->materias()->get()->count() > 0){
-            $temas = Tema::where('materia_id',$user->materias()->pluck('id')->toArray())->get();
+            $temas = Tema::whereIn('materia_id',$user->materias()->pluck('id')->toArray())->get();
         }
         if(!is_null($temas) && count($temas) > 0){
-            $preguntas = Pregunta::where('tema_id',$temas->pluck('id'))->get();
+            $preguntas = Pregunta::whereIn('tema_id',$temas->pluck('id'))->get();
         }
 
         $data = array(

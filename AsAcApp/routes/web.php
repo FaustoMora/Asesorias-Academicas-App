@@ -69,3 +69,7 @@ Route::get('temas/{id_tema}/pregunta/', 'ApiTemaController@getExcludedPregunta')
 Route::resource('temas', 'ApiTemaController',['only' => [
     'index', 'show'
 ]]);
+
+Route::resource('materias', 'ApiMateriaController',['only' => [
+    'index', 'show'
+]]);

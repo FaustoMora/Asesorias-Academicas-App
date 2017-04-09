@@ -31,6 +31,11 @@ class MateriaController extends Controller
 	{
 
 		$name = $request->input('nombre');
+		$encoded_icon = null;
+		if ($request->hasFile('icono')) {
+			$icono = $request->file('icono');
+			$encoded_icon = base64_encode(file_get_contents("/".$icono, FILE_USE_INCLUDE_PATH,NULL));
+		}
 
 		if ( !empty ( $id_materia ) ) {
     		$user = $request->user();
@@ -38,6 +43,7 @@ class MateriaController extends Controller
 			$materia = Materia::find($id_materia);
 			if($user->id == $materia->user()->first()->id){
 				$materia->nombre_materia = $name;
+				$materia->icono_materia = $encoded_icon;
 				$materia->save();
 			}
 		}
@@ -65,11 +71,17 @@ class MateriaController extends Controller
 	public function create_detail(Request $request)
 	{
 		$name = $request->input('nombre');
+		$encoded_icon = null;
+		if ($request->hasFile('icono')) {
+			$icono = $request->file('icono');
+			$encoded_icon = base64_encode(file_get_contents("/".$icono, FILE_USE_INCLUDE_PATH,NULL));
+		}
 		
 		$user = $request->user();
 		$user = User::find($user->id);
 		$materia = new Materia;
 		$materia->nombre_materia = $name;
+		$materia->icono_materia = $encoded_icon;
 		$materia->user()->associate($user);
 		$materia->save();
 

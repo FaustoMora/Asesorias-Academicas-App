@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Tema;
+use App\Materia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\View;
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +25,11 @@ class TemaController extends Controller
 		//$user = Auth::user();
 		$user = $request->user();
 		$user = User::find($user->id);
-		return view('layouts.temas')->with('temas',$user->materias()->with('temas')->get());
+		$temas = null;
+		if($user->materias()->get()->count() > 0){
+            $temas = Tema::whereIn('materia_id',$user->materias()->pluck('id')->toArray())->get();
+        }
+		return view('layouts.temas')->with('temas',$temas)->with('materias',$user->materias()->get());
 	}
 
 	public function update_detail(Request $request, $id_tema)
@@ -34,10 +39,8 @@ class TemaController extends Controller
 		$description = $request->input('descripcionTema');
 
 		if ( !empty ( $id_tema ) ) {
-    		$user = $request->user();
-    		$user = User::find($user->id);
 			$tema = Tema::find($id_tema);
-			if($user->id == $tema->user()->first()->id){
+			if(!is_null($tema)){
 				$tema->nombre = $name;
 				$tema->descripcion = $description;
 				$tema->save();
@@ -47,18 +50,37 @@ class TemaController extends Controller
 		return redirect('/MisTemas');	
 	}
 
+
+	public function delete_detail(Request $request, $id_tema)
+	{
+		if ( !empty ( $id_tema ) ) {
+			$tema = Tema::find($id_tema);
+			if(!is_null($tema)){
+				$tema->delete();
+			}
+		}
+
+		return redirect('/MisTemas');	
+	}
+
 	public function create_detail(Request $request)
 	{
 		$name = $request->input('nombreTema');
+		$id_materia = $request->input('id_materia');
 		$description = $request->input('descripcionTema');
 		
-		$user = $request->user();
-		$user = User::find($user->id);
-		$tema = new Tema;
-		$tema->nombre = $name;
-		$tema->descripcion = $description;
-		$tema->user()->associate($user);
-		$tema->save();
+		if(!is_null($id_materia)){
+			$materia = Materia::find($id_materia);
+			if(!is_null($materia)){
+
+				$tema = new Tema;
+				$tema->nombre = $name;
+				$tema->descripcion = $description;
+				$tema->materia()->associate($materia);
+				$tema->save();
+			}
+		}
+
 
 		return redirect('/MisTemas');
 	}
