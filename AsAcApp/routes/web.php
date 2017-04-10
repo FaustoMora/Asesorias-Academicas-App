@@ -58,6 +58,8 @@ Route::get('/Preguntas', 'PreguntaController@home_pregunta');
 
 Route::post('/crearPregunta', 'PreguntaController@crear_pregunta');
 
+Route::post('/editarPregunta/{id_pregunta}', 'PreguntaController@editar_pregunta');
+
 
 //ROUTES PARA API
 

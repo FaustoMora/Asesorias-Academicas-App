@@ -15,7 +15,7 @@
     <!-- Default panel contents -->
     <div class="panel-heading">PREGUNTAS</div>
       <div class="panel-body">
-        <form method="post" role="form" action="{{ url('/crearPregunta') }}">
+        <form method="post" role="form" action="{{ url('/crearPregunta') }}" enctype="multipart/form-data">
           {!! csrf_field() !!}
           <!--Seleccion de Tema-->
         	<div class="col-md-12 col-sm-12 form-group row">
@@ -24,10 +24,9 @@
               <select class="form-control" required name="lista_temas">
                 <option value="0">--Seleccione un tema--</option>
                 @foreach($materias as $materia)
-                  <option>{{$materia->nombre_materia}}</option>
                   @foreach($temas as $tema)
                     @if($tema->materia_id == $materia->id)
-                      <option value="{{$tema->id}}">{{$tema->nombre}}</option>
+                      <option value="{{$tema->id}}"><b>{{$tema->materia->nombre_materia}}</b> - {{$tema->nombre}}</option>
                     @endif  
                   @endforeach
                 @endforeach
@@ -133,125 +132,216 @@
         <table class="table" id="table_id" style="text-align: center;">
            <thead >
             <tr>
+              <th style="text-align: center;">Materia-Tema</th>
               <th style="text-align: center;">Nombre</th>
-              <th style="text-align: center;">Descripcion</th>
               <th style="text-align: center;">Editar</th>
+              <th style="text-align: center;">Eliminar</th>
            </tr>
           </thead>
           <tbody>
-              @foreach ($temas as $tema)
-              <tr>
-                <td>
-                  <div class="panel panel-info" style="width: 95%; border-color: #ccc;">
-                    <div class="panel-heading" style="position: relative; background-color: #eee; border-color: #ccc;">
-                      <a style="text-decoration: none; position: relative; height: 100%; background-color: #E8E8E8;" data-toggle="collapse" data-parent="#accordion" href="#tema{{$tema->id}}">
-                        <h3 class="panel-title">
-                          {{ $tema->nombre }}
-                        </h3>
-                      </a>
-                    </div><!--Fin del panel-heading-->
+            @foreach ($temas as $tema)
+                   
+                @foreach($preguntas as $pregunta)
+                  @if($pregunta->tema_id == $tema->id)
+                  <tr> 
+                  <td><b>{{ $tema->materia->nombre_materia }}</b> - {{$tema->nombre}}</td>
+                  <td>
+                    <div class="panel panel-info" style="width: 95%; border-color: #ccc;">
+                      <div class="panel-heading" style="position: relative; background-color: #eee; border-color: #ccc;">
+                        <a style="text-decoration: none; position: relative; height: 100%; background-color: #E8E8E8;" data-toggle="collapse" data-parent="#accordion" href="#pregunta{{$pregunta->id}}">
+                          <h4 class="panel-title">
+                             <b>Pregunta: {{ $pregunta->detalle }}</b>
+                          </h4>
+                        </a>
+                      </div><!--Fin del panel-heading-->
+                      <div id="pregunta{{$pregunta->id}}" class="panel-collapse collapse" 
+                        name="ciclo_panel_body" style = "background: white;">
+                        <div class="panel-body">
+                          <div id="noneditModulo1" class="nonEditModulo">
+                            <!--NO EDITABLE-->
+                          </div>
+                          <div id="editable_body_1" class="editableModulo">
+                            <div style="text-align:center;">
+                              <?php
+                                $imagenpreg = $pregunta->preguntaimagen()->first();
+                                $decoded = base64_decode($imagenpreg->bitmap);
+                                echo "<img style=width:300px; alt=Solución de la Pregunta src=\"data:image/png;base64,$imagenpreg->bitmap\" />";
+                              ?>
+                            </div>
+                            <table class="table table-striped table-bordered table-hover" id="opciones-respuestas">
+                              <thead>
+                                @foreach($respuestas as $respuesta)
+                                  @if($respuesta->pregunta->id == $pregunta->id)
+                                    <tr style="margin: 10px;">
+                                      <td style="text-align:left; width: 300px;"><b style="font-size:12px;">{{ $respuesta->detalle }}
+                                        @if($respuesta->es_correcta == 1)
+                                            <div style="color:green; float:right;"align="right">Correcta!</div></td>
+                                        @endif
+                                      </td>
+                                    </tr>
+                                                            
+                                  @endif
+                                @endforeach
+                                <tr style="margin: 10px;">
+                                  <td>
+                                    <button style="font-size: 12px;"name="verSolucion" type="" 
+                                    data-toggle="modal" data-target="#solucion{{$pregunta->id}}" 
+                                    class="btn btn-primary pull-right">Ver Solución</button>
+                                  </td>
+                                </tr>
+                              </thead>
+                            </table> 
+                            <!-- Modal -->
+                            <div id="solucion{{$pregunta->id}}" class="modal fade" role="dialog">
+                              <div class="modal-dialog">
 
-                    <div id="tema{{$tema->id}}" class="panel-collapse collapse" 
-                    name="ciclo_panel_body" style = "background: white;">
-                      <div class="panel-body">
-                        <div id="noneditModulo1" class="nonEditModulo">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Soluci&oacute;n</h4>
+                                  </div>
+                                  <div style="text-align:center;"class="modal-body">
+                                    <?php
+                                      $imagensol = $pregunta->solucionimagen()->first();
+                                      $decoded = base64_decode($imagensol->bitmap);
+                                      echo "<img style=width:300px; alt=Solución de la Pregunta src=\"data:image/png;base64,$imagensol->bitmap\" />";
+                                    ?>
 
-                        </div>
-                        <div id="editable_body_1" class="editableModulo">
-                            @foreach($preguntas as $pregunta)
-                              @if($pregunta->tema_id == $tema->id)
-                                <div class="panel panel-info" style="width: 95%; border-color: #ccc;">
-                                  <div class="panel-heading" style="position: relative; background-color: #eee; border-color: #ccc;">
-                                    <a style="text-decoration: none; position: relative; height: 100%; background-color: #E8E8E8;" data-toggle="collapse" data-parent="#accordion" href="#pregunta{{$pregunta->id}}">
-                                      <h4 class="panel-title">
-                                         <b>Pregunta: {{ $pregunta->detalle }}</b>
-                                      </h4>
-                                    </a>
-                                  </div><!--Fin del panel-heading-->
-                                  <div id="pregunta{{$pregunta->id}}" class="panel-collapse collapse" 
-                                    name="ciclo_panel_body" style = "background: white;">
-                                    <div class="panel-body">
-                                      <div id="noneditModulo1" class="nonEditModulo">
-                                        <!--NO EDITABLE-->
-                                      </div>
-                                      <div id="editable_body_1" class="editableModulo">
-                                        <div style="text-align:center;">
-                                          <?php
-                                            $imagenpreg = $pregunta->preguntaimagen()->first();
-                                            $decoded = base64_decode($imagenpreg->bitmap);
-                                            echo "<img style=width:400px; alt=Solución de la Pregunta src=\"data:image/png;base64,$imagenpreg->bitmap\" />";
-                                          ?>
-                                        </div>
-                                        <table class="table table-striped table-bordered table-hover" id="opciones-respuestas">
-                                          <thead>
-                                            @foreach($respuestas as $respuesta)
-                                              @if($respuesta->pregunta->id == $pregunta->id)
-                                                <tr style="margin: 10px;">
-                                                  <td style="text-align:left; width: 300px;"><b style="font-size:12px;">{{ $respuesta->detalle }}
-                                                    @if($respuesta->es_correcta == 1)
-                                                        <div style="color:green; float:right;"align="right">Correcta!</div></td>
-                                                    @endif
-                                                  </td>
-                                                </tr>
-                                                                        
-                                              @endif
-                                            @endforeach
-                                            <tr style="margin: 10px;">
-                                              <td>
-                                                <button style="font-size: 12px;"name="verSolucion" type="" 
-                                                data-toggle="modal" data-target="#solucion{{$pregunta->id}}" 
-                                                class="btn btn-primary pull-right">Ver Solución</button>
-                                              </td>
-                                            </tr>
-                                          </thead>
-                                        </table> 
-                                        <!-- Modal -->
-                                        <div id="solucion{{$pregunta->id}}" class="modal fade" role="dialog">
-                                          <div class="modal-dialog">
+                                    <!--
+                                      <img id="{{$imagensol->id}}" src="data:image/gif;base64,' . $decoded . '" alt="Solución de la Pregunta">
+                                    -->
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                  </div>
+                                </div>
 
-                                            <!-- Modal content-->
-                                            <div class="modal-content">
-                                              <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                <h4 class="modal-title">Soluci&oacute;n</h4>
-                                              </div>
-                                              <div style="text-align:center;"class="modal-body">
-                                                <?php
-                                                  $imagensol = $pregunta->solucionimagen()->first();
-                                                  $decoded = base64_decode($imagensol->bitmap);
-                                                  echo "<img style=width:300px; alt=Solución de la Pregunta src=\"data:image/png;base64,$imagensol->bitmap\" />";
-                                                ?>
+                              </div>
+                            </div>
+                          </div>
+                        </div><!--Cierro el panel-body-->
+                      </div><!--Cierro el panel-collapse-->
+                    </div><!--Fin del panel-info-->
+                    </td>
+                    <td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal{{ $pregunta->id }}"><span><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span></button></td>
+                    <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModalDel{{ $pregunta->id }}"><span><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span></button></td>
+                  </tr> 
+                  @endif
+                @endforeach       
 
-                                                <!--
-                                                  <img id="{{$imagensol->id}}" src="data:image/gif;base64,' . $decoded . '" alt="Solución de la Pregunta">
-                                                -->
-                                              </div>
-                                              <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                              </div>
-                                            </div>
+            @endforeach<!--Fin del foreach de temas-->
 
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div><!--Cierro el panel-body-->
-                                  </div><!--Cierro el panel-collapse-->
-                                </div><!--Fin del panel-info-->
-                                
-                              @endif
-                            @endforeach
-                        </div><!--Cierro el editable-body-->
-                      </div><!--Cierro el panel-body-->
-                    </div><!--Cierro el panel-collapse-->
-                  </div><!--Cierro el panel-info de la ventana externa de lista de temas-->
-                </td>
-                <td>{{ $tema->descripcion }}</td>
-                <td>Editar</td>
-              </tr>
-              <!-- Modal -->
-              @endforeach
           </tbody>
         </table>
+        @foreach($preguntas as $pregunta)
+          <div id="myModal{{ $pregunta->id }}" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+            <!-- Modal EDITAR-->
+            <div class="modal-content">
+            <form method="post" role="form" action="{{ url('editarPregunta',array('id_pregunta'=>$pregunta->id))  }}" enctype="multipart/form-data">
+            {{csrf_field()}}
+              <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Editar Pregunta</h4>
+              </div>
+              <div class="modal-body">
+                
+                <div class="col-md-12 col-sm-12 form-group row">
+
+
+                  <label class=" col-md-2 col-form-label">Descripción</label>
+                  <div class="col-md-10">
+                    <input type="text" name="descEdit" placeholder="Descipci&oacute;n de la Pregunta" class="form-control" value="{{ $pregunta->detalle }}" required>
+                    <br>
+                  </div>
+
+
+                  <label class=" col-md-2 col-form-label">Imagen Enunciado</label>
+                  <div class="col-md-10">
+                    <input type="file" name="imgEnunciadoEdit" accept="image/png" class="form-control">
+                    <br>
+                  </div>
+                  
+
+                  <div style="width: 100%;" class="col-md-10 col-sm-10 form-group row">
+                  <label class=" col-md-2 col-form-label">Opciones</label>
+                    <div class="col-md-10 col-sm-10 form-group row" style="float: right"><!--Div interno para las opciones-->
+                      <div class="col-md-10" style="width: 100%;"><!--Div para una respuesta-->             
+                      @foreach($respuestas as $respuesta)
+                        @if($respuesta->pregunta_id == $pregunta->id)
+                          <div class="input-group">
+                            <span style="display:table-cell;">
+                              <input value="{{ $respuesta->detalle }}" style="width: 100%;"type="text" name="OpcEdit{{$respuesta->id}}" placeholder="Opciones de respuestas" class="form-control" required>
+                            </span>
+                            <span style="display:table-cell;" class="input-group-addon">
+                              @if($respuesta->es_correcta)
+                                <input checked value="{{ $respuesta->es_correcta }}" style="float:right" type="checkbox" name="chkbox{{$respuesta->id}}">
+                              @else
+                                <input value="{{ $respuesta->es_correcta }}" style="float:right" type="checkbox" name="chkbox{{$respuesta->id}}">
+                              @endif
+                            </span>
+                          </div>
+                        @endif
+                      @endforeach
+                      </div>
+                    </div>
+                  </div><!--Fin del div de las opciones-->
+
+                  <label style="float: left" class=" col-md-2 col-form-label">Solución</label>
+                  <div class="col-md-10">
+                    <input type="file" name="imgSolucionEdit" accept="image/png" class="form-control">
+                    <br>
+                  </div>
+
+                  <label style="float: left" class=" col-md-2 col-form-label">Video Solución</label>
+                  <div class="col-md-10">
+                    <input type="text" name="ytbEditar" placeholder="Link del video" class="form-control" value="{{ $pregunta->link_youtube }}" required>
+                    <br>
+                  </div>
+                </div><!--Fin del form del modal-->
+                <div style="clear:both;"></div>
+
+
+              </div>
+              <div class="modal-footer">
+              <button type="submit" class="btn btn-success pull-right"  style="margin: 4px;">Guardar</button>
+              <button type="button" class="btn btn-default pull-right" data-dismiss="modal" style="margin: 4px;">Cerrar</button>
+              <div style="clear:both;"></div>
+              </div>
+            </form>
+            </div>
+            </div>
+          </div>
+
+          <div id="myModalDel{{ $materia->id }}" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+            <!-- Modal ELIMINAR-->
+            <div class="modal-content">
+            <form method="post" role="form" action="{{ url('deleteMateria',array('id_materia'=>$materia->id))  }}">
+            {{csrf_field()}}
+              <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Eliminar Pregunta</h4>
+              </div>
+              <div class="modal-body">
+                <p ><strong class="text-warning">Al eliminar la materia {{ $materia->nombre_materia }} se eliminara todo contenido relacionado con ella. </strong> <br><strong class="text-danger">
+                EST&Aacute; SEGURO DE PROCEDER?</strong></p>
+                <div style="clear:both;"></div>
+              </div>
+              <div class="modal-footer">
+              <button type="submit" class="btn btn-danger pull-right"  style="margin: 4px;">Aceptar</button>
+              <button type="button" class="btn btn-default pull-right" data-dismiss="modal" style="margin: 4px;">Cancelar</button>
+              <div style="clear:both;"></div>
+              </div>
+            </form>
+            </div>
+
+            </div>
+          </div>
+        @endforeach
       </div>
   </div>
 

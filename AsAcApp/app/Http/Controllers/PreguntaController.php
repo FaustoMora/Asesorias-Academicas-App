@@ -10,6 +10,7 @@ use App\Respuesta;
 use App\Imagen;
 use Illuminate\Http\Request;
 use App\Http\Controllers\View;
+use Illuminate\Support\Facades\Auth;
 
 /**
 * 
@@ -127,5 +128,67 @@ class PreguntaController extends Controller
 		return redirect('/Preguntas');
 
 		
+	}
+
+	public function editar_pregunta(Request $request, $id_pregunta){
+
+		$preg = Pregunta::where("id",$id_pregunta)->first();
+
+		$desc = $request->input('descEdit');
+
+		//Subida de imagen de pregunta
+		if ($request->hasFile('imgEnunciadoEdit')) {
+			$solucionpreg = $request->file('imgEnunciadoEdit');
+			$encoded_preg = base64_encode(file_get_contents("/".$solucionpreg, FILE_USE_INCLUDE_PATH,NULL));
+		}else{
+			$encoded_preg = null;
+		}
+		//Subida de imagen de solución
+		if($request->hasFile('imgSolucionEdit')){
+			$solucion = $request->file('imgSolucionEdit');
+			$encoded_sol = base64_encode(file_get_contents("/".$solucion, FILE_USE_INCLUDE_PATH,NULL));
+		}else{
+			$encoded_sol = null;
+		}
+		$youtube = $request->input('ytbEditar');
+		
+		$user = $request->user();
+
+		//Imagen de pregunta
+		$imgprg = Imagen::where("id",$preg->fk_pregunta_imagen)->first();
+		if($encoded_preg != null){
+			$imgprg->bitmap = $encoded_preg;
+			$imgprg->save();
+		}
+
+		//Imagen de la solución
+		$imgsol = Imagen::where("id",$preg->fk_solucion_imagen)->first();
+		if($encoded_sol != null){
+			$imgsol->bitmap = $encoded_sol;
+			$imgsol->save();
+		}
+
+		$preg->detalle = $desc;
+		$preg->link_youtube = $youtube;
+		$preg->fk_pregunta_imagen = $imgprg->id;
+		$preg->fk_solucion_imagen = $imgsol->id;
+		$preg->save();
+
+		//Parte de respuestas
+		$respuestas = Respuesta::where("pregunta_id",$id_pregunta);
+		foreach($respuestas as $respuesta){
+			$resp = $request->input('OpcEdit{{$respuesta->id}}');
+			//Si son correctas
+			$corr = isset($_POST['chkbox{{$respuesta->id}}']) && $_POST['chkbox1']  ? "1" : "0";
+			//Se crean las respuestas asociadas a la pregunta
+			$r = Respuesta::where("id",$respuesta->id);
+			$r->detalle = $resp;
+			$r->es_correcta = $corr;
+			$r->pregunta_id = $preg->id;
+			$r->imagen_id = $imgsol->id;
+			$r->save();
+		}
+
+		return redirect('/Preguntas');
 	}
 }
