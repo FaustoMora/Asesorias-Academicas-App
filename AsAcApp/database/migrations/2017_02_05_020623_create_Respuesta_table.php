@@ -18,7 +18,7 @@ class CreateRespuestaTable extends Migration
             $table->string('detalle');
             $table->boolean('es_correcta');
             $table->integer('pregunta_id')->unsigned();
-            $table->integer('imagen_id')->unsigned();
+            $table->integer('imagen_id')->unsigned()->nullable();
             $table->timestamps();
         });
         Schema::table('respuesta', function(Blueprint $table){
