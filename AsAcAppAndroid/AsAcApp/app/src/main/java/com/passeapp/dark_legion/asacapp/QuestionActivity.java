@@ -83,8 +83,9 @@ public class QuestionActivity extends AppCompatActivity {
                 int pos = optionsList.getCheckedItemPosition();
                 if(pos > -1){
                     OptionClass aux = VariablesActivity.actualQuestion.getOpciones().get(pos);
-                    VariablesActivity.scores.add(1);
-                    Toast.makeText(getApplicationContext(),"Seleccionaste: "+aux.toString(),Toast.LENGTH_SHORT).show();
+                    if(aux.getEs_correcta()){
+                        VariablesActivity.scores.add(1);
+                    }
                     buildCustomDialog();
                 }else{
                     Toast.makeText(getApplicationContext(),"Seleccione un tema para continuar",Toast.LENGTH_SHORT).show();
@@ -171,6 +172,8 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(VariablesActivity.scores.size()==5){
+
+                    /*
                     scoreDialog = new AlertDialog.Builder(QuestionActivity.this).create();
                     scoreDialog.setTitle("Tu score es: " + VariablesActivity.sumScore());
                     scoreDialog.setButton(DialogInterface.BUTTON_NEUTRAL,"OK",new DialogInterface.OnClickListener(){
@@ -182,7 +185,10 @@ public class QuestionActivity extends AppCompatActivity {
                         }
                     });
                     customDialog.dismiss();
-                    scoreDialog.show();
+                    scoreDialog.show();*/
+                    customDialog.dismiss();
+                    finish();
+                    startActivity(new Intent(getApplicationContext(), EndingActivity.class));
                 }else{
                     String excludedId = VariablesActivity.actualQuestion.get_id().toString();
                     if(VariablesActivity.excludesQuestions != null && !VariablesActivity.excludesQuestions.isEmpty()){
@@ -235,11 +241,12 @@ public class QuestionActivity extends AppCompatActivity {
                 finish();
             }else {
                 VariablesActivity.actualQuestion = questionClass;
+                VariablesActivity.lstQuestions.add(questionClass);
                 init();
+            }
                 reset_variables();
                 progressDialog.dismiss();
             }
-        }
 
         @Override
         protected void onProgressUpdate(Integer... values) {
@@ -288,5 +295,12 @@ public class QuestionActivity extends AppCompatActivity {
             }
             return null;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        VariablesActivity.resetQuestionvariables();
+        finish();
+        startActivity(new Intent(getApplicationContext(), TemaActivity.class));
     }
 }

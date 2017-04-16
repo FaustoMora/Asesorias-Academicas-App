@@ -8,6 +8,7 @@ public class VariablesActivity extends AppCompatActivity {
 
     public static ArrayList<MateriaClass> lstMaterias = new ArrayList<MateriaClass>();
     public static ArrayList<TemaClass> lstTemas = new ArrayList<TemaClass>();
+    public static ArrayList<QuestionClass> lstQuestions = new ArrayList<QuestionClass>();
     public static MateriaClass actualMateria;
     public static TemaClass actualTema;
     public static QuestionClass actualQuestion;
@@ -21,6 +22,18 @@ public class VariablesActivity extends AppCompatActivity {
     }
 
     public static void reset_variables(){
+        actualTema = null;
+        actualQuestion = null;
+        excludesQuestions =null;
+    }
+
+    public static void resetQuestionvariables(){
+        actualQuestion = null;
+        excludesQuestions =null;
+        lstQuestions.clear();
+    }
+
+    public static void resetAllvariables(){
         actualMateria = null;
         actualTema = null;
         actualQuestion = null;
@@ -38,5 +51,10 @@ public class VariablesActivity extends AppCompatActivity {
     public static void reset_list(){
         lstMaterias.clear();
         lstTemas.clear();
+        lstQuestions.clear();
+    }
+
+    public static String displayedScore(){
+        return String.valueOf(sumScore()) + "/" + String.valueOf(scores.size());
     }
 }

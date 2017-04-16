@@ -63,6 +63,7 @@ public class TemaActivity extends AppCompatActivity {
                     if(auxTema != null ){
                         //TemaClass auxTema = arrayList.get(posTema);
                         VariablesActivity.actualTema = auxTema;
+                        VariablesActivity.lstQuestions.clear();
                         //Toast.makeText(getApplicationContext(),"Seleccionaste: "+auxTema.toString(),Toast.LENGTH_LONG).show();
                         VariablesActivity.scores.clear();
                         startActivity(new Intent(getApplicationContext(), QuestionActivity.class));
@@ -167,6 +168,7 @@ public class TemaActivity extends AppCompatActivity {
     public void onBackPressed() {
         VariablesActivity.reset_variables();
         VariablesActivity.lstTemas.clear();
+        VariablesActivity.lstQuestions.clear();
         finish();
     }
 

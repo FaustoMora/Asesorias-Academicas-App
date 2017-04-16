@@ -99,4 +99,9 @@ public class SolutionActivity extends AppCompatActivity {
         this.solutionImage.setImageBitmap(Bitmap.createScaledBitmap(decodedByte, 700, 420, false));
 
     }
+
+    @Override
+    public void onBackPressed() {
+
+    }
 }

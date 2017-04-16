@@ -176,7 +176,7 @@ public class MateriaActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        VariablesActivity.reset_variables();
+        VariablesActivity.resetAllvariables();
         VariablesActivity.reset_list();
         finish();
     }
