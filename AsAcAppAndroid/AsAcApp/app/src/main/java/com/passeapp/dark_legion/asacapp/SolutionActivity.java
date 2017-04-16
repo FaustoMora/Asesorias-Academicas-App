@@ -40,24 +40,24 @@ public class SolutionActivity extends AppCompatActivity {
         this.nextExcludeQuestionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(MainActivity.scores.size()==5){
+                if(VariablesActivity.scores.size()==5){
                     scoreDialog = new AlertDialog.Builder(SolutionActivity.this).create();
-                    scoreDialog.setTitle("Tu score es: " + MainActivity.sumScore());
+                    scoreDialog.setTitle("Tu score es: " + VariablesActivity.sumScore());
                     scoreDialog.setButton(DialogInterface.BUTTON_NEUTRAL,"OK",new DialogInterface.OnClickListener(){
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             scoreDialog.dismiss();
                             finish();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            startActivity(new Intent(getApplicationContext(), TemaActivity.class));
                         }
                     });
                     scoreDialog.show();
                 }else{
-                    String excludedId = QuestionActivity.actualQuestion.get_id().toString();
-                    if(QuestionActivity.excludesQuestions != null && !QuestionActivity.excludesQuestions.isEmpty()){
-                        QuestionActivity.excludesQuestions = QuestionActivity.excludesQuestions + "," + excludedId;
+                    String excludedId = VariablesActivity.actualQuestion.get_id().toString();
+                    if(VariablesActivity.excludesQuestions != null && !VariablesActivity.excludesQuestions.isEmpty()){
+                        VariablesActivity.excludesQuestions = VariablesActivity.excludesQuestions + "," + excludedId;
                     }else{
-                        QuestionActivity.excludesQuestions = "?p=" + excludedId;
+                        VariablesActivity.excludesQuestions = "?p=" + excludedId;
                     }
                     startActivity(new Intent(getApplicationContext(), QuestionActivity.class));
                 }
@@ -65,7 +65,7 @@ public class SolutionActivity extends AppCompatActivity {
         });
 
         this.solutionList = (ListView)findViewById(R.id.solutionList);
-        this.solutionList.setAdapter(new ArrayAdapter<OptionClass>(this, android.R.layout.simple_list_item_1, QuestionActivity.actualQuestion.getOpciones()) {
+        this.solutionList.setAdapter(new ArrayAdapter<OptionClass>(this, android.R.layout.simple_list_item_1, VariablesActivity.actualQuestion.getOpciones()) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View row = super.getView(position, convertView, parent);
@@ -90,11 +90,11 @@ public class SolutionActivity extends AppCompatActivity {
     }
 
     protected void initialiceImage(){
-        byte[] decodedString = Base64.decode(QuestionActivity.actualQuestion.getPregunta_imagen(), Base64.DEFAULT);
+        byte[] decodedString = Base64.decode(VariablesActivity.actualQuestion.getPregunta_imagen(), Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         this.solutionQuestionImage.setImageBitmap(Bitmap.createScaledBitmap(decodedByte, 700, 420, false));
 
-        decodedString = Base64.decode(QuestionActivity.actualQuestion.getSolucion_imagen(), Base64.DEFAULT);
+        decodedString = Base64.decode(VariablesActivity.actualQuestion.getSolucion_imagen(), Base64.DEFAULT);
         decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         this.solutionImage.setImageBitmap(Bitmap.createScaledBitmap(decodedByte, 700, 420, false));
 

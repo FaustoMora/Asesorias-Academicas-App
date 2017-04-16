@@ -1,9 +1,7 @@
 package com.passeapp.dark_legion.asacapp;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -23,7 +21,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckedTextView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -46,9 +43,6 @@ public class QuestionActivity extends AppCompatActivity {
     protected ImageButton continueTestBtn;
     protected ListView optionsList;
     public ArrayAdapter<OptionClass> adapterOptions;
-    public static TemaClass actualTema;
-    public static QuestionClass actualQuestion;
-    public static String excludesQuestions;
     public AlertDialog scoreDialog;
     private ImageView questionImage;
     public static int selectedPosOption;
@@ -68,6 +62,8 @@ public class QuestionActivity extends AppCompatActivity {
         }catch (Exception e){
             Log.e("error api",e.getLocalizedMessage());
             Toast.makeText(getApplicationContext(),"CONEXION A INTERNET NO DISPONIBLE",Toast.LENGTH_LONG).show();
+            finish();
+            startActivity(new Intent(getApplicationContext(), MateriaActivity.class));
         }
     }
 
@@ -86,8 +82,8 @@ public class QuestionActivity extends AppCompatActivity {
             public void onClick(View view) {
                 int pos = optionsList.getCheckedItemPosition();
                 if(pos > -1){
-                    OptionClass aux = QuestionActivity.actualQuestion.getOpciones().get(pos);
-                    MainActivity.scores.add(1);
+                    OptionClass aux = VariablesActivity.actualQuestion.getOpciones().get(pos);
+                    VariablesActivity.scores.add(1);
                     Toast.makeText(getApplicationContext(),"Seleccionaste: "+aux.toString(),Toast.LENGTH_SHORT).show();
                     buildCustomDialog();
                 }else{
@@ -97,7 +93,7 @@ public class QuestionActivity extends AppCompatActivity {
         });
 
         this.optionsList = (ListView)findViewById(R.id.optionsList);
-        this.adapterOptions = new ArrayAdapter<OptionClass>(this,android.R.layout.simple_list_item_single_choice,QuestionActivity.actualQuestion.getOpciones()){
+        this.adapterOptions = new ArrayAdapter<OptionClass>(this,android.R.layout.simple_list_item_single_choice,VariablesActivity.actualQuestion.getOpciones()){
             @Override
             public boolean isEnabled(int position) {
                 return !hasSelectedOption;
@@ -144,7 +140,7 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     protected void initialiceImage(){
-        byte[] decodedString = Base64.decode(QuestionActivity.actualQuestion.getPregunta_imagen(), Base64.DEFAULT);
+        byte[] decodedString = Base64.decode(VariablesActivity.actualQuestion.getPregunta_imagen(), Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         this.questionImage.setImageBitmap(Bitmap.createScaledBitmap(decodedByte, 700, 420, false));
     }
@@ -174,25 +170,25 @@ public class QuestionActivity extends AppCompatActivity {
         nextQuestionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(MainActivity.scores.size()==5){
+                if(VariablesActivity.scores.size()==5){
                     scoreDialog = new AlertDialog.Builder(QuestionActivity.this).create();
-                    scoreDialog.setTitle("Tu score es: " + MainActivity.sumScore());
+                    scoreDialog.setTitle("Tu score es: " + VariablesActivity.sumScore());
                     scoreDialog.setButton(DialogInterface.BUTTON_NEUTRAL,"OK",new DialogInterface.OnClickListener(){
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             scoreDialog.dismiss();
                             finish();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            startActivity(new Intent(getApplicationContext(), TemaActivity.class));
                         }
                     });
                     customDialog.dismiss();
                     scoreDialog.show();
                 }else{
-                    String excludedId = QuestionActivity.actualQuestion.get_id().toString();
-                    if(QuestionActivity.excludesQuestions != null && !QuestionActivity.excludesQuestions.isEmpty()){
-                        QuestionActivity.excludesQuestions = QuestionActivity.excludesQuestions + "," + excludedId;
+                    String excludedId = VariablesActivity.actualQuestion.get_id().toString();
+                    if(VariablesActivity.excludesQuestions != null && !VariablesActivity.excludesQuestions.isEmpty()){
+                        VariablesActivity.excludesQuestions = VariablesActivity.excludesQuestions + "," + excludedId;
                     }else{
-                        QuestionActivity.excludesQuestions = "?p=" + excludedId;
+                        VariablesActivity.excludesQuestions = "?p=" + excludedId;
                     }
                     customDialog.dismiss();
                     finish();
@@ -217,11 +213,11 @@ public class QuestionActivity extends AppCompatActivity {
 
     private class HttpGET_QuestionTask extends AsyncTask<String,Integer,QuestionClass> {
         String SERVER = "http://174.138.80.160/";
-        String RESOURCE = "temas/"+QuestionActivity.actualTema.get_id()+"/pregunta/";
+        String RESOURCE = "temas/"+VariablesActivity.actualTema.get_id()+"/pregunta/";
 
         public HttpGET_QuestionTask() {
-            if(QuestionActivity.excludesQuestions != null){
-                this.RESOURCE = this.RESOURCE + QuestionActivity.excludesQuestions;
+            if(VariablesActivity.excludesQuestions != null){
+                this.RESOURCE = this.RESOURCE + VariablesActivity.excludesQuestions;
             }
         }
 
@@ -232,10 +228,17 @@ public class QuestionActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(QuestionClass questionClass) {
-            actualQuestion = questionClass;
-            init();
-            reset_variables();
-            progressDialog.dismiss();
+            if (questionClass == null){
+                progressDialog.dismiss();
+                Toast.makeText(getApplicationContext(),"NO EXISTEN DATOS PARA PRESENTAR",Toast.LENGTH_LONG).show();
+                startActivity(new Intent(getApplicationContext(), MateriaActivity.class));
+                finish();
+            }else {
+                VariablesActivity.actualQuestion = questionClass;
+                init();
+                reset_variables();
+                progressDialog.dismiss();
+            }
         }
 
         @Override

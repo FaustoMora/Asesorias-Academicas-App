@@ -9,9 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class TemaCustomAdapter extends ArrayAdapter<TemaClass>{
 
@@ -27,11 +25,11 @@ public class TemaCustomAdapter extends ArrayAdapter<TemaClass>{
 
         TemaClass contact = getItem(position);
         TextView contactName = (TextView) customView.findViewById(R.id.lblText);
-        ImageView icon = (ImageView)customView.findViewById(R.id.iconFolder);
+        //ImageView icon = (ImageView)customView.findViewById(R.id.iconFolder);
         contactName.setText(contact.getNombre());
-        icon.setImageResource(R.drawable.folder);
+        //icon.setImageResource(R.drawable.folder);
 
-        if (position == MainActivity.selectedListPos) {
+        if (position == TemaActivity.selectedListPos) {
             customView.setBackgroundResource(R.color.pressed_color);
         }
 

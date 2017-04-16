@@ -5,7 +5,7 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="com.passeapp.dark_legion.asacapp.MainActivity">
+    tools:context="com.passeapp.dark_legion.asacapp.TemaActivity">
 
     <TableLayout
         android:layout_width="match_parent"
