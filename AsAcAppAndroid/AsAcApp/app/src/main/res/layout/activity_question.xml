@@ -46,7 +46,9 @@
                     android:id="@+id/optionsList"
                     android:choiceMode="singleChoice"
                     android:minHeight="200dp"
-                    android:listSelector="@drawable/selector"/>
+                    android:listSelector="@drawable/selector"
+                    android:background="@android:color/white"
+                    android:textColor="@android:color/black"/>
             </TableRow>
 
             <TableRow
@@ -62,7 +64,8 @@
                     app:srcCompat="@android:drawable/ic_media_play"
                     android:id="@+id/questionPlayBtn"
                     android:layout_gravity="center"
-
+                    android:background="#007fff"
+                    android:textColor="@android:color/white"
                     />
             </TableRow>
 

@@ -9,6 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#ddf2ff"
     tools:context="com.passeapp.dark_legion.asacapp.InitActivity">
 
 
@@ -28,6 +29,8 @@
         android:layout_below="@+id/iconoApp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="43dp"
-        android:id="@+id/startAppBtn" />
+        android:id="@+id/startAppBtn"
+        android:background="#007fff"
+        android:textColor="@android:color/white"/>
 
 </RelativeLayout>

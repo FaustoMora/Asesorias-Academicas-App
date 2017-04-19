@@ -61,7 +61,7 @@ public class QuestionActivity extends AppCompatActivity {
             new HttpGET_QuestionTask().execute();
         }catch (Exception e){
             Log.e("error api",e.getLocalizedMessage());
-            Toast.makeText(getApplicationContext(),"CONEXION A INTERNET NO DISPONIBLE",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"CONEXIÓN A INTERNET NO DISPONIBLE",Toast.LENGTH_LONG).show();
             finish();
             startActivity(new Intent(getApplicationContext(), MateriaActivity.class));
         }
@@ -88,7 +88,7 @@ public class QuestionActivity extends AppCompatActivity {
                     }
                     buildCustomDialog();
                 }else{
-                    Toast.makeText(getApplicationContext(),"Seleccione un tema para continuar",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Seleccione una respuesta para continuar",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -126,9 +126,9 @@ public class QuestionActivity extends AppCompatActivity {
                     selectedPosOption = i;
                     if(view.isSelected() ){
                         if (op.getEs_correcta()){
-                            selectedColorOption = Color.GREEN;
+                            selectedColorOption = Color.CYAN;
                         }else{
-                            selectedColorOption = Color.RED;
+                            selectedColorOption = Color.CYAN;
                         }
                     }
                     hasSelectedOption = true;
