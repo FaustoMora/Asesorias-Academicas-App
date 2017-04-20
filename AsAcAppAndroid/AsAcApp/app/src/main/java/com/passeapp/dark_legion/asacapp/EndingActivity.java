@@ -113,7 +113,7 @@ public class EndingActivity extends AppCompatActivity {
 
             try{
                 File pdfFolder = new File(Environment.getExternalStoragePublicDirectory(
-                        Environment.DIRECTORY_DOWNLOADS), "pdfTest");
+                        Environment.DIRECTORY_DOWNLOADS),"");
                 if (!pdfFolder.exists()) {
                     pdfFolder.mkdir();
                     Log.i("PDF", "Pdf Directory created");

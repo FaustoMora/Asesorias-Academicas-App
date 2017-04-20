@@ -85,6 +85,8 @@ public class QuestionActivity extends AppCompatActivity {
                     OptionClass aux = VariablesActivity.actualQuestion.getOpciones().get(pos);
                     if(aux.getEs_correcta()){
                         VariablesActivity.scores.add(1);
+                    }else{
+                        VariablesActivity.scores.add(0);
                     }
                     buildCustomDialog();
                 }else{
@@ -237,8 +239,8 @@ public class QuestionActivity extends AppCompatActivity {
             if (questionClass == null){
                 progressDialog.dismiss();
                 Toast.makeText(getApplicationContext(),"NO EXISTEN DATOS PARA PRESENTAR",Toast.LENGTH_LONG).show();
-                startActivity(new Intent(getApplicationContext(), MateriaActivity.class));
                 finish();
+                startActivity(new Intent(getApplicationContext(), MateriaActivity.class));
             }else {
                 VariablesActivity.actualQuestion = questionClass;
                 VariablesActivity.lstQuestions.add(questionClass);
