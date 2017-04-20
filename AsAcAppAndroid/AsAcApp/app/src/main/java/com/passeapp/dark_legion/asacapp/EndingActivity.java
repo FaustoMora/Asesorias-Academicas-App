@@ -97,6 +97,7 @@ public class EndingActivity extends AppCompatActivity {
             progressDialog.dismiss();
             if(aBoolean){
                 finish();
+                Toast.makeText(getApplicationContext(),"DESCARGA EXITOSA",Toast.LENGTH_LONG).show();
                 startActivity(new Intent(getApplicationContext(), MateriaActivity.class));
             }else{
                 Toast.makeText(getApplicationContext(),"OCURRIO Un ERROR En LA DESCARGA",Toast.LENGTH_LONG).show();
@@ -113,7 +114,7 @@ public class EndingActivity extends AppCompatActivity {
 
             try{
                 File pdfFolder = new File(Environment.getExternalStoragePublicDirectory(
-                        Environment.DIRECTORY_DOWNLOADS),"");
+                        Environment.DIRECTORY_DOWNLOADS), "pdfTest");
                 if (!pdfFolder.exists()) {
                     pdfFolder.mkdir();
                     Log.i("PDF", "Pdf Directory created");

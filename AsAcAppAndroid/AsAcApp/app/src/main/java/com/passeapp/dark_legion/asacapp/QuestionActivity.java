@@ -240,7 +240,7 @@ public class QuestionActivity extends AppCompatActivity {
                 progressDialog.dismiss();
                 Toast.makeText(getApplicationContext(),"NO EXISTEN DATOS PARA PRESENTAR",Toast.LENGTH_LONG).show();
                 finish();
-                startActivity(new Intent(getApplicationContext(), MateriaActivity.class));
+                startActivity(new Intent(getApplicationContext(), TemaActivity.class));
             }else {
                 VariablesActivity.actualQuestion = questionClass;
                 VariablesActivity.lstQuestions.add(questionClass);

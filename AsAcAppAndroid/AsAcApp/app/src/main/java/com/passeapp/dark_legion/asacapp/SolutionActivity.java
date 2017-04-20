@@ -41,7 +41,7 @@ public class SolutionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(VariablesActivity.scores.size()==5){
-                    scoreDialog = new AlertDialog.Builder(SolutionActivity.this).create();
+                    /*scoreDialog = new AlertDialog.Builder(SolutionActivity.this).create();
                     scoreDialog.setTitle("Tu score es: " + VariablesActivity.sumScore());
                     scoreDialog.setButton(DialogInterface.BUTTON_NEUTRAL,"OK",new DialogInterface.OnClickListener(){
                         @Override
@@ -51,7 +51,9 @@ public class SolutionActivity extends AppCompatActivity {
                             startActivity(new Intent(getApplicationContext(), TemaActivity.class));
                         }
                     });
-                    scoreDialog.show();
+                    scoreDialog.show();*/
+                    finish();
+                    startActivity(new Intent(getApplicationContext(), EndingActivity.class));
                 }else{
                     String excludedId = VariablesActivity.actualQuestion.get_id().toString();
                     if(VariablesActivity.excludesQuestions != null && !VariablesActivity.excludesQuestions.isEmpty()){
@@ -59,6 +61,7 @@ public class SolutionActivity extends AppCompatActivity {
                     }else{
                         VariablesActivity.excludesQuestions = "?p=" + excludedId;
                     }
+                    finish();
                     startActivity(new Intent(getApplicationContext(), QuestionActivity.class));
                 }
             }

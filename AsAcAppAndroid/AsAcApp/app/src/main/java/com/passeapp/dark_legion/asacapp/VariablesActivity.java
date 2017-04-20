@@ -31,6 +31,7 @@ public class VariablesActivity extends AppCompatActivity {
         actualQuestion = null;
         excludesQuestions =null;
         lstQuestions.clear();
+        scores.clear();
     }
 
     public static void resetAllvariables(){
@@ -43,7 +44,7 @@ public class VariablesActivity extends AppCompatActivity {
     public static int sumScore(){
         int aux=0;
         for (int i: scores ) {
-            aux = aux + scores.get(i);
+            aux += i;
         }
         return aux;
     }
