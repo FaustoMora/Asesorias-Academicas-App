@@ -97,6 +97,7 @@ public class EndingActivity extends AppCompatActivity {
             progressDialog.dismiss();
             if(aBoolean){
                 finish();
+                Toast.makeText(getApplicationContext(),"DESCARGA EXITOSA",Toast.LENGTH_LONG).show();
                 startActivity(new Intent(getApplicationContext(), MateriaActivity.class));
             }else{
                 Toast.makeText(getApplicationContext(),"OCURRIO Un ERROR En LA DESCARGA",Toast.LENGTH_LONG).show();

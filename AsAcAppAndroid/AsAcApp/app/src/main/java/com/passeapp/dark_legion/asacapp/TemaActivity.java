@@ -68,6 +68,7 @@ public class TemaActivity extends AppCompatActivity {
                         VariablesActivity.lstQuestions.clear();
                         //Toast.makeText(getApplicationContext(),"Seleccionaste: "+auxTema.toString(),Toast.LENGTH_LONG).show();
                         VariablesActivity.scores.clear();
+                        finish();
                         startActivity(new Intent(getApplicationContext(), QuestionActivity.class));
                     }else{
                         Toast.makeText(getApplicationContext(),"Seleccione un tema para continuar",Toast.LENGTH_LONG).show();
@@ -173,6 +174,7 @@ public class TemaActivity extends AppCompatActivity {
         VariablesActivity.lstTemas.clear();
         VariablesActivity.lstQuestions.clear();
         finish();
+        startActivity(new Intent(getApplicationContext(), MateriaActivity.class));
     }
 
 
