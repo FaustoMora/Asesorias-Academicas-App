@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.ListView;
 import android.widget.Toast;
 import org.apache.http.HttpEntity;
@@ -26,7 +28,7 @@ import java.util.ArrayList;
 
 public class TemaActivity extends AppCompatActivity {
 
-    protected ImageButton startTestBtn;
+    protected Button startTestBtn;
     protected ListView listTemas;
     public ArrayAdapter<TemaClass> adapterTemas;
     private ProgressDialog progressDialog;
@@ -53,7 +55,7 @@ public class TemaActivity extends AppCompatActivity {
 
     protected void init(){
 
-        this.startTestBtn = (ImageButton)findViewById(R.id.startTestBtn);
+        this.startTestBtn = (Button)findViewById(R.id.startTestBtn);
         this.startTestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,6 +93,7 @@ public class TemaActivity extends AppCompatActivity {
                 selectedListPos = i;
             }
         });
+
     }
 
     public ProgressDialog createDialog(){
@@ -171,6 +174,8 @@ public class TemaActivity extends AppCompatActivity {
         VariablesActivity.lstQuestions.clear();
         finish();
     }
+
+
 
 
 }

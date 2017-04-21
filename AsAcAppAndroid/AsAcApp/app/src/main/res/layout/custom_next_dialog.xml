@@ -2,10 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="300dp"
+    android:background="#ddf2ff">
+
     <View
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:scaleType="center"
         android:background="#ddf2ff" />
 
@@ -13,18 +15,19 @@
         android:text="@string/lblShowSolution"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:id="@+id/showSolutionBtn"
         android:background="#007fff"
         android:textColor="@android:color/white"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:scaleType="center"
-        android:background="#ddf2ff" />
+
     <Button
         android:id="@+id/nextQuestionBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:background="#007fff"
         android:text="@string/lblNextQuestion"
         android:textColor="@android:color/white" />

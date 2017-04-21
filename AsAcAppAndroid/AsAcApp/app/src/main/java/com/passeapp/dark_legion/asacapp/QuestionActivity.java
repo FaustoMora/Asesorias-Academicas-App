@@ -40,7 +40,7 @@ import java.util.ArrayList;
 
 public class QuestionActivity extends AppCompatActivity {
 
-    protected ImageButton continueTestBtn;
+    protected Button continueTestBtn;
     protected ListView optionsList;
     public ArrayAdapter<OptionClass> adapterOptions;
     public AlertDialog scoreDialog;
@@ -76,7 +76,7 @@ public class QuestionActivity extends AppCompatActivity {
         //final LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
         this.hasSelectedOption = false;
         this.questionImage = (ImageView)findViewById(R.id.questionImage);
-        this.continueTestBtn = (ImageButton)findViewById(R.id.questionPlayBtn);
+        this.continueTestBtn = (Button)findViewById(R.id.questionContinueBtn);
         this.continueTestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,9 +126,9 @@ public class QuestionActivity extends AppCompatActivity {
                     selectedPosOption = i;
                     if(view.isSelected() ){
                         if (op.getEs_correcta()){
-                            selectedColorOption = Color.CYAN;
+                            selectedColorOption = Color.GREEN;
                         }else{
-                            selectedColorOption = Color.CYAN;
+                            selectedColorOption = Color.RED;
                         }
                     }
                     hasSelectedOption = true;
