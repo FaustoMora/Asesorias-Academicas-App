@@ -31,5 +31,10 @@
         android:background="#007fff"
         android:text="@string/lblNextQuestion"
         android:textColor="@android:color/white" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:scaleType="center"
+        android:background="#ddf2ff" />
 
 </LinearLayout>
