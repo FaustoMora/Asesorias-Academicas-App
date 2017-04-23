@@ -12,14 +12,14 @@ import android.util.Base64;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 
 
 public class SolutionActivity extends AppCompatActivity {
 
-    protected ImageButton nextExcludeQuestionBtn;
+    protected Button nextExcludeQuestionBtn;
     protected ListView solutionList;
     private ImageView solutionImage;
     private ImageView solutionQuestionImage;
@@ -36,7 +36,7 @@ public class SolutionActivity extends AppCompatActivity {
     public void init(){
         this.solutionQuestionImage = (ImageView)findViewById(R.id.solutionQuestionImage);
         this.solutionImage = (ImageView)findViewById(R.id.solutionImage);
-        this.nextExcludeQuestionBtn = (ImageButton)findViewById(R.id.nextExcludeQuestionBtn);
+        this.nextExcludeQuestionBtn = (Button)findViewById(R.id.nextExcludeQuestionBtn);
         this.nextExcludeQuestionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

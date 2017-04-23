@@ -11,18 +11,44 @@
         android:layout_height="match_parent"
         android:scrollbars="vertical"
         android:background="#ddf2ff"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
-        <GridView
+        <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:numColumns="2"
-            android:columnWidth="100dp"
-            android:verticalSpacing="5dp"
-            android:stretchMode="spacingWidthUniform"
-            android:layout_marginTop="50dp"
-            android:id="@+id/gridViewMaterias"/>
+            android:orientation="vertical">
+            <TextView
+                android:text="@string/lblMateria"
+                android:textColor="@android:color/black"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:id="@+id/textView"
+                android:layout_weight="1"
+                android:layout_marginTop="30dp"/>
+
+        </TableRow>
 
     </ScrollView>
+
+    <GridView
+        android:id="@+id/gridViewMaterias"
+        android:layout_width="400dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:columnWidth="100dp"
+        android:adjustViewBounds="true"
+        android:numColumns="2"
+        android:stretchMode="spacingWidthUniform"
+        android:verticalSpacing="10dp"
+        android:layout_marginTop="74dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
