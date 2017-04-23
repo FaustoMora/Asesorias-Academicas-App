@@ -16,7 +16,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
@@ -112,6 +115,10 @@ public class EndingActivity extends AppCompatActivity {
 
         private Boolean createPdf(){
 
+            Font titleDoc = new Font(Font.FontFamily.TIMES_ROMAN, 24, Font.BOLD, BaseColor.BLACK);
+            Font title = new Font(Font.FontFamily.TIMES_ROMAN, 20, Font.BOLD, BaseColor.BLACK);
+            Font options = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.NORMAL, BaseColor.DARK_GRAY);
+
             try{
                 File pdfFolder = new File(Environment.getExternalStoragePublicDirectory(
                         Environment.DIRECTORY_DOWNLOADS), "pdfTest");
@@ -131,30 +138,39 @@ public class EndingActivity extends AppCompatActivity {
                 PdfWriter.getInstance(document, output);
                 document.open();
 
+                Chunk textTitle = new Chunk(VariablesActivity.actualTema.getDescription(), titleDoc);
+                document.add(new Paragraph(textTitle));
+                document.add(new Paragraph(""));
                 int i = 0;
                 for (QuestionClass aux: VariablesActivity.lstQuestions) {
                     i++;
                     // get input stream
                     byte[] decodedString = Base64.decode(aux.getPregunta_imagen(), Base64.DEFAULT);
                     byte[] decodedString2 = Base64.decode(aux.getSolucion_imagen(), Base64.DEFAULT);
+
+                    // se debe usar para el tamano de las imgs, por defualt el decode base64 renderiza tamano original
                     Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                     Bitmap bmp = Bitmap.createBitmap(decodedByte);
 
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
                     bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
-
-                    Image image = Image.getInstance(stream.toByteArray());
+                    //----------------------------------
+                    Image image = Image.getInstance(decodedString);
+                    image.scaleToFit(PageSize.A4.getWidth(), 250f);
+                    //Image image = Image.getInstance(stream.toByteArray());
                     Image image2 = Image.getInstance(decodedString2);
+                    image2.scaleToFit(PageSize.A4.getWidth()-65f, 420f);
 
-                    document.add(new Paragraph(VariablesActivity.actualTema.getDescription()));
-                    document.add(new Paragraph("Pregunta No" + i));
+                    document.add(new Paragraph(""));
+                    Chunk text = new Chunk("Pregunta No" + i, title);
+                    document.add(new Paragraph(text));
                     document.add(image);
                     for (OptionClass op: aux.getOpciones()) {
-                        document.add(new Paragraph(VariablesActivity.actualTema.getDescription()));
+                        Chunk optionText = new Chunk(op.getDetalle(),options);
+                        document.add(new Paragraph(optionText));
                     }
                     document.add(image2);
-                    document.add(new Paragraph(""));
-
+                    document.newPage();
                 }
                 document.close();
 

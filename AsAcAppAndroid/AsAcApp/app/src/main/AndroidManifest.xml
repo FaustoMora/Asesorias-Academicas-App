@@ -34,7 +34,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".EndingActivity" />
+        <activity android:name=".EndingActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".VariablesActivity" />
     </application>
 
