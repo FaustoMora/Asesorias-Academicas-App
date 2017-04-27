@@ -212,15 +212,13 @@
                                       <img id="{{$imagensol->id}}" src="data:image/gif;base64,' . $decoded . '" alt="Solución de la Pregunta">
                                     -->
                                     <h5 class="panel-title">
-                                       <b>
-                                        <?php
+                                       <?php
                                           if($pregunta->link_youtube != null){
-                                            echo "Video Solución: ".$pregunta->link_youtube;
+                                            echo "<b> Video Solución: </b><a href=\"http://$pregunta->link_youtube\">".$pregunta->link_youtube."</a>";
                                           }else{
-                                            echo "Video Solución: Esta pregunta no contiene video solución";
+                                            echo "<b> Video Solución: Esta pregunta no contiene video solución </b>";
                                           }
                                         ?>
-                                       </b>
                                     </h5>
                                   </div>
                                   <div class="modal-footer">
