@@ -1,5 +1,6 @@
 package com.passeapp.dark_legion.asacapp;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.ListView;
 import android.widget.Toast;
 import org.apache.http.HttpEntity;
@@ -23,56 +26,61 @@ import org.json.JSONObject;
 import org.json.JSONException;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class TemaActivity extends AppCompatActivity {
 
-    protected ImageButton startTestBtn;
+    protected Button startTestBtn;
     protected ListView listTemas;
     public ArrayAdapter<TemaClass> adapterTemas;
-    public ArrayList<TemaClass> arrayList;
+    private ProgressDialog progressDialog;
     public static int selectedListPos = -1;
-    public static ArrayList<Integer> scores = new ArrayList<Integer>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         try {
-            this.arrayList = new HttpGET_TemasTask().execute().get();
+            new HttpGET_TemasTask().execute();
         }catch (Exception e){
             Toast.makeText(getApplicationContext(),"CONEXION A INTERNET NO DISPONIBLE",Toast.LENGTH_LONG).show();
+            finish();
+            startActivity(new Intent(getApplicationContext(), MateriaActivity.class));
         }
-        init();
-        reset_variables();
 
     }
 
     protected void reset_variables(){
         selectedListPos = -1;
-        QuestionActivity.excludesQuestions = null;
+        VariablesActivity.excludesQuestions = null;
     }
 
     protected void init(){
 
-        this.startTestBtn = (ImageButton)findViewById(R.id.startTestBtn);
+        this.startTestBtn = (Button)findViewById(R.id.startTestBtn);
         this.startTestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TemaClass aux = (TemaClass) listTemas.getSelectedItem();
-                TemaClass auxTema = (TemaClass) listTemas.getItemAtPosition(selectedListPos);
-                if(auxTema != null ){
-                    //TemaClass auxTema = arrayList.get(posTema);
-                    QuestionActivity.actualTema = auxTema;
-                    Toast.makeText(getApplicationContext(),"Seleccionaste: "+auxTema.toString(),Toast.LENGTH_SHORT).show();
-                    scores.clear();
-                    startActivity(new Intent(getApplicationContext(), QuestionActivity.class));
+                if(OnlineConnect.isOnline(getApplicationContext())){
+                    TemaClass aux = (TemaClass) listTemas.getSelectedItem();
+                    TemaClass auxTema = (TemaClass) listTemas.getItemAtPosition(selectedListPos);
+                    if(auxTema != null ){
+                        //TemaClass auxTema = arrayList.get(posTema);
+                        VariablesActivity.actualTema = auxTema;
+                        VariablesActivity.lstQuestions.clear();
+                        //Toast.makeText(getApplicationContext(),"Seleccionaste: "+auxTema.toString(),Toast.LENGTH_LONG).show();
+                        VariablesActivity.scores.clear();
+                        finish();
+                        startActivity(new Intent(getApplicationContext(), QuestionActivity.class));
+                    }else{
+                        Toast.makeText(getApplicationContext(),"Seleccione un tema para continuar",Toast.LENGTH_LONG).show();
+                    }
                 }else{
-                    Toast.makeText(getApplicationContext(),"Seleccione un tema para continuar",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"CONEXION A INTERNET  NO DISPONIBLE",Toast.LENGTH_LONG).show();
                 }
             }
         });
 
         this.listTemas = (ListView)findViewById(R.id.listTemas);
-        this.adapterTemas = new TemaCustomAdapter(this,this.arrayList);
+        this.adapterTemas = new TemaCustomAdapter(this,VariablesActivity.lstTemas);
         this.listTemas.setAdapter(this.adapterTemas);
         this.listTemas.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         this.listTemas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -86,15 +94,44 @@ public class MainActivity extends AppCompatActivity {
                 selectedListPos = i;
             }
         });
+
+    }
+
+    public ProgressDialog createDialog(){
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Cargando...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        return  progressDialog;
     }
 
 
     private class HttpGET_TemasTask extends AsyncTask<Void,Integer,ArrayList<TemaClass>>{
         String SERVER = "http://174.138.80.160";
-        String RESOURCE = "/temas";
+        String RESOURCE = "/materias/"+VariablesActivity.actualMateria.getId().toString();
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = createDialog();
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<TemaClass> temaClasses) {
+            VariablesActivity.lstTemas = temaClasses;
+            init();
+            reset_variables();
+            progressDialog.dismiss();
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            progressDialog.setProgress(values[0]);
+        }
 
         @Override
         protected ArrayList<TemaClass> doInBackground(Void... voids) {
+            publishProgress(0);
             return getTemas();
         }
 
@@ -110,7 +147,8 @@ public class MainActivity extends AppCompatActivity {
                 HttpEntity entity = response.getEntity();
                 text = Util.getASCIIContentFromEntity(entity);
 
-                JSONArray objects = new JSONArray(text);
+                JSONObject materia = new JSONObject(text);
+                JSONArray objects = materia.getJSONArray("temas");
                 for(int i=0;i<objects.length();i++){
                     JSONObject temaJSON = objects.getJSONObject(i);
                     TemaClass auxTema = new TemaClass(temaJSON.getInt("id"),temaJSON.getString("nombre"),temaJSON.getString("descripcion"));
@@ -130,11 +168,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public static int sumScore(){
-        int aux=0;
-        for (int i: scores ) {
-            aux = aux + scores.get(i);
-        }
-        return aux;
+    @Override
+    public void onBackPressed() {
+        VariablesActivity.reset_variables();
+        VariablesActivity.lstTemas.clear();
+        VariablesActivity.lstQuestions.clear();
+        finish();
+        startActivity(new Intent(getApplicationContext(), MateriaActivity.class));
     }
+
+
+
+
 }
