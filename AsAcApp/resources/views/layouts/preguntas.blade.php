@@ -112,7 +112,7 @@
             <div class="col-md-12 col-sm-12 form-group row">
               <label style="float: left" class=" col-md-2">Video Solución</label>
               <div class="col-md-10">
-                <input type="text" name="youtube" placeholder="Link del video de Youtube" class="form-control" required>
+                <input type="text" name="youtube" placeholder="Link del video de Youtube/Opcional" class="form-control">
               </div>
             </div>
 
@@ -211,6 +211,17 @@
                                     <!--
                                       <img id="{{$imagensol->id}}" src="data:image/gif;base64,' . $decoded . '" alt="Solución de la Pregunta">
                                     -->
+                                    <h5 class="panel-title">
+                                       <b>
+                                        <?php
+                                          if($pregunta->link_youtube != null){
+                                            echo "Video Solución: ".$pregunta->link_youtube;
+                                          }else{
+                                            echo "Video Solución: Esta pregunta no contiene video solución";
+                                          }
+                                        ?>
+                                       </b>
+                                    </h5>
                                   </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -297,7 +308,7 @@
 
                   <label style="float: left" class=" col-md-2 col-form-label">Video Solución</label>
                   <div class="col-md-10">
-                    <input type="text" name="ytbEditar" placeholder="Link del video" class="form-control" value="{{ $pregunta->link_youtube }}" required>
+                    <input type="text" name="ytbEditar" placeholder="Link del video" class="form-control" value="{{ $pregunta->link_youtube }}">
                     <br>
                   </div>
                 </div><!--Fin del form del modal-->
@@ -315,19 +326,19 @@
             </div>
           </div>
 
-          <div id="myModalDel{{ $materia->id }}" class="modal fade" role="dialog">
+          <div id="myModalDel{{ $pregunta->id }}" class="modal fade" role="dialog">
             <div class="modal-dialog">
 
             <!-- Modal ELIMINAR-->
             <div class="modal-content">
-            <form method="post" role="form" action="{{ url('deleteMateria',array('id_materia'=>$materia->id))  }}">
+            <form method="post" role="form" action="{{ url('eliminarPregunta',array('id_pregunta'=>$pregunta->id))  }}">
             {{csrf_field()}}
               <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal">&times;</button>
               <h4 class="modal-title">Eliminar Pregunta</h4>
               </div>
               <div class="modal-body">
-                <p ><strong class="text-warning">Al eliminar la materia {{ $materia->nombre_materia }} se eliminara todo contenido relacionado con ella. </strong> <br><strong class="text-danger">
+                <p ><strong class="text-warning">Al eliminar la pregunta {{ $pregunta->detalle }} se eliminara todo contenido relacionado con ella. </strong> <br><strong class="text-danger">
                 EST&Aacute; SEGURO DE PROCEDER?</strong></p>
                 <div style="clear:both;"></div>
               </div>

@@ -60,6 +60,7 @@ Route::post('/crearPregunta', 'PreguntaController@crear_pregunta');
 
 Route::post('/editarPregunta/{id_pregunta}', 'PreguntaController@editar_pregunta');
 
+Route::post('/eliminarPregunta/{id_pregunta}', 'PreguntaController@eliminar_pregunta');
 
 //ROUTES PARA API
 

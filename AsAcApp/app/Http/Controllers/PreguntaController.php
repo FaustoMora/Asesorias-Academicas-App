@@ -191,4 +191,18 @@ class PreguntaController extends Controller
 
 		return redirect('/Preguntas');
 	}
+
+
+
+	public function eliminar_pregunta(Request $request, $id_pregunta)
+	{
+
+		if ( !empty ( $id_pregunta ) ) {
+    		$preg = Pregunta::where("id",$id_pregunta)->first();
+			$preg->delete();
+			
+		}
+
+		return redirect('/Preguntas');	
+	}
 }
