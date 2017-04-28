@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 
 public class SolutionActivity extends AppCompatActivity {
@@ -23,6 +24,7 @@ public class SolutionActivity extends AppCompatActivity {
     protected ListView solutionList;
     private ImageView solutionImage;
     private ImageView solutionQuestionImage;
+    private TextView solutionYoutube;
     public AlertDialog scoreDialog;
 
     @Override
@@ -36,6 +38,7 @@ public class SolutionActivity extends AppCompatActivity {
     public void init(){
         this.solutionQuestionImage = (ImageView)findViewById(R.id.solutionQuestionImage);
         this.solutionImage = (ImageView)findViewById(R.id.solutionImage);
+        this.solutionYoutube = (TextView)findViewById(R.id.youtube);
         this.nextExcludeQuestionBtn = (Button)findViewById(R.id.nextExcludeQuestionBtn);
         this.nextExcludeQuestionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +104,8 @@ public class SolutionActivity extends AppCompatActivity {
         decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         this.solutionImage.setImageBitmap(Bitmap.createScaledBitmap(decodedByte, 700, 420, false));
 
+        String linkYoutube = VariablesActivity.actualQuestion.getLink_youtube();
+        this.solutionYoutube.setText(linkYoutube);
     }
 
     @Override

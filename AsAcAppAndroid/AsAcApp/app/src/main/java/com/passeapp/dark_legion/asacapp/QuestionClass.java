@@ -6,14 +6,16 @@ public class QuestionClass {
     private Integer _id;
     private String detalle;
     private Integer tema_id;
+    private String youtube;
     private String pregunta_imagen;
     private String solucion_imagen;
     private ArrayList<OptionClass> opciones;
 
-    public QuestionClass(Integer _id, String detalle, Integer tema_id, String pregunta_imagen, String solucion_imagen) {
+    public QuestionClass(Integer _id, String detalle, Integer tema_id, String link_youtube,String pregunta_imagen, String solucion_imagen) {
         this._id = _id;
         this.detalle = detalle;
         this.tema_id = tema_id;
+        this.youtube = link_youtube;
         this.pregunta_imagen = pregunta_imagen;
         this.solucion_imagen = solucion_imagen;
     }
@@ -41,6 +43,10 @@ public class QuestionClass {
     public void setTema_id(Integer tema_id) {
         this.tema_id = tema_id;
     }
+
+    public String getLink_youtube(){ return youtube; }
+
+    public void setLink_youtube(String link_youtube){ this.youtube = link_youtube; }
 
     public String getPregunta_imagen() {
         return pregunta_imagen.replace("data:image/png;base64,","");
