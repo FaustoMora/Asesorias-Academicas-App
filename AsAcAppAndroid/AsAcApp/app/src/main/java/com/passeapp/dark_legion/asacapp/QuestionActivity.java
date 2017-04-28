@@ -276,7 +276,7 @@ public class QuestionActivity extends AppCompatActivity {
 
                 JSONObject jsonObject = new JSONObject(text);
                 QuestionClass auxQuestion = new QuestionClass(jsonObject.getInt("id"),jsonObject.getString("detalle"),jsonObject.getInt("tema_id"),
-                        jsonObject.getString("youtube") ,jsonObject.getJSONObject("pregunta_imagen").getString("bitmap"),jsonObject.getJSONObject("solucion_imagen").getString("bitmap"));
+                        jsonObject.getString("link_youtube") ,jsonObject.getJSONObject("pregunta_imagen").getString("bitmap"),jsonObject.getJSONObject("solucion_imagen").getString("bitmap"));
                 JSONArray opcionesJSON = jsonObject.getJSONArray("respuestas");
                 for(int i=0;i<opcionesJSON.length();i++){
                     JSONObject opJSON = opcionesJSON.getJSONObject(i);

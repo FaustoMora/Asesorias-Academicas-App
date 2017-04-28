@@ -105,7 +105,12 @@ public class SolutionActivity extends AppCompatActivity {
         this.solutionImage.setImageBitmap(Bitmap.createScaledBitmap(decodedByte, 700, 420, false));
 
         String linkYoutube = VariablesActivity.actualQuestion.getLink_youtube();
-        this.solutionYoutube.setText(linkYoutube);
+
+        if(linkYoutube == "null"){
+            this.solutionYoutube.setText("Esta pregunta no contiene video solución.");
+        }else{
+            this.solutionYoutube.setText(linkYoutube);
+        }
     }
 
     @Override
