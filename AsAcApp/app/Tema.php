@@ -6,20 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tema extends Model{
 	protected $table = 'tema';
-	protected $columns = array('id','nombre','descripcion','materia_id');
+	protected $columns = array('id','nombre','descripcion','fk_materia');
 	protected $fillable = [
         'nombre','descripcion',
     ];
 
-    protected $hidden = ['materia_id'];
+    protected $hidden = ['fk_materia'];
 
 
 	public function Materia(){
 		return $this->belongsTo('App\Materia');
 	}
 
-	public function Preguntas(){
-		return $this->hasMany('App\Pregunta', 'tema_id', 'id');
+	public function Tests(){
+		return $this->hasMany('App\Test', 'fk_tema', 'id');
 	}
 
 }

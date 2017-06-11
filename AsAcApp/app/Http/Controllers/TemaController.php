@@ -10,24 +10,24 @@ use App\Http\Controllers\View;
 use Illuminate\Support\Facades\Auth;
 
 /**
-* 
+*
 */
 class TemaController extends Controller
 {
-	
+
 	public function __construct()
 	{
 		$this->middleware('auth');
 	}
 
 	public function get_list(Request $request)
-	{	
+	{
 		//$user = Auth::user();
 		$user = $request->user();
 		$user = User::find($user->id);
-		$temas = null;
+		$temas = [];
 		if($user->materias()->get()->count() > 0){
-            $temas = Tema::whereIn('materia_id',$user->materias()->pluck('id')->toArray())->get();
+            $temas = Tema::whereIn('fk_materia',$user->materias()->pluck('id')->toArray())->get();
         }
 		return view('layouts.temas')->with('temas',$temas)->with('materias',$user->materias()->get());
 	}
@@ -47,7 +47,7 @@ class TemaController extends Controller
 			}
 		}
 
-		return redirect('/MisTemas');	
+		return redirect('/MisTemas');
 	}
 
 
@@ -60,7 +60,7 @@ class TemaController extends Controller
 			}
 		}
 
-		return redirect('/MisTemas');	
+		return redirect('/MisTemas');
 	}
 
 	public function create_detail(Request $request)
@@ -68,7 +68,7 @@ class TemaController extends Controller
 		$name = $request->input('nombreTema');
 		$id_materia = $request->input('id_materia');
 		$description = $request->input('descripcionTema');
-		
+
 		if(!is_null($id_materia)){
 			$materia = Materia::find($id_materia);
 			if(!is_null($materia)){

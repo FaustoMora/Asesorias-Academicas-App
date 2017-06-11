@@ -17,20 +17,20 @@ class CreatePreguntaTable extends Migration
             $table->increments('id');
             $table->string('detalle');
             $table->string('link_youtube')->nullable();
-            $table->integer('tema_id')->unsigned();
+            $table->integer('fk_test')->unsigned();
             $table->integer('fk_pregunta_imagen')->unsigned();
             $table->integer('fk_solucion_imagen')->unsigned();
             $table->timestamps();
         });
         Schema::table('pregunta', function(Blueprint $table){
-            $table->foreign('tema_id')->references('id')->on('tema')->onDelete('cascade');
+            $table->foreign('fk_test')->references('id')->on('test')->onDelete('cascade');
         });
         Schema::table('pregunta', function(Blueprint $table){
             $table->foreign('fk_pregunta_imagen')->references('id')->on('imagen')->onDelete('cascade');
         });
         Schema::table('pregunta', function(Blueprint $table){
             $table->foreign('fk_solucion_imagen')->references('id')->on('imagen')->onDelete('cascade');
-            
+
         });
     }
     /**

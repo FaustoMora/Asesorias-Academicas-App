@@ -30,6 +30,6 @@ class User extends Authenticatable
 
     public function Materias()
     {
-        return $this->hasMany('App\Materia','user_id','id');
+        return $this->hasMany('App\Materia','fk_user','id');
     }
 }

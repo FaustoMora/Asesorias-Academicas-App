@@ -45,7 +45,7 @@ return [
             'port' => env('DB_PORT', '3306'),
             'database' => 'asesorias_academicasDB',
             'username' => 'root',
-            'password' => 'root',
+            'password' => 'admin',
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',

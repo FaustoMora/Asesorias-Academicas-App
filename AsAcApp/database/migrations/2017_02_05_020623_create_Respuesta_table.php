@@ -17,16 +17,16 @@ class CreateRespuestaTable extends Migration
             $table->increments('id');
             $table->string('detalle');
             $table->boolean('es_correcta');
-            $table->integer('pregunta_id')->unsigned();
-            $table->integer('imagen_id')->unsigned()->nullable();
+            $table->integer('fk_pregunta')->unsigned();
+            $table->integer('fk_imagen')->unsigned()->nullable();
             $table->timestamps();
         });
         Schema::table('respuesta', function(Blueprint $table){
-            $table->foreign('pregunta_id')->references('id')->on('pregunta')->onDelete('cascade');
+            $table->foreign('fk_pregunta')->references('id')->on('pregunta')->onDelete('cascade');
         });
         Schema::table('respuesta', function(Blueprint $table){
-            $table->foreign('imagen_id')->references('id')->on('imagen')->onDelete('cascade');
-            
+            $table->foreign('fk_imagen')->references('id')->on('imagen')->onDelete('cascade');
+
         });
     }
     /**

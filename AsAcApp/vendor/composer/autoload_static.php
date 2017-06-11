@@ -300,11 +300,12 @@ class ComposerStaticInit72596248a17f74cd8cbce5bd8f6c55bf
 
     public static $classMap = array (
         'CreateImagenTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_05_020610_create_Imagen_table.php',
-        'CreateMateriaTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_07_031126_create_materia_table.php',
+        'CreateMateriaTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_05_020600_create_materia_table.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
         'CreatePreguntaTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_05_020612_create_Pregunta_table.php',
         'CreateRespuestaTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_05_020623_create_Respuesta_table.php',
         'CreateTemaTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_05_020603_create_Tema_table.php',
+        'CreateTestTable' => __DIR__ . '/../..' . '/database/migrations/2017_06_11_081210_create_test_table.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/DatabaseSeeder.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',

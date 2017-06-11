@@ -13,7 +13,7 @@ use App\Http\Controllers\View;
 use Illuminate\Support\Facades\Auth;
 
 /**
-* 
+*
 */
 class PreguntaController extends Controller
 {
@@ -21,7 +21,7 @@ class PreguntaController extends Controller
 	public function home_pregunta(Request $request){
 
 		$user = $request->user();
-		$materias = Materia::where("user_id",$user->id)->get();
+		$materias = Materia::where("fk_user",$user->id)->get();
 		$temas = Tema::all();//Obtengo los temas
 		$preguntas = Pregunta::all();
 		$respuestas = Respuesta::all();
@@ -87,7 +87,7 @@ class PreguntaController extends Controller
 		$preg = new Pregunta;
 		$preg->detalle = $desc;
 		$preg->link_youtube = $youtube;
-		$preg->tema_id = $tema->id;
+		$preg->fk_tema = $tema->id;
 		$preg->fk_pregunta_imagen = $imagen_preg->id;
 		$preg->fk_solucion_imagen = $imagen_solucion->id;
 		$preg->save();
@@ -98,28 +98,28 @@ class PreguntaController extends Controller
 		$r1 = new Respuesta;
 		$r1->detalle = $resp1;
 		$r1->es_correcta = $corr1;
-		$r1->pregunta_id = $pregunta->id;
-		$r1->imagen_id = $imagen_solucion->id;
+		$r1->fk_pregunta = $pregunta->id;
+		$r1->fk_imagen = $imagen_solucion->id;
 
 		$r2 = new Respuesta;
 		$r2->detalle = $resp2;
 		$r2->es_correcta = $corr2;
-		$r2->pregunta_id = $pregunta->id;
-		$r2->imagen_id = $imagen_solucion->id;
-		
+		$r2->fk_pregunta = $pregunta->id;
+		$r2->fk_imagen = $imagen_solucion->id;
+
 		$r3 = new Respuesta;
 		$r3->detalle = $resp3;
 		$r3->es_correcta = $corr3;
-		$r3->pregunta_id = $pregunta->id;
-		$r3->imagen_id = $imagen_solucion->id;
-		
+		$r3->fk_pregunta = $pregunta->id;
+		$r3->fk_imagen = $imagen_solucion->id;
+
 		$r4 = new Respuesta;
 		$r4->detalle = $resp4;
 		$r4->es_correcta = $corr4;
-		$r4->pregunta_id = $pregunta->id;
-		$r4->imagen_id = $imagen_solucion->id;
+		$r4->fk_pregunta = $pregunta->id;
+		$r4->fk_imagen = $imagen_solucion->id;
 
-		
+
 		$r1->save();
 		$r2->save();
 		$r3->save();
@@ -127,7 +127,7 @@ class PreguntaController extends Controller
 
 		return redirect('/Preguntas');
 
-		
+
 	}
 
 	public function editar_pregunta(Request $request, $id_pregunta){
@@ -151,7 +151,7 @@ class PreguntaController extends Controller
 			$encoded_sol = null;
 		}
 		$youtube = $request->input('ytbEditar');
-		
+
 		$user = $request->user();
 
 		//Imagen de pregunta
@@ -175,7 +175,7 @@ class PreguntaController extends Controller
 		$preg->save();
 
 		//Parte de respuestas
-		$respuestas = Respuesta::where("pregunta_id",$id_pregunta);
+		$respuestas = Respuesta::where("fk_pregunta",$id_pregunta);
 		foreach($respuestas as $respuesta){
 			$resp = $request->input('OpcEdit{{$respuesta->id}}');
 			//Si son correctas
@@ -184,8 +184,8 @@ class PreguntaController extends Controller
 			$r = Respuesta::where("id",$respuesta->id);
 			$r->detalle = $resp;
 			$r->es_correcta = $corr;
-			$r->pregunta_id = $preg->id;
-			$r->imagen_id = $imgsol->id;
+			$r->fk_pregunta = $preg->id;
+			$r->fk_imagen = $imgsol->id;
 			$r->save();
 		}
 
@@ -200,9 +200,9 @@ class PreguntaController extends Controller
 		if ( !empty ( $id_pregunta ) ) {
     		$preg = Pregunta::where("id",$id_pregunta)->first();
 			$preg->delete();
-			
+
 		}
 
-		return redirect('/Preguntas');	
+		return redirect('/Preguntas');
 	}
 }

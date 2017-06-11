@@ -52,12 +52,12 @@ UNLOCK TABLES;
 --   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 --   `nombre_materia` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
 --   `icono_materia` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
---   `user_id` int(10) unsigned NOT NULL,
+--   `fk_user` int(10) unsigned NOT NULL,
 --   `created_at` timestamp NULL DEFAULT NULL,
 --   `updated_at` timestamp NULL DEFAULT NULL,
 --   PRIMARY KEY (`id`),
---   KEY `materia_users_id_foreign` (`user_id`),
---   CONSTRAINT `materia_users_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+--   KEY `materia_users_id_foreign` (`fk_user`),
+--   CONSTRAINT `materia_users_id_foreign` FOREIGN KEY (`fk_user`) REFERENCES `users` (`id`) ON DELETE CASCADE
 -- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 -- /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -131,7 +131,7 @@ UNLOCK TABLES;
 -- CREATE TABLE `pregunta` (
 --   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 --   `detalle` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
---   `tema_id` int(10) unsigned NOT NULL,
+--   `fk_tema` int(10) unsigned NOT NULL,
 --   `fk_pregunta_imagen` int(10) unsigned NOT NULL,
 --   `fk_solucion_imagen` int(10) unsigned NOT NULL,
 --   `created_at` timestamp NULL DEFAULT NULL,
@@ -166,15 +166,15 @@ UNLOCK TABLES;
 --   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 --   `detalle` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
 --   `es_correcta` tinyint(1) NOT NULL,
---   `pregunta_id` int(10) unsigned NOT NULL,
---   `imagen_id` int(10) unsigned DEFAULT NULL,
+--   `fk_pregunta` int(10) unsigned NOT NULL,
+--   `fk_imagen` int(10) unsigned DEFAULT NULL,
 --   `created_at` timestamp NULL DEFAULT NULL,
 --   `updated_at` timestamp NULL DEFAULT NULL,
 --   PRIMARY KEY (`id`),
---   KEY `respuesta_pregunta_id_foreign` (`pregunta_id`),
---   KEY `respuesta_imagen_id_foreign` (`imagen_id`),
---   CONSTRAINT `respuesta_imagen_id_foreign` FOREIGN KEY (`imagen_id`) REFERENCES `imagen` (`id`),
---   CONSTRAINT `respuesta_pregunta_id_foreign` FOREIGN KEY (`pregunta_id`) REFERENCES `pregunta` (`id`)
+--   KEY `respuesta_fk_pregunta_foreign` (`fk_pregunta`),
+--   KEY `respuesta_fk_imagen_foreign` (`fk_imagen`),
+--   CONSTRAINT `respuesta_fk_imagen_foreign` FOREIGN KEY (`fk_imagen`) REFERENCES `imagen` (`id`),
+--   CONSTRAINT `respuesta_fk_pregunta_foreign` FOREIGN KEY (`fk_pregunta`) REFERENCES `pregunta` (`id`)
 -- ) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 -- /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -202,7 +202,7 @@ UNLOCK TABLES;
 --   `created_at` timestamp NULL DEFAULT NULL,
 --   `updated_at` timestamp NULL DEFAULT NULL,
 --   `icono_tema` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
---   `materia_id` int(10) unsigned NOT NULL,
+--   `fk_materia` int(10) unsigned NOT NULL,
 --   PRIMARY KEY (`id`)
 -- ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 -- /*!40101 SET character_set_client = @saved_cs_client */;

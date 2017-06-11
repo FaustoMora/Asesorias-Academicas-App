@@ -25,7 +25,7 @@
                 <option value="0">--Seleccione un tema--</option>
                 @foreach($materias as $materia)
                   @foreach($temas as $tema)
-                    @if($tema->materia_id == $materia->id)
+                    @if($tema->fk_materia == $materia->id)
                       <option value="{{$tema->id}}"><b>{{$tema->materia->nombre_materia}}</b> - {{$tema->nombre}}</option>
                     @endif  
                   @endforeach
@@ -142,7 +142,7 @@
             @foreach ($temas as $tema)
                    
                 @foreach($preguntas as $pregunta)
-                  @if($pregunta->tema_id == $tema->id)
+                  @if($pregunta->fk_tema == $tema->id)
                   <tr> 
                   <td><b>{{ $tema->materia->nombre_materia }}</b> - {{$tema->nombre}}</td>
                   <td>
@@ -279,7 +279,7 @@
                     <div class="col-md-10 col-sm-10 form-group row" style="float: right"><!--Div interno para las opciones-->
                       <div class="col-md-10" style="width: 100%;"><!--Div para una respuesta-->             
                       @foreach($respuestas as $respuesta)
-                        @if($respuesta->pregunta_id == $pregunta->id)
+                        @if($respuesta->fk_pregunta == $pregunta->id)
                           <div class="input-group">
                             <span style="display:table-cell;">
                               <input value="{{ $respuesta->detalle }}" style="width: 100%;"type="text" name="OpcEdit{{$respuesta->id}}" placeholder="Opciones de respuestas" class="form-control" required>

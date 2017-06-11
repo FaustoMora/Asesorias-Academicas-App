@@ -17,11 +17,12 @@ class CreateTemaTable extends Migration
             $table->increments('id');
             $table->string('nombre');
             $table->string('descripcion');
-            $table->integer('materia_id')->unsigned();
+			$table->string('formulas');
+            $table->integer('fk_materia')->unsigned();
             $table->timestamps();
         });
         Schema::table('tema', function(Blueprint $table){
-            $table->foreign('materia_id')->references('id')->on('materia')->onDelete('cascade');
+            $table->foreign('fk_materia')->references('id')->on('materia')->onDelete('cascade');
         });
     }
     /**

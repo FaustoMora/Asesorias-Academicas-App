@@ -43,14 +43,14 @@
 	<tbody>
 		@foreach ($materias as $materia)
 		<tr>
-		  <td>@if( $materia->icono_materia != null )
+		  <td>@if( $materia->icono != null )
 				<?php
-					$imagen = $materia->icono_materia;
+					$imagen = $materia->icono;
 					$decoded = base64_decode($imagen);
 					echo '<img style="width:50px;height:50px;" src="data:image/png;base64,'. $imagen.'"/>';
 				?>
 				@endif</td>
-		  <td>{{ $materia->nombre_materia }}</td>
+		  <td>{{ $materia->nombre }}</td>
 		  <td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal{{ $materia->id }}"><span><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span></button></td>
 		  <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModalDel{{ $materia->id }}"><span><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span></button></td>
 		</tr>
@@ -72,11 +72,11 @@
 		<h4 class="modal-title">Editar Materia</h4>
 	  </div>
 	  <div class="modal-body">
-		  
+
 			<div class="col-md-12 col-sm-12 form-group row">
 			  <label class=" col-md-2 col-form-label">Nombre</label>
 			  <div class="col-md-10">
-				<input type="text" name="nombre" placeholder="Nombre de la Materia" class="form-control" value="{{ $materia->nombre_materia }}" required>
+				<input type="text" name="nombre" placeholder="Nombre de la Materia" class="form-control" value="{{ $materia->nombre }}" required>
 				<br>
 				<input type="file" name="icono" accept="image/png" class="form-control">
 			  </div>
@@ -105,7 +105,7 @@
 		<h4 class="modal-title">Eliminar Materia</h4>
 	  </div>
 	  <div class="modal-body">
-			<p ><strong class="text-warning">Al eliminar la materia {{ $materia->nombre_materia }} se eliminara todo contenido relacionado con ella. </strong> <br><strong class="text-danger">
+			<p ><strong class="text-warning">Al eliminar la materia {{ $materia->nombre }} se eliminara todo contenido relacionado con ella. </strong> <br><strong class="text-danger">
 			EST&Aacute; SEGURO DE PROCEDER?</strong></p>
 			<div style="clear:both;"></div>
 	  </div>
