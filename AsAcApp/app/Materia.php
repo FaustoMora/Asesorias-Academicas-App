@@ -14,7 +14,7 @@ class Materia extends Model{
     protected $hidden = ['fk_user'];
 
 	public function User(){
-		return $this->belongsTo('App\User');
+		return $this->belongsTo('App\User','fk_user','id');
 	}
 
 	public function Temas(){

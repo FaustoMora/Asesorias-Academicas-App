@@ -9,18 +9,18 @@ use App\Http\Controllers\View;
 use Illuminate\Support\Facades\Auth;
 
 /**
-* 
+*
 */
 class MateriaController extends Controller
 {
-	
+
 	public function __construct()
 	{
 		$this->middleware('auth');
 	}
 
 	public function get_list(Request $request)
-	{	
+	{
 		//$user = Auth::user();
 		$user = $request->user();
 		$user = User::find($user->id);
@@ -42,13 +42,13 @@ class MateriaController extends Controller
     		$user = User::find($user->id);
 			$materia = Materia::find($id_materia);
 			if($user->id == $materia->user()->first()->id){
-				$materia->nombre_materia = $name;
-				$materia->icono_materia = $encoded_icon;
+				$materia->nombre = $name;
+				$materia->icono = $encoded_icon;
 				$materia->save();
 			}
 		}
 
-		return redirect('/MisMaterias');	
+		return redirect('/MisMaterias');
 	}
 
 
@@ -64,7 +64,7 @@ class MateriaController extends Controller
 			}
 		}
 
-		return redirect('/MisMaterias');	
+		return redirect('/MisMaterias');
 	}
 
 
@@ -76,12 +76,12 @@ class MateriaController extends Controller
 			$icono = $request->file('icono');
 			$encoded_icon = base64_encode(file_get_contents("/".$icono, FILE_USE_INCLUDE_PATH,NULL));
 		}
-		
+
 		$user = $request->user();
 		$user = User::find($user->id);
 		$materia = new Materia;
-		$materia->nombre_materia = $name;
-		$materia->icono_materia = $encoded_icon;
+		$materia->nombre = $name;
+		$materia->icono = $encoded_icon;
 		$materia->user()->associate($user);
 		$materia->save();
 

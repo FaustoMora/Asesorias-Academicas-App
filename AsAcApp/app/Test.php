@@ -11,11 +11,11 @@ class Test extends Model{
         'nombre'
     ];
 
-    protected $hidden = ['fk_tema'];
+    //protected $hidden = ['fk_tema'];
 
 
 	public function Tema(){
-		return $this->belongsTo('App\Tema');
+		return $this->belongsTo('App\Tema','fk_tema','id');
 	}
 
 	public function Preguntas(){

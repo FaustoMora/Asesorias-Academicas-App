@@ -19,17 +19,13 @@
           {!! csrf_field() !!}
           <!--Seleccion de Tema-->
         	<div class="col-md-12 col-sm-12 form-group row">
-            <label class=" col-md-2 col-form-label">Tema:</label>
+            <label class=" col-md-2 col-form-label">Test:</label>
             <div class="col-md-10">
-              <select class="form-control" required name="lista_temas">
+              <select class="form-control" required name="lstTests">
                 <option value="0">--Seleccione un tema--</option>
-                @foreach($materias as $materia)
-                  @foreach($temas as $tema)
-                    @if($tema->fk_materia == $materia->id)
-                      <option value="{{$tema->id}}"><b>{{$tema->materia->nombre_materia}}</b> - {{$tema->nombre}}</option>
-                    @endif  
+                  @foreach($tests as $test)
+                      <option value="{{$test->id}}"><b>{{$test->tema->nombre}}</b> - {{$test->nombre}}</option>
                   @endforeach
-                @endforeach
               </select>
             </div>
           </div><!--Fin de seleccion de tema-->
@@ -51,12 +47,12 @@
         	<div class="col-md-12 col-sm-12 form-group row">
         		<label class=" col-md-2 col-form-label">Opciones</label>
         		<div class="col-md-10 col-sm-10 form-group row"><!--Div interno para las opciones-->
-              
+
               <div class="col-md-10" style="width: 100%;"><!--Div para una respuesta-->
                 <div class="input-group">
                   <label style="float: left" class=" col-md-2">A)</label>
                   <span style="display:table-cell;">
-                    <input style="width: 100%;"type="text" name="opc1" placeholder="Opciones de respuestas" class="form-control" required>
+                    <input style="width: 100%;"type="text" name="opc1" placeholder="Opciones de respuestas" class="form-control" value="A)" required>
                   </span>
                   <span style="display:table-cell;" class="input-group-addon">
                     <input style="float:right" type="checkbox" name="chkbox1">
@@ -68,7 +64,7 @@
                 <div class="input-group">
                   <label style="float: left" class=" col-md-2">B)</label>
                   <span style="display:table-cell;">
-                    <input style="width: 100%;"type="text" name="opc2" placeholder="Opciones de respuestas" class="form-control" required>
+                    <input style="width: 100%;"type="text" name="opc2" placeholder="Opciones de respuestas" class="form-control" value="B)" required>
                   </span>
                   <span style="display:table-cell;" class="input-group-addon">
                     <input style="float:right" type="checkbox" name="chkbox2">
@@ -80,7 +76,7 @@
                 <div class="input-group">
                   <label style="float: left" class=" col-md-2">C)</label>
                   <span style="display:table-cell;">
-                    <input style="width: 100%;"type="text" name="opc3" placeholder="Opciones de respuestas" class="form-control" required>
+                    <input style="width: 100%;"type="text" name="opc3" placeholder="Opciones de respuestas" class="form-control" value="C)" required>
                   </span>
                   <span style="display:table-cell;" class="input-group-addon">
                     <input style="float:right" type="checkbox" name="chkbox3">
@@ -92,7 +88,7 @@
                 <div class="input-group">
                   <label style="float: left" class=" col-md-2">D)</label>
                   <span style="display:table-cell;">
-                    <input style="width: 100%;"type="text" name="opc4" placeholder="Opciones de respuestas" class="form-control" required>
+                    <input style="width: 100%;"type="text" name="opc4" placeholder="Opciones de respuestas" class="form-control" value="D)" required>
                   </span>
                   <span style="display:table-cell;" class="input-group-addon">
                     <input style="float:right" type="checkbox" name="chkbox4">
@@ -108,7 +104,7 @@
                 <img id="solc" name="solc"hidden="true" src="#" alt="Solución de la Pregunta">
               </div>
             </div>
-            
+
             <div class="col-md-12 col-sm-12 form-group row">
               <label style="float: left" class=" col-md-2">Video Solución</label>
               <div class="col-md-10">
@@ -132,19 +128,17 @@
         <table class="table" id="table_id" style="text-align: center;">
            <thead >
             <tr>
-              <th style="text-align: center;">Materia-Tema</th>
+              <th style="text-align: center;">Tema-Test</th>
               <th style="text-align: center;">Nombre</th>
               <th style="text-align: center;">Editar</th>
               <th style="text-align: center;">Eliminar</th>
            </tr>
           </thead>
           <tbody>
-            @foreach ($temas as $tema)
-                   
+
                 @foreach($preguntas as $pregunta)
-                  @if($pregunta->fk_tema == $tema->id)
-                  <tr> 
-                  <td><b>{{ $tema->materia->nombre_materia }}</b> - {{$tema->nombre}}</td>
+                  <tr>
+                  <td><b>{{$pregunta->test->tema->nombre}}</b> - {{$pregunta->test->nombre}}</td>
                   <td>
                     <div class="panel panel-info" style="width: 95%; border-color: #ccc;">
                       <div class="panel-heading" style="position: relative; background-color: #eee; border-color: #ccc;">
@@ -154,7 +148,7 @@
                           </h4>
                         </a>
                       </div><!--Fin del panel-heading-->
-                      <div id="pregunta{{$pregunta->id}}" class="panel-collapse collapse" 
+                      <div id="pregunta{{$pregunta->id}}" class="panel-collapse collapse"
                         name="ciclo_panel_body" style = "background: white;">
                         <div class="panel-body">
                           <div id="noneditModulo1" class="nonEditModulo">
@@ -170,27 +164,24 @@
                             </div>
                             <table class="table table-striped table-bordered table-hover" id="opciones-respuestas">
                               <thead>
-                                @foreach($respuestas as $respuesta)
-                                  @if($respuesta->pregunta->id == $pregunta->id)
+                                @foreach($pregunta->respuestas as $respuesta)
                                     <tr style="margin: 10px;">
                                       <td style="text-align:left; width: 300px;"><b style="font-size:12px;">{{ $respuesta->detalle }}
-                                        @if($respuesta->es_correcta == 1)
+                                        @if($respuesta->es_correcta)
                                             <div style="color:green; float:right;"align="right">Correcta!</div></td>
                                         @endif
                                       </td>
                                     </tr>
-                                                            
-                                  @endif
                                 @endforeach
                                 <tr style="margin: 10px;">
                                   <td>
-                                    <button style="font-size: 12px;"name="verSolucion" type="" 
-                                    data-toggle="modal" data-target="#solucion{{$pregunta->id}}" 
+                                    <button style="font-size: 12px;"name="verSolucion" type=""
+                                    data-toggle="modal" data-target="#solucion{{$pregunta->id}}"
                                     class="btn btn-primary pull-right">Ver Solución</button>
                                   </td>
                                 </tr>
                               </thead>
-                            </table> 
+                            </table>
                             <!-- Modal -->
                             <div id="solucion{{$pregunta->id}}" class="modal fade" role="dialog">
                               <div class="modal-dialog">
@@ -205,13 +196,13 @@
                                     <?php
                                       $imagensol = $pregunta->solucionimagen()->first();
                                       $decoded = base64_decode($imagensol->bitmap);
-                                      echo "<img style=width:300px; alt=Solución de la Pregunta src=\"data:image/png;base64,$imagensol->bitmap\" />";
+                                      echo "<img style=width:300px;height=400px; alt=Solución de la Pregunta src=\"data:image/png;base64,$imagensol->bitmap\" />";
                                     ?>
 
                                     <!--
                                       <img id="{{$imagensol->id}}" src="data:image/gif;base64,' . $decoded . '" alt="Solución de la Pregunta">
                                     -->
-                                    <h5 class="panel-title">
+                                    <h5 class="panel-title" style="margin-top:5px;">
                                        <?php
                                           if($pregunta->link_youtube != null){
                                             echo "<b> Video Solución: </b><a href=\"http://$pregunta->link_youtube\">".$pregunta->link_youtube."</a>";
@@ -235,11 +226,8 @@
                     </td>
                     <td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal{{ $pregunta->id }}"><span><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span></button></td>
                     <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModalDel{{ $pregunta->id }}"><span><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span></button></td>
-                  </tr> 
-                  @endif
-                @endforeach       
-
-            @endforeach<!--Fin del foreach de temas-->
+                  </tr>
+                @endforeach
 
           </tbody>
         </table>
@@ -256,7 +244,7 @@
               <h4 class="modal-title">Editar Pregunta</h4>
               </div>
               <div class="modal-body">
-                
+
                 <div class="col-md-12 col-sm-12 form-group row">
 
 
@@ -272,14 +260,13 @@
                     <input type="file" name="imgEnunciadoEdit" accept="image/png" class="form-control">
                     <br>
                   </div>
-                  
+
 
                   <div style="width: 100%;" class="col-md-10 col-sm-10 form-group row">
                   <label class=" col-md-2 col-form-label">Opciones</label>
                     <div class="col-md-10 col-sm-10 form-group row" style="float: right"><!--Div interno para las opciones-->
-                      <div class="col-md-10" style="width: 100%;"><!--Div para una respuesta-->             
-                      @foreach($respuestas as $respuesta)
-                        @if($respuesta->fk_pregunta == $pregunta->id)
+                      <div class="col-md-10" style="width: 100%;"><!--Div para una respuesta-->
+                      @foreach($pregunta->respuestas as $respuesta)
                           <div class="input-group">
                             <span style="display:table-cell;">
                               <input value="{{ $respuesta->detalle }}" style="width: 100%;"type="text" name="OpcEdit{{$respuesta->id}}" placeholder="Opciones de respuestas" class="form-control" required>
@@ -292,7 +279,6 @@
                               @endif
                             </span>
                           </div>
-                        @endif
                       @endforeach
                       </div>
                     </div>
@@ -303,7 +289,6 @@
                     <input type="file" name="imgSolucionEdit" accept="image/png" class="form-control">
                     <br>
                   </div>
-
                   <label style="float: left" class=" col-md-2 col-form-label">Video Solución</label>
                   <div class="col-md-10">
                     <input type="text" name="ytbEditar" placeholder="Link del video" class="form-control" value="{{ $pregunta->link_youtube }}">
@@ -414,4 +399,3 @@
 </script>
   @endsection<!--Fin de la sección de Menú-->
 @endsection
-

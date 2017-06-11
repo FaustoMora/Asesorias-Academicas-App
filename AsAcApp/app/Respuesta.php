@@ -12,7 +12,7 @@ class Respuesta extends Model{
     ];
 
 	public function Pregunta(){
-		return $this->hasOne('App\Pregunta', 'id', 'fk_pregunta');
+		return $this->belongsTo('App\Pregunta', 'fk_pregunta', 'id');
 	}
 
 	public function Imagen(){

@@ -17,7 +17,7 @@ class CreateTemaTable extends Migration
             $table->increments('id');
             $table->string('nombre');
             $table->string('descripcion');
-			$table->string('formulas');
+			$table->string('formulas')->nullable();
             $table->integer('fk_materia')->unsigned();
             $table->timestamps();
         });

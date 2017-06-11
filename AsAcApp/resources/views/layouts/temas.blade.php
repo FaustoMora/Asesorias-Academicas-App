@@ -9,7 +9,7 @@
   <!-- Default panel contents -->
   <div class="panel-heading">MENU TEMAS</div>
   <div class="panel-body">
-    <form method="post" role="form" action="{{ url('/crearTema') }}">
+    <form method="post" role="form" action="{{ url('/crearTema') }}" enctype="multipart/form-data">
     {{ csrf_field() }}
       <div class="col-md-12 col-sm-12 form-group row">
         <label class=" col-md-2 col-form-label">Materia</label>
@@ -34,6 +34,12 @@
     			<input type="text" name="descripcionTema" placeholder="Descripci&oacute;n del Tema" class="form-control" required>
     		</div>
     	</div>
+		<div class="col-md-12 col-sm-12 form-group row">
+			<label class=" col-md-2 col-form-label">PDF Formulas</label>
+			<div class="col-md-10">
+				<input type="file" name="formulasDoc" class="form-control" accept="application/pdf">
+			</div>
+		</div>
     	<div style="clear:both;"></div>
     	<div class="col-md-11 col-sm-11 form-group">
     	<button type="submit" class="btn btn-success pull-right">Crear Nuevo Tema</button>

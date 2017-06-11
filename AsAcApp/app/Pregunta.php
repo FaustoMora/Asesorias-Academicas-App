@@ -14,7 +14,7 @@ class Pregunta extends Model{
     protected $hidden = ['fk_pregunta_imagen','fk_solucion_imagen'];
 
 	public function Test(){
-		return $this->belongsTo('App\Test', 'id', 'fk_test');
+		return $this->belongsTo('App\Test', 'fk_test', 'id');
 	}
 
 

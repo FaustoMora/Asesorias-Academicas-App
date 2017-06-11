@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Materia;
 use App\Tema;
+use App\Test;
 use App\Pregunta;
 use Illuminate\Support\Facades\Auth;
 
