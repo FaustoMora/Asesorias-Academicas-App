@@ -49,7 +49,7 @@ Route::get('/MisTests', 'TestController@get_list');
 
 Route::post('/updateTest/{id_test}', ['uses' =>'TestController@update_detail']);
 
-Route::post('/updateStatusTest/{id_test}', ['uses' =>'TestController@update_status']);
+Route::get('/updateStatusTest/{id_test}', ['uses' =>'TestController@update_status']);
 
 Route::post('/crearTest', 'TestController@create_detail');
 

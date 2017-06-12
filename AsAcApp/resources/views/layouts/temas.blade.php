@@ -58,6 +58,7 @@
         <th style="text-align: center;">Materia</th>
         <th style="text-align: center;">Nombre</th>
         <th style="text-align: center;">Descripcion</th>
+		<th style="text-align: center;">Formula</th>
         <th style="text-align: center;">Editar</th>
         <th style="text-align: center;">Eliminar</th>
       </tr>
@@ -68,6 +69,11 @@
           <td>{{ $tema->materia->nombre }}</td>
           <td>{{ $tema->nombre }}</td>
           <td>{{ $tema->descripcion }}</td>
+		  <td>
+			  @if(!is_null($tema->formulas))
+			  <a href="{{ asset($tema->formulas) }}" target="_blank">Ver PDF</a>
+			  @endif
+		  </td>
           <td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal{{ $tema->id }}"><span><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span></button></td>
           <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModalDel{{ $tema->id }}"><span><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span></button></td>
         </tr>
@@ -81,7 +87,7 @@
 
     <!-- Modal content-->
     <div class="modal-content">
-    <form method="post" role="form" action="{{ url('updateTema',array('id_tema'=>$tema->id))  }}">
+    <form method="post" role="form" action="{{ url('updateTema',array('id_tema'=>$tema->id))  }}" enctype="multipart/form-data">
     {{csrf_field()}}
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -100,6 +106,12 @@
                 <input type="text" name="descripcionTema" placeholder="Descripci&oacute;n del Tema" class="form-control" value="{{ $tema->descripcion }}" required>
               </div>
             </div>
+			<div class="col-md-12 col-sm-12 form-group row">
+				<label class=" col-md-2 col-form-label">PDF Formulas</label>
+				<div class="col-md-10">
+					<input type="file" name="formulasDoc" class="form-control" accept="application/pdf">
+				</div>
+			</div>
             <div style="clear:both;"></div>
       </div>
       <div class="modal-footer">

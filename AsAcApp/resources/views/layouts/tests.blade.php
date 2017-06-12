@@ -57,9 +57,9 @@
           <td>{{ $test->nombre }}</td>
 		  <td>
 			  @if($test->active)
-			  <input type="checkbox" name="updateStatus{{ $test->id }}" id="updateStatus{{ $test->id }}" value="{{ $test->id }}" checked>
+			  <input type="checkbox" class="changeStatus" name="updateStatus{{ $test->id }}" id="updateStatus{{ $test->id }}" value="{{ $test->id }}" checked>
 			  @else
-			  <input type="checkbox" name="updateStatus{{ $test->id }}" id="updateStatus{{ $test->id }}" value="{{ $test->id }}">
+			  <input type="checkbox" class="changeStatus" name="updateStatus{{ $test->id }}" id="updateStatus{{ $test->id }}" value="{{ $test->id }}">
 			  @endif
 		  </td>
           <td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal{{ $test->id }}"><span><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span></button></td>
@@ -135,6 +135,27 @@
 <script type="text/javascript">
 
   $(document).ready( function () {
+
+	  function changeStatus(instance) {
+		  var pk = instance.val();
+		  $.ajax({
+			  data:  {'id_test':pk},
+			  url:   '/updateStatusTest/'+pk,
+			  type:  'get',
+			  success:  function (response) {
+				  var obj = JSON.parse(response);
+				  if(obj.status){
+					  $(instance).prop('checked', true);
+				  }else{
+					  $(instance).prop('checked', false);
+				  }
+			  }
+		  });
+	  }
+
+	  $('.changeStatus').click(function(){
+		  changeStatus($(this));
+	  });
 
     $('#table_id').DataTable({
         "language": {

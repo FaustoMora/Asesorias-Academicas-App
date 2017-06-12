@@ -188,8 +188,7 @@ class PreguntaController extends Controller
 			$r = Respuesta::where("id",$respuesta->id);
 			$r->detalle = $resp;
 			$r->es_correcta = $corr;
-			$r->fk_pregunta = $preg->id;
-			$r->fk_imagen = $imgsol->id;
+			$r->pregunta()->associate($preg);
 			$r->save();
 		}
 

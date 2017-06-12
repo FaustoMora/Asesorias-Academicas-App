@@ -45,6 +45,13 @@ class TemaController extends Controller
 				$tema->descripcion = $description;
 				$tema->save();
 			}
+			if($request->hasFile('formulasDoc')){
+				$file = $request->file('formulasDoc');
+				$docName = ''.str_random(10).'.'.$file->getClientOriginalExtension();
+				$file->move('uploads/docs/',$docName);
+				$tema->formulas = 'uploads/docs/'.$docName;
+				$tema->save();
+			}
 		}
 
 		return redirect('/MisTemas');
@@ -78,6 +85,14 @@ class TemaController extends Controller
 				$tema->descripcion = $description;
 				$tema->materia()->associate($materia);
 				$tema->save();
+
+				if($request->hasFile('formulasDoc')){
+					$file = $request->file('formulasDoc');
+					$docName = ''.str_random(10).'.'.$file->getClientOriginalExtension();
+					$file->move('uploads/docs/',$docName);
+					$tema->formulas = 'uploads/docs/'.$docName;
+					$tema->save();
+				}
 			}
 		}
 

@@ -54,18 +54,19 @@ class TestController extends Controller
 
 	public function update_status(Request $request, $id_test)
 	{
-
 		if ( !empty ( $id_test ) ) {
 			$test = Test::find($id_test);
 			if(!is_null($test)){
 				if($test->active){
 					$test->active = false;
 					$test->save();
+					$status = array('status' => false);
 				}else{
 					$test->active = true;
 					$test->save();
+					$status = array('status' => true);
 				}
-				return response()->json(NULL, 200, [], JSON_UNESCAPED_UNICODE);
+				return response()->json(json_encode($status), 200, [], JSON_UNESCAPED_UNICODE);
 			}
 		}
 		return response()->json(NULL, 400, [], JSON_UNESCAPED_UNICODE);

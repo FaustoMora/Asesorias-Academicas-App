@@ -22,7 +22,7 @@
             <label class=" col-md-2 col-form-label">Test:</label>
             <div class="col-md-10">
               <select class="form-control" required name="lstTests">
-                <option value="0">--Seleccione un tema--</option>
+                <option value="0">--Seleccione un test--</option>
                   @foreach($tests as $test)
                       <option value="{{$test->id}}"><b>{{$test->tema->nombre}}</b> - {{$test->nombre}}</option>
                   @endforeach
