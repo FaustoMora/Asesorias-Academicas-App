@@ -55,7 +55,7 @@
                     <input style="width: 100%;"type="text" name="opc1" placeholder="Opciones de respuestas" class="form-control" value="A)" required>
                   </span>
                   <span style="display:table-cell;" class="input-group-addon">
-                    <input style="float:right" type="checkbox" name="chkbox1">
+                    <input style="float:right" type="radio" name="correctOption" value="opc1">
                   </span>
                 </div>
               </div>
@@ -67,7 +67,7 @@
                     <input style="width: 100%;"type="text" name="opc2" placeholder="Opciones de respuestas" class="form-control" value="B)" required>
                   </span>
                   <span style="display:table-cell;" class="input-group-addon">
-                    <input style="float:right" type="checkbox" name="chkbox2">
+                    <input style="float:right" type="radio" name="correctOption" value="opc2">
                   </span>
                 </div>
               </div>
@@ -79,7 +79,7 @@
                     <input style="width: 100%;"type="text" name="opc3" placeholder="Opciones de respuestas" class="form-control" value="C)" required>
                   </span>
                   <span style="display:table-cell;" class="input-group-addon">
-                    <input style="float:right" type="checkbox" name="chkbox3">
+                    <input style="float:right" type="radio" name="correctOption" value="opc3">
                   </span>
                 </div>
               </div>
@@ -91,7 +91,7 @@
                     <input style="width: 100%;"type="text" name="opc4" placeholder="Opciones de respuestas" class="form-control" value="D)" required>
                   </span>
                   <span style="display:table-cell;" class="input-group-addon">
-                    <input style="float:right" type="checkbox" name="chkbox4">
+                    <input style="float:right" type="radio" name="correctOption" value="opc4">
                   </span>
                 </div>
               </div>
@@ -273,9 +273,9 @@
                             </span>
                             <span style="display:table-cell;" class="input-group-addon">
                               @if($respuesta->es_correcta)
-                                <input checked value="{{ $respuesta->es_correcta }}" style="float:right" type="checkbox" name="chkbox{{$respuesta->id}}">
+                                <input checked style="float:right" type="radio" name="updateCorrectOption" value="{{$respuesta->id}}">
                               @else
-                                <input value="{{ $respuesta->es_correcta }}" style="float:right" type="checkbox" name="chkbox{{$respuesta->id}}">
+                                <input style="float:right" type="radio" name="updateCorrectOption" value="{{$respuesta->id}}">
                               @endif
                             </span>
                           </div>

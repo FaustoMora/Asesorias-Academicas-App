@@ -75,11 +75,12 @@ class PreguntaController extends Controller
 			$resp2 = $request->input('opc2');
 			$resp3 = $request->input('opc3');
 			$resp4 = $request->input('opc4');
+
 			//Si son correctas
-			$corr1 = isset($_POST['chkbox1']) && $_POST['chkbox1']  ? "1" : "0";
-			$corr2 = isset($_POST['chkbox2']) && $_POST['chkbox2']  ? "1" : "0";
-			$corr3 = isset($_POST['chkbox3']) && $_POST['chkbox3']  ? "1" : "0";
-			$corr4 = isset($_POST['chkbox4']) && $_POST['chkbox4']  ? "1" : "0";
+			$corr1 = ($request->input('correctOption') == 'opc1') ? true : false;
+			$corr2 = ($request->input('correctOption') == 'opc2') ? true : false;
+			$corr3 = ($request->input('correctOption') == 'opc3') ? true : false;
+			$corr4 = ($request->input('correctOption') == 'opc4') ? true : false;
 
 			//Imagen de pregunta
 			$imgprg = new Imagen;
@@ -179,17 +180,12 @@ class PreguntaController extends Controller
 		$preg->save();
 
 		//Parte de respuestas
-		$respuestas = Respuesta::where("fk_pregunta",$id_pregunta);
-		foreach($respuestas as $respuesta){
-			$resp = $request->input('OpcEdit{{$respuesta->id}}');
-			//Si son correctas
-			$corr = isset($_POST['chkbox{{$respuesta->id}}']) && $_POST['chkbox1']  ? "1" : "0";
+		foreach($preg->respuestas()->get() as $respuesta){
+			$resp = $request->input('OpcEdit'.$respuesta->id);
 			//Se crean las respuestas asociadas a la pregunta
-			$r = Respuesta::where("id",$respuesta->id);
-			$r->detalle = $resp;
-			$r->es_correcta = $corr;
-			$r->pregunta()->associate($preg);
-			$r->save();
+			$respuesta->detalle = $resp;
+			$respuesta->es_correcta = ($request->input('updateCorrectOption') == $respuesta->id) ? true : false;
+			$respuesta->save();
 		}
 
 		return redirect('/Preguntas');
