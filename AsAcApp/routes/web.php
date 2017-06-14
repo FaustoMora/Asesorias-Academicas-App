@@ -63,6 +63,8 @@ Route::post('/UpdateEmail', 'ConfigController@update_email');
 
 Route::post('/UpdatePassword', 'ConfigController@update_password');
 
+Route::post('/UpdateMessage', 'ConfigController@update_message');
+
 
 /// ROUTES para PREGUNTAS
 

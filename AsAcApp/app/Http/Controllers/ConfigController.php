@@ -9,11 +9,11 @@ use Auth;
 use Hash;
 
 /**
-* 
+*
 */
 class ConfigController extends Controller
 {
-	
+
 	public function __construct()
 	{
 		$this->middleware('auth');
@@ -33,7 +33,7 @@ class ConfigController extends Controller
 			$pass = $request->input('actualPass');
 			$newPass = $request->input('newPass');
 
-			if ( Hash::check($pass, Auth::user()->password) ) 
+			if ( Hash::check($pass, Auth::user()->password) )
 			{
     			$user->fill([
             		'password' =>  Hash::make($newPass)
@@ -42,12 +42,12 @@ class ConfigController extends Controller
 			}
 
 		}
-		return redirect('/Config');	
+		return redirect('/Config');
 	}
 
 	public function update_email(Request $request)
 	{
-		
+
 		if (Auth::check())
 		{
 			$user = Auth::user();
@@ -55,7 +55,7 @@ class ConfigController extends Controller
 			$pass = $request->input('actualPass');
 			$newEmail = $request->input('newEmail');
 
-			if ( Hash::check($pass, Auth::user()->password) ) 
+			if ( Hash::check($pass, Auth::user()->password) )
 			{
     			$user->fill([
             		'email' =>  $newEmail
@@ -64,7 +64,26 @@ class ConfigController extends Controller
 			}
 
 		}
-		return redirect('/Config');	
+		return redirect('/Config');
+	}
+
+	public function update_message(Request $request)
+	{
+
+		if (Auth::check())
+		{
+			$user = Auth::user();
+			$user = User::find($user->id);
+			$message = $request->input('newMessage');
+
+			if (!is_null($message) )
+			{
+				$user->message =  $message;
+				$user->save();
+			}
+
+		}
+		return redirect('/Config');
 	}
 
 }

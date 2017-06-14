@@ -9,6 +9,27 @@
   <div class="panel-body">
   	<div class="col-md-12 col-sm-12">
   	<div class="col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+	<div class="page-header">
+			<h1><small>Mensaje de Notificacion</small></h1>
+	</div>
+  	<form method="post" role="form" action="{{ url('/UpdateMessage') }}">
+    {{csrf_field()}}
+  		<div class="col-md-12 col-sm-12 form-group row">
+    		<label class=" col-md-2 col-form-label">Cambiar Mensaje</label>
+    		<div class="col-md-10">
+				@if(!is_null(Auth::user()->message))
+    			<input type="text" name="newMessage" class="form-control" value="{{ Auth::user()->message }}" required>
+				@else
+				<input type="text" name="newMessage" class="form-control" placeholder="Escriba su primer mensaje" required>
+				@endif
+    		</div>
+    	</div>
+    	<div style="clear:both;"></div>
+    	<div class="col-md-11 col-sm-11 form-group">
+    	<button type="submit" class="btn btn-danger pull-right" id="cambiarPass">Cambiar</button>
+    	</div>
+  	</form>
+	<div style="clear:both;"></div>
   	<div class="page-header">
 			<h1><small>Actualizaci&oacute;n de Email</small></h1>
 	</div>
