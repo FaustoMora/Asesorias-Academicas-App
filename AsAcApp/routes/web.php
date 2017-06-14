@@ -76,9 +76,9 @@ Route::post('/eliminarPregunta/{id_pregunta}', 'PreguntaController@eliminar_preg
 
 //ROUTES PARA API
 
-Route::get('temas/{id_tema}/pregunta', 'ApiTemaController@getInitialPregunta');
+#Route::get('temas/{id_tema}/pregunta', 'ApiTemaController@getInitialPregunta');
 
-Route::get('temas/{id_tema}/pregunta/', 'ApiTemaController@getExcludedPregunta');
+#Route::get('temas/{id_tema}/pregunta/', 'ApiTemaController@getExcludedPregunta');
 
 
 Route::resource('temas', 'ApiTemaController',['only' => [
@@ -86,5 +86,13 @@ Route::resource('temas', 'ApiTemaController',['only' => [
 ]]);
 
 Route::resource('materias', 'ApiMateriaController',['only' => [
+    'index', 'show'
+]]);
+
+Route::resource('tests', 'ApiTestController',['only' => [
+    'index', 'show'
+]]);
+
+Route::resource('preguntas', 'ApiPreguntaController',['only' => [
     'index', 'show'
 ]]);

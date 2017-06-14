@@ -21,4 +21,10 @@ class Materia extends Model{
 		return $this->hasMany('App\Tema', 'fk_materia', 'id');
 	}
 
+	public function scopeExclude($query,$value = array())
+	{
+    	return $query->select( array_diff( $this->columns,(array) $value) );
+	}
+
+
 }

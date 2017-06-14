@@ -31,7 +31,7 @@ class PreguntaController extends Controller
 			$temas = Tema::whereIn('fk_materia',$user->materias()->pluck('id')->toArray())->get();
 		}
 		if(!is_null($temas) && count($temas) > 0){
-			$tests = Test::whereIn('fk_tema',$temas->pluck('id'))->get();
+			$tests = Test::whereIn('fk_tema',$temas->pluck('id'))->has('preguntas','<=',4)->get();
 		}
 		if(!is_null($tests) && count($tests) > 0){
 			$preguntas = Pregunta::whereIn('fk_test',$tests->pluck('id'))->get();

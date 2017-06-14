@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Materia;
+use App\Pregunta;
 use Illuminate\Http\Request;
 
-class ApiMateriaController extends Controller
+class ApiPreguntaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class ApiMateriaController extends Controller
      */
     public function index()
     {
-        $materia = Materia::has('temas','>=', 1)->get();
-        return response()->json($materia, 200, [], JSON_UNESCAPED_UNICODE);
+		$preguntas = Pregunta::all();
+		return response()->json($preguntas, 200, [], JSON_UNESCAPED_UNICODE);
     }
 
     /**
@@ -42,23 +42,21 @@ class ApiMateriaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Materia  $materia
+     * @param  \App\Pregunta  $pregunta
      * @return \Illuminate\Http\Response
      */
-    public function show(Materia $materia)
+    public function show(Pregunta $pregunta)
     {
-        return response()->json($materia->exclude(['icono'])->with('temas')->whereHas('temas',function($q){
-			$q->has('tests','>=',1);
-		})->first(), 200, [], JSON_UNESCAPED_UNICODE);
+        return response()->json($pregunta->with('PreguntaImagen','SolucionImagen','Respuestas')->first(), 200, [], JSON_UNESCAPED_UNICODE);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Materia  $materia
+     * @param  \App\Pregunta  $pregunta
      * @return \Illuminate\Http\Response
      */
-    public function edit(Materia $materia)
+    public function edit(Pregunta $pregunta)
     {
         //
     }
@@ -67,10 +65,10 @@ class ApiMateriaController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Materia  $materia
+     * @param  \App\Pregunta  $pregunta
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Materia $materia)
+    public function update(Request $request, Pregunta $pregunta)
     {
         //
     }
@@ -78,10 +76,10 @@ class ApiMateriaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Materia  $materia
+     * @param  \App\Pregunta  $pregunta
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Materia $materia)
+    public function destroy(Pregunta $pregunta)
     {
         //
     }

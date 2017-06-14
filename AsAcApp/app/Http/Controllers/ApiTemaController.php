@@ -16,7 +16,7 @@ class ApiTemaController extends Controller
      */
     public function index()
     {
-        $temas = Tema::has('preguntas','>=', 5)->get();
+        $temas = Tema::has('tests','>=', 1)->get();
         return response()->json($temas, 200, [], JSON_UNESCAPED_UNICODE);
     }
 
@@ -27,11 +27,13 @@ class ApiTemaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(tema $tema)
-    {   
-        return response()->json($tema, 200, [], JSON_UNESCAPED_UNICODE); 
+    {
+        return response()->json($tema->with('tests')->whereHas('tests',function($q){
+			$q->has('preguntas','>=',5)->where('active',true);
+		})->first(), 200, [], JSON_UNESCAPED_UNICODE);
     }
 
-    
+
     /**
      *
      * @param  \App\tema  $tema
@@ -51,7 +53,7 @@ class ApiTemaController extends Controller
                 return response()->json(NULL, 404, [], JSON_UNESCAPED_UNICODE);
             }
         }
-        return response()->json(NULL, 400, [], JSON_UNESCAPED_UNICODE); 
+        return response()->json(NULL, 400, [], JSON_UNESCAPED_UNICODE);
     }
 
     /**

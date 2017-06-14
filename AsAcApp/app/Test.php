@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Test extends Model{
 	protected $table = 'test';
-	protected $columns = array('id','nombre','fk_tema');
+	protected $columns = array('id','nombre','active','fk_tema');
 	protected $fillable = [
         'nombre'
     ];
