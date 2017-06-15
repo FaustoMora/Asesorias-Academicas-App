@@ -8,6 +8,7 @@ use App\Tema;
 use App\Test;
 use App\Pregunta;
 use Illuminate\Support\Facades\Auth;
+use Pusher;
 
 class HomeController extends Controller
 {
@@ -28,6 +29,18 @@ class HomeController extends Controller
      */
     public function index()
     {
+		/*$pusher = new Pusher(env('PUSHER_APP_KEY'),env('PUSHER_APP_SECRET'), env('PUSHER_APP_ID'), array('cluster' => env('PUSHER_APP_CLUSTER'),'encrypted'=>true) );
+		$pusher->notify(
+		  array("asacapp"),
+		  array(
+		    'gcm' => array(
+		      'notification' => array(
+		        'title' => 'hello world',
+		        'icon' => 'logoasac'
+		      ),
+		    ),
+		  )
+	  	);*/
         $user = Auth::user();
         $user = User::find($user->id);
         $temas = null;
