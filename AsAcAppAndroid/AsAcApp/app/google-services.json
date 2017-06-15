@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "940102880394",
+    "project_id": "asesorias-academicas"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:940102880394:android:78c9bc629d2bc875",
+        "android_client_info": {
+          "package_name": "com.passeapp.dark_legion.asacapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "940102880394-qrgpdi89hiru0ilhd2imtclba7a7stn1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvKygkHgipRmmlshgI0Z44pQFYyb4YbWg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
