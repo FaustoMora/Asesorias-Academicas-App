@@ -47,7 +47,7 @@ class TemaController extends Controller
 			}
 			if($request->hasFile('formulasDoc')){
 				$file = $request->file('formulasDoc');
-				$docName = ''.str_random(10).'.'.$file->getClientOriginalExtension();
+				$docName = ''.str_random(10).'_'.$name.'.'.$file->getClientOriginalExtension();
 				$file->move('uploads/docs/',$docName);
 				$tema->formulas = 'uploads/docs/'.$docName;
 				$tema->save();
