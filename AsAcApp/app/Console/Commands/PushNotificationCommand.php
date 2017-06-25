@@ -44,12 +44,16 @@ class PushNotificationCommand extends Command
     {
 		$user = User::find(1);
 		error_log($user->message);
+		$message = 'Bienvenido a Asesorias Acedemicas'
+		if(!is_null($user->message)){
+			$message = $user->message;
+		}
 		$this->pusher->notify(
 		  array("asacapp"),
 		  array(
 			'gcm' => array(
 			  'notification' => array(
-				'title' => $user->message,
+				'title' => $message,
 				'icon' => 'logoasac'
 			  ),
 			),
