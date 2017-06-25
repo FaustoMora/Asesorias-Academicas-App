@@ -12,6 +12,19 @@
 	<div class="page-header">
 			<h1><small>Mensaje de Notificacion</small></h1>
 	</div>
+	<form method="post" role="form" action="{{ url('/SendPersonalMessage') }}">
+	{{csrf_field()}}
+		<div class="col-md-12 col-sm-12 form-group row">
+			<label class=" col-md-2 col-form-label">Enviar Mensaje</label>
+			<div class="col-md-10">
+				<input type="text" name="personalMessage" class="form-control" placeholder="Enviar mensaje personificado" required>
+			</div>
+		</div>
+		<div style="clear:both;"></div>
+		<div class="col-md-11 col-sm-11 form-group">
+		<button type="submit" class="btn btn-primary pull-right" id="cambiarPass">Enviar</button>
+		</div>
+	</form>
   	<form method="post" role="form" action="{{ url('/UpdateMessage') }}">
     {{csrf_field()}}
   		<div class="col-md-12 col-sm-12 form-group row">
@@ -26,7 +39,7 @@
     	</div>
     	<div style="clear:both;"></div>
     	<div class="col-md-11 col-sm-11 form-group">
-    	<button type="submit" class="btn btn-danger pull-right" id="cambiarPass">Cambiar</button>
+    	<button type="submit" class="btn btn-primary pull-right" id="cambiarPass">Cambiar</button>
     	</div>
   	</form>
 	<div style="clear:both;"></div>

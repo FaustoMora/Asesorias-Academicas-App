@@ -16,7 +16,7 @@
 			<div class="col-md-10">
 				<input type="text" name="nombre" placeholder="Nombre de la Materia" class="form-control" required>
 				<br>
-				<input type="file" name="icono" accept="image/png" class="form-control">
+				<input type="file" name="icono" accept="image/png" class="form-control" required>
 			</div>
 		</div>
 		<div style="clear:both;"></div>

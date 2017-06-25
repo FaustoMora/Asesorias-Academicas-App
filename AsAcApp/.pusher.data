@@ -3,5 +3,5 @@ AIzaSyCTadaOOQILLgP7G-OZqmhP_p94OvYahfU
 Sender ID help
 940102880394
 
-
+crontab -l
 * * * * * php /home/dark-legion/Espol/AsesoriasAcademicasApp/Asesorias-Academicas-App/AsAcApp/artisan schedule:run >> /dev/null 2>&1

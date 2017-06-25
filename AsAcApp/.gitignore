@@ -1,6 +1,6 @@
 /node_modules
 /public/storage
-/storage/*.key
+storage/*.key
 /vendor
 /.idea
 Homestead.json
@@ -11,3 +11,5 @@ Homestead.yaml
 /vendor/composer/LICENSE
 /vendor/composer/*.php
 /config/database.php
+public/uploads/*
+storage/logs/laravel.log

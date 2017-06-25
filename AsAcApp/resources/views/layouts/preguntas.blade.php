@@ -55,7 +55,7 @@
                     <input style="width: 100%;"type="text" name="opc1" placeholder="Opciones de respuestas" class="form-control" value="A)" required>
                   </span>
                   <span style="display:table-cell;" class="input-group-addon">
-                    <input style="float:right" type="radio" name="correctOption" value="opc1">
+                    <input style="float:right" type="radio" name="correctOption" value="opc1" required>
                   </span>
                 </div>
               </div>
@@ -67,7 +67,7 @@
                     <input style="width: 100%;"type="text" name="opc2" placeholder="Opciones de respuestas" class="form-control" value="B)" required>
                   </span>
                   <span style="display:table-cell;" class="input-group-addon">
-                    <input style="float:right" type="radio" name="correctOption" value="opc2">
+                    <input style="float:right" type="radio" name="correctOption" value="opc2" required>
                   </span>
                 </div>
               </div>
@@ -79,7 +79,7 @@
                     <input style="width: 100%;"type="text" name="opc3" placeholder="Opciones de respuestas" class="form-control" value="C)" required>
                   </span>
                   <span style="display:table-cell;" class="input-group-addon">
-                    <input style="float:right" type="radio" name="correctOption" value="opc3">
+                    <input style="float:right" type="radio" name="correctOption" value="opc3" required>
                   </span>
                 </div>
               </div>
@@ -91,7 +91,7 @@
                     <input style="width: 100%;"type="text" name="opc4" placeholder="Opciones de respuestas" class="form-control" value="D)" required>
                   </span>
                   <span style="display:table-cell;" class="input-group-addon">
-                    <input style="float:right" type="radio" name="correctOption" value="opc4">
+                    <input style="float:right" type="radio" name="correctOption" value="opc4" required>
                   </span>
                 </div>
               </div>

@@ -7,6 +7,8 @@ use App\Tema;
 use Illuminate\Http\Request;
 use Auth;
 use Hash;
+use Pusher;
+use Log;
 
 /**
 *
@@ -84,6 +86,34 @@ class ConfigController extends Controller
 
 		}
 		return redirect('/Config');
+	}
+
+	public function send_personal_message(Request $request)
+	{
+		if (Auth::check())
+		{
+			$message = $request->input('personalMessage');
+
+			if (!is_null($message) )
+			{
+				$pusher = new Pusher(env('PUSHER_APP_KEY'),env('PUSHER_APP_SECRET'), env('PUSHER_APP_ID'), array('cluster' => env('PUSHER_APP_CLUSTER'),'encrypted'=>true));
+				$pusher->notify(
+				  array("asacapp"),
+				  array(
+					'gcm' => array(
+					  'notification' => array(
+						'title' => $message,
+						'icon' => 'logoasac'
+					  ),
+					),
+				  )
+				);
+				Log::info('sending personal push notification');
+			}
+
+		}
+		return redirect('/Config');
+
 	}
 
 }

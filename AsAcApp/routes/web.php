@@ -65,6 +65,8 @@ Route::post('/UpdatePassword', 'ConfigController@update_password');
 
 Route::post('/UpdateMessage', 'ConfigController@update_message');
 
+Route::post('/SendPersonalMessage','ConfigController@send_personal_message');
+
 
 /// ROUTES para PREGUNTAS
 

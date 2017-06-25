@@ -3,3 +3,108 @@
 [2017-06-15 04:54:01] local.INFO: sending push notification  
 [2017-06-15 04:55:02] local.INFO: sending push notification  
 [2017-06-15 04:56:02] local.INFO: sending push notification  
+[2017-06-16 21:56:07] local.ERROR: exception 'Symfony\Component\Console\Exception\CommandNotFoundException' with message 'Command "server.php" is not defined.' in /home/dark-legion/Espol/AsesoriasAcademicasApp/Asesorias-Academicas-App/AsAcApp/vendor/symfony/console/Application.php:579
+Stack trace:
+#0 /home/dark-legion/Espol/AsesoriasAcademicasApp/Asesorias-Academicas-App/AsAcApp/vendor/symfony/console/Application.php(204): Symfony\Component\Console\Application->find('server.php')
+#1 /home/dark-legion/Espol/AsesoriasAcademicasApp/Asesorias-Academicas-App/AsAcApp/vendor/symfony/console/Application.php(130): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#2 /home/dark-legion/Espol/AsesoriasAcademicasApp/Asesorias-Academicas-App/AsAcApp/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(122): Symfony\Component\Console\Application->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#3 /home/dark-legion/Espol/AsesoriasAcademicasApp/Asesorias-Academicas-App/AsAcApp/artisan(36): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#4 {main}  
+[2017-06-23 06:20:02] local.ERROR: exception 'BadMethodCallException' with message 'Method everyMinut does not exist.' in /home/dark-legion/Espol/AsesoriasAcademicasApp/Asesorias-Academicas-App/AsAcApp/vendor/laravel/framework/src/Illuminate/Support/Traits/Macroable.php:74
+Stack trace:
+#0 /home/dark-legion/Espol/AsesoriasAcademicasApp/Asesorias-Academicas-App/AsAcApp/app/Console/Kernel.php(29): Illuminate\Console\Scheduling\Event->__call('everyMinut', Array)
+#1 /home/dark-legion/Espol/AsesoriasAcademicasApp/Asesorias-Academicas-App/AsAcApp/app/Console/Kernel.php(29): Illuminate\Console\Scheduling\Event->everyMinut()
+#2 /home/dark-legion/Espol/AsesoriasAcademicasApp/Asesorias-Academicas-App/AsAcApp/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(101): App\Console\Kernel->schedule(Object(Illuminate\Console\Scheduling\Schedule))
+#3 /home/dark-legion/Espol/AsesoriasAcademicasApp/Asesorias-Academicas-App/AsAcApp/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(86): Illuminate\Foundation\Console\Kernel->defineConsoleSchedule()
+#4 [internal function]: Illuminate\Foundation\Console\Kernel->Illuminate\Foundation\Console\{closure}(Object(Illuminate\Foundation\Application))
+#5 /home/dark-legion/Espol/AsesoriasAcademicasApp/Asesorias-Academicas-App/AsAcApp/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(827): call_user_func(Object(Closure), Object(Illuminate\Foundation\Application))
+#6 /home/dark-legion/Espol/AsesoriasAcademicasApp/Asesorias-Academicas-App/AsAcApp/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(776): Illuminate\Foundation\Application->fireAppCallbacks(Array)
+#7 /home/dark-legion/Espol/AsesoriasAcademicasApp/Asesorias-Academicas-App/AsAcApp/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/BootProviders.php(17): Illuminate\Foundation\Application->boot()
+#8 /home/dark-legion/Espol/AsesoriasAcademicasApp/Asesorias-Academicas-App/AsAcApp/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(208): Illuminate\Foundation\Bootstrap\BootProviders->bootstrap(Object(Illuminate\Foundation\Application))
+#9 /home/dark-legion/Espol/AsesoriasAcademicasApp/Asesorias-Academicas-App/AsAcApp/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(267): Illuminate\Foundation\Application->bootstrapWith(Array)
+#10 /home/dark-legion/Espol/AsesoriasAcademicasApp/Asesorias-Academicas-App/AsAcApp/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(114): Illuminate\Foundation\Console\Kernel->bootstrap()
+#11 /home/dark-legion/Espol/AsesoriasAcademicasApp/Asesorias-Academicas-App/AsAcApp/artisan(36): Illuminate\Foundation\Console\Kernel->handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#12 {main}  
+[2017-06-23 06:21:04] local.INFO: sending push notification  
+[2017-06-23 06:22:02] local.INFO: sending push notification  
+[2017-06-23 06:23:02] local.INFO: sending push notification  
+[2017-06-23 06:24:02] local.INFO: sending push notification  
+[2017-06-23 06:25:02] local.INFO: sending push notification  
+[2017-06-23 06:26:01] local.INFO: sending push notification  
+[2017-06-23 06:27:02] local.INFO: sending push notification  
+[2017-06-23 06:28:02] local.INFO: sending push notification  
+[2017-06-23 06:29:03] local.INFO: sending push notification  
+[2017-06-23 06:30:01] local.INFO: sending push notification  
+[2017-06-23 06:31:02] local.INFO: sending push notification  
+[2017-06-23 06:32:02] local.INFO: sending push notification  
+[2017-06-23 06:33:02] local.INFO: sending push notification  
+[2017-06-23 06:34:02] local.INFO: sending push notification  
+[2017-06-23 06:35:02] local.INFO: sending push notification  
+[2017-06-23 06:36:02] local.INFO: sending push notification  
+[2017-06-23 06:37:01] local.INFO: sending push notification  
+[2017-06-23 06:38:02] local.INFO: sending push notification  
+[2017-06-23 06:39:02] local.INFO: sending push notification  
+[2017-06-23 06:40:02] local.INFO: sending push notification  
+[2017-06-23 06:41:02] local.INFO: sending push notification  
+[2017-06-23 06:42:01] local.INFO: sending push notification  
+[2017-06-23 06:43:01] local.INFO: sending push notification  
+[2017-06-23 06:44:02] local.INFO: sending push notification  
+[2017-06-23 06:45:02] local.INFO: sending push notification  
+[2017-06-23 06:46:02] local.INFO: sending push notification  
+[2017-06-23 06:47:01] local.INFO: sending push notification  
+[2017-06-23 06:48:02] local.INFO: sending push notification  
+[2017-06-23 06:49:02] local.INFO: sending push notification  
+[2017-06-23 06:50:02] local.INFO: sending push notification  
+[2017-06-23 06:51:01] local.INFO: sending push notification  
+[2017-06-23 06:52:02] local.INFO: sending push notification  
+[2017-06-23 06:53:02] local.INFO: sending push notification  
+[2017-06-23 14:27:08] local.INFO: sending push notification  
+[2017-06-23 14:28:02] local.INFO: sending push notification  
+[2017-06-23 14:29:16] local.INFO: sending push notification  
+[2017-06-23 14:30:22] local.INFO: sending push notification  
+[2017-06-23 14:31:22] local.INFO: sending push notification  
+[2017-06-23 14:32:02] local.INFO: sending push notification  
+[2017-06-23 14:33:02] local.INFO: sending push notification  
+[2017-06-23 14:34:22] local.INFO: sending push notification  
+[2017-06-23 14:35:21] local.INFO: sending push notification  
+[2017-06-23 14:36:22] local.INFO: sending push notification  
+[2017-06-23 14:37:17] local.INFO: sending push notification  
+[2017-06-23 14:38:22] local.INFO: sending push notification  
+[2017-06-23 14:39:07] local.INFO: sending push notification  
+[2017-06-23 14:40:22] local.INFO: sending push notification  
+[2017-06-23 14:41:22] local.INFO: sending push notification  
+[2017-06-23 14:42:16] local.INFO: sending push notification  
+[2017-06-23 14:43:22] local.INFO: sending push notification  
+[2017-06-23 14:44:02] local.INFO: sending push notification  
+[2017-06-23 14:45:22] local.INFO: sending push notification  
+[2017-06-23 14:46:01] local.INFO: sending push notification  
+[2017-06-23 14:47:17] local.INFO: sending push notification  
+[2017-06-23 14:48:22] local.INFO: sending push notification  
+[2017-06-23 14:49:22] local.INFO: sending push notification  
+[2017-06-23 14:50:07] local.INFO: sending push notification  
+[2017-06-23 14:51:17] local.INFO: sending push notification  
+[2017-06-23 14:51:37] local.INFO: sending push notification  
+[2017-06-23 14:52:07] local.INFO: sending push notification  
+[2017-06-23 14:53:22] local.INFO: sending push notification  
+[2017-06-23 14:54:09] local.INFO: sending push notification  
+[2017-06-23 15:16:07] local.INFO: sending push notification  
+[2017-06-23 15:17:02] local.INFO: sending push notification  
+[2017-06-23 15:18:01] local.INFO: sending push notification  
+[2017-06-24 19:57:11] local.INFO: sending push notification  
+[2017-06-24 19:57:12] local.INFO: sending push notification  
+[2017-06-25 03:42:07] local.INFO: sending push notification  
+[2017-06-25 03:43:01] local.INFO: sending push notification  
+[2017-06-25 03:44:02] local.INFO: sending push notification  
+[2017-06-25 03:45:02] local.INFO: sending push notification  
+[2017-06-25 03:46:01] local.INFO: sending push notification  
+[2017-06-25 03:47:02] local.INFO: sending push notification  
+[2017-06-25 03:48:02] local.INFO: sending push notification  
+[2017-06-25 03:49:02] local.INFO: sending push notification  
+[2017-06-25 03:50:01] local.INFO: sending push notification  
+[2017-06-25 04:07:48] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'App\Http\Controllers\Pusher' not found' in /home/dark-legion/Espol/AsesoriasAcademicasApp/Asesorias-Academicas-App/AsAcApp/app/Http/Controllers/ConfigController.php:97
+Stack trace:
+#0 {main}  
+[2017-06-25 04:08:11] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'App\Http\Controllers\Log' not found' in /home/dark-legion/Espol/AsesoriasAcademicasApp/Asesorias-Academicas-App/AsAcApp/app/Http/Controllers/ConfigController.php:110
+Stack trace:
+#0 {main}  
+[2017-06-25 04:08:23] local.INFO: sending personal push notification  
