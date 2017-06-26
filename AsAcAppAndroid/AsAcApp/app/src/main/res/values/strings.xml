@@ -5,5 +5,5 @@
     <string name="lblNextQuestion">Siguiente</string>
     <string name="lblContinue">Continuar</string>
     <string name="lblStart">Comenzar</string>
-    <string name="lblMateria">Mantener presionado para seleccionar una Materia:</string>
+    <string name="lblMateria">Mantener presionado para seleccionar</string>
 </resources>

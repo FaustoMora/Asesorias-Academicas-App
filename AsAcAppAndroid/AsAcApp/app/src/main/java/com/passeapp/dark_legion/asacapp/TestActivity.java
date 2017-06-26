@@ -2,6 +2,7 @@ package com.passeapp.dark_legion.asacapp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,9 +11,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -21,31 +24,33 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 import org.json.JSONArray;
-import org.json.JSONObject;
 import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
-public class TemaActivity extends AppCompatActivity {
+public class TestActivity extends AppCompatActivity {
 
     protected Button startTestBtn;
-    protected ListView listTemas;
-    protected TextView lblMateriaTema;
-    public ArrayAdapter<TemaClass> adapterTemas;
+    protected ListView listTests;
+    protected TextView lblTemaTest;
+    protected ImageButton formulaIcon;
+    public ArrayAdapter<TestClass> adapterTests;
     private ProgressDialog progressDialog;
     public static int selectedListPos = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tema);
+        setContentView(R.layout.activity_test);
+
         try {
-            new HttpGET_TemasTask().execute();
+            new TestActivity.HttpGET_TestTask().execute();
         }catch (Exception e){
             Toast.makeText(getApplicationContext(),"CONEXION A INTERNET NO DISPONIBLE",Toast.LENGTH_LONG).show();
             finish();
-            startActivity(new Intent(getApplicationContext(), MateriaActivity.class));
+            startActivity(new Intent(getApplicationContext(), TemaActivity.class));
         }
-
     }
 
     protected void reset_variables(){
@@ -54,25 +59,31 @@ public class TemaActivity extends AppCompatActivity {
 
     protected void init(){
 
-        this.lblMateriaTema = (TextView)findViewById(R.id.lblMateriaTema);
-        this.lblMateriaTema.setText(VariablesActivity.actualMateria.getNombre());
+        this.formulaIcon = (ImageButton)findViewById(R.id.formulaIcon);
+        if(!VariablesActivity.actualTema.getFormulas().isEmpty()){
+            this.formulaIcon.setVisibility(View.VISIBLE);
+            this.formulaIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse("http://174.138.80.160/"+VariablesActivity.actualTema.getFormulas())));
+                }
+            });
+        }
+
+        this.lblTemaTest = (TextView)findViewById(R.id.lblTemaTest);
+        this.lblTemaTest.setText(VariablesActivity.actualTema.getNombre());
 
         this.startTestBtn = (Button)findViewById(R.id.startTestBtn);
         this.startTestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(OnlineConnect.isOnline(getApplicationContext())){
-                    TemaClass aux = (TemaClass) listTemas.getSelectedItem();
-                    TemaClass auxTema = (TemaClass) listTemas.getItemAtPosition(selectedListPos);
-                    if(auxTema != null ){
-                        //TemaClass auxTema = arrayList.get(posTema);
-                        VariablesActivity.actualTema = auxTema;
-                        VariablesActivity.actualIndexTema = selectedListPos;
-                        //VariablesActivity.lstQuestions.clear();
-                        //Toast.makeText(getApplicationContext(),"Seleccionaste: "+auxTema.toString(),Toast.LENGTH_LONG).show();
-                        //VariablesActivity.scores.clear();
+                    TestClass auxTest = (TestClass) listTests.getItemAtPosition(selectedListPos);
+                    if(auxTest != null ){
+                        VariablesActivity.actualTest = auxTest;
+                        VariablesActivity.actualIndexTest = selectedListPos;
                         finish();
-                        startActivity(new Intent(getApplicationContext(), TestActivity.class));
+                        startActivity(new Intent(getApplicationContext(), QuestionActivity.class));
                     }else{
                         Toast.makeText(getApplicationContext(),"Seleccione un tema para continuar",Toast.LENGTH_LONG).show();
                     }
@@ -82,18 +93,18 @@ public class TemaActivity extends AppCompatActivity {
             }
         });
 
-        this.listTemas = (ListView)findViewById(R.id.listTemas);
-        this.adapterTemas = new TemaCustomAdapter(this,VariablesActivity.lstTemas);
-        this.listTemas.setAdapter(this.adapterTemas);
-        this.listTemas.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        this.listTemas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        this.listTests = (ListView)findViewById(R.id.listTest);
+        this.adapterTests = new TestCustomAdapter(this,VariablesActivity.lstTests);
+        this.listTests.setAdapter(this.adapterTests);
+        this.listTests.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        this.listTests.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 adapterView.setSelected(true);
                 view.setSelected(true);
 
-                listTemas.setSelection(i);
-                listTemas.setItemChecked(i,true);
+                listTests.setSelection(i);
+                listTests.setItemChecked(i,true);
                 selectedListPos = i;
             }
         });
@@ -110,9 +121,9 @@ public class TemaActivity extends AppCompatActivity {
     }
 
 
-    private class HttpGET_TemasTask extends AsyncTask<Void,Integer,ArrayList<TemaClass>>{
+    private class HttpGET_TestTask extends AsyncTask<Void,Integer,ArrayList<TestClass>> {
         String SERVER = "http://174.138.80.160";
-        String RESOURCE = "/materias/"+VariablesActivity.actualMateria.getId().toString();
+        String RESOURCE = "/temas/"+VariablesActivity.actualTema.get_id().toString();
 
         @Override
         protected void onPreExecute() {
@@ -120,10 +131,10 @@ public class TemaActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<TemaClass> temaClasses) {
-            VariablesActivity.lstTemas = temaClasses;
-            VariablesActivity.actualMateria.setLstTemas(temaClasses);
-            VariablesActivity.lstMaterias.get(VariablesActivity.actualIndexMateria).setLstTemas(temaClasses);
+        protected void onPostExecute(ArrayList<TestClass> lstTests) {
+            VariablesActivity.lstTests = lstTests;
+            VariablesActivity.actualTema.setLstTest(lstTests);
+            VariablesActivity.lstMaterias.get(VariablesActivity.actualIndexMateria).getLstTemas().get(VariablesActivity.actualIndexTema).setLstTest(lstTests);
             init();
             reset_variables();
             progressDialog.dismiss();
@@ -135,18 +146,18 @@ public class TemaActivity extends AppCompatActivity {
         }
 
         @Override
-        protected ArrayList<TemaClass> doInBackground(Void... voids) {
+        protected ArrayList<TestClass> doInBackground(Void... voids) {
             publishProgress(0);
-            if(VariablesActivity.lstTemas.isEmpty() && VariablesActivity.actualMateria.getLstTemas().isEmpty()){
-                return getTemas();
+            if(VariablesActivity.lstTests.isEmpty() && VariablesActivity.actualTema.getLstTest().isEmpty()){
+                return getTests();
             }else{
-                return VariablesActivity.lstTemas;
+                return VariablesActivity.lstTests;
             }
         }
 
-        private ArrayList<TemaClass> getTemas() {
+        private ArrayList<TestClass> getTests() {
 
-            ArrayList<TemaClass> temasList = new ArrayList<TemaClass>();
+            ArrayList<TestClass> list = new ArrayList<TestClass>();
             HttpClient httpClient = new DefaultHttpClient();
             HttpContext localContext = new BasicHttpContext();
             HttpGet httpGet = new HttpGet(SERVER + RESOURCE);
@@ -156,12 +167,12 @@ public class TemaActivity extends AppCompatActivity {
                 HttpEntity entity = response.getEntity();
                 text = Util.getASCIIContentFromEntity(entity);
 
-                JSONObject materia = new JSONObject(text);
-                JSONArray objects = materia.getJSONArray("temas");
+                JSONObject tema = new JSONObject(text);
+                JSONArray objects = tema.getJSONArray("tests");
                 for(int i=0;i<objects.length();i++){
                     JSONObject temaJSON = objects.getJSONObject(i);
-                    TemaClass auxTema = new TemaClass(temaJSON.getInt("id"),temaJSON.getString("nombre"),temaJSON.getString("descripcion"),temaJSON.getString("formulas"));
-                    temasList.add(auxTema);
+                    TestClass aux = new TestClass(temaJSON.getInt("id"),temaJSON.getString("nombre"));
+                    list.add(aux);
                 }
 
             } catch (JSONException e) {
@@ -173,7 +184,7 @@ public class TemaActivity extends AppCompatActivity {
                 e.printStackTrace();
                 System.out.println("Exception::"+e.getLocalizedMessage());
             }
-            return temasList;
+            return list;
         }
     }
 
@@ -181,7 +192,6 @@ public class TemaActivity extends AppCompatActivity {
     public void onBackPressed() {
         reset_variables();
         finish();
-        startActivity(new Intent(getApplicationContext(), MateriaActivity.class));
+        startActivity(new Intent(getApplicationContext(), TemaActivity.class));
     }
-
 }

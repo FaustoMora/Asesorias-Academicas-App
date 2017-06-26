@@ -1,14 +1,19 @@
 package com.passeapp.dark_legion.asacapp;
 
+import java.util.ArrayList;
+
 public class TemaClass {
     private Integer _id;
     private String nombre;
     private String description;
+    private String formulas;
+    private ArrayList<TestClass> lstTest = new ArrayList<TestClass>();
 
-    public TemaClass(Integer _id, String nombre, String description) {
+    public TemaClass(Integer _id, String nombre, String description, String formulas) {
         this._id = _id;
         this.nombre = nombre;
         this.description = description;
+        this.formulas = formulas;
     }
 
     public Integer get_id() {
@@ -38,5 +43,21 @@ public class TemaClass {
     @Override
     public String toString() {
         return this.getNombre();
+    }
+
+    public ArrayList<TestClass> getLstTest() {
+        return lstTest;
+    }
+
+    public void setLstTest(ArrayList<TestClass> lstTest) {
+        this.lstTest = lstTest;
+    }
+
+    public String getFormulas() {
+        return formulas;
+    }
+
+    public void setFormulas(String formulas) {
+        this.formulas = formulas;
     }
 }

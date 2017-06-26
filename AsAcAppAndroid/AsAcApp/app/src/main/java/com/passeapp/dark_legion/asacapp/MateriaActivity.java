@@ -32,11 +32,15 @@ public class MateriaActivity extends AppCompatActivity {
 
     GridView gridView;
     private ProgressDialog progressDialog;
+    private String density;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_materia);
+
+        density = String.valueOf(getResources().getDisplayMetrics().density);
+
 
         try{
             new HttpGET_MateriaTask().execute();
@@ -58,6 +62,7 @@ public class MateriaActivity extends AppCompatActivity {
                     MateriaClass aux = VariablesActivity.lstMaterias.get(i);
                     if(aux != null){
                         VariablesActivity.actualMateria = aux;
+                        VariablesActivity.actualIndexMateria = i;
                         startActivity(new Intent(getApplicationContext(), TemaActivity.class));
                     }
                 }else {
@@ -70,7 +75,13 @@ public class MateriaActivity extends AppCompatActivity {
 
     public void reset_variables(){
         VariablesActivity.actualMateria = null;
-        VariablesActivity.lstTemas.clear();
+        VariablesActivity.actualTema = null;
+        VariablesActivity.actualTest = null;
+        VariablesActivity.actualQuestion = null;
+        VariablesActivity.actualIndexMateria = null;
+        VariablesActivity.actualIndexTema = null;
+        VariablesActivity.actualIndexTest = null;
+        VariablesActivity.actualIndexPregunta = null;
     }
 
     public ProgressDialog createDialog(){
@@ -90,7 +101,11 @@ public class MateriaActivity extends AppCompatActivity {
         @Override
         protected ArrayList<MateriaClass> doInBackground(Void... voids) {
             publishProgress(0);
-            return getMaterias();
+            if(VariablesActivity.lstMaterias.isEmpty()){
+                return getMaterias();
+            }else{
+                return VariablesActivity.lstMaterias;
+            }
         }
 
         @Override
@@ -126,7 +141,7 @@ public class MateriaActivity extends AppCompatActivity {
                 JSONArray objects = new JSONArray(text);
                 for(int i=0;i<objects.length();i++){
                     JSONObject temaJSON = objects.getJSONObject(i);
-                    MateriaClass aux = new MateriaClass(temaJSON.getInt("id"),temaJSON.getString("nombre_materia"),temaJSON.getString("icono_materia"));
+                    MateriaClass aux = new MateriaClass(temaJSON.getInt("id"),temaJSON.getString("nombre"),temaJSON.getString("icono"));
                     materiasList.add(aux);
                 }
 
@@ -161,23 +176,56 @@ public class MateriaActivity extends AppCompatActivity {
         }
 
         @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            view = getLayoutInflater().inflate(R.layout.custom_grid_element,viewGroup,false);
+        public View getView(int i, View convertView, ViewGroup viewGroup) {
+
+            View view = convertView;
+
+            if (view == null) {
+                view = getLayoutInflater().inflate(R.layout.custom_grid_element,null);
+            }
 
             ImageView icon = (ImageView)view.findViewById(R.id.iconoMateria);
             MateriaClass aux = (MateriaClass) getItem(i);
             byte[] decodedString = Base64.decode(aux.getIcono(), Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            icon.setImageBitmap(Bitmap.createScaledBitmap(decodedByte, 150, 150, false));
 
+            // 0.75 if it's LDPI
+            // 1.0 if it's MDPI
+            // 1.5 if it's HDPI
+            // 2.0 if it's XHDPI
+            // 3.0 if it's XXHDPI
+            // 4.0 if it's XXXHDPI
+            int iconSize;
+            switch (density){
+                case "0.75":
+                    iconSize = 100;
+                    break;
+                case "1.0":
+                    iconSize = 150;
+                    break;
+                case "1.5":
+                    iconSize = 225;
+                    break;
+                case "2.0":
+                    iconSize = 275;
+                    break;
+                case "3.0":
+                    iconSize = 350;
+                    break;
+                case "4.0":
+                    iconSize = 400;
+                    break;
+                default:
+                    iconSize = 275;
+                    break;
+            }
+            icon.setImageBitmap(Bitmap.createScaledBitmap(decodedByte, iconSize, iconSize, false));
             return view;
         }
     }
 
     @Override
     public void onBackPressed() {
-        VariablesActivity.resetAllvariables();
-        VariablesActivity.reset_list();
         finish();
     }
 }

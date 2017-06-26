@@ -16,23 +16,21 @@
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
         app:srcCompat="@mipmap/white_square"
-        android:layout_marginTop="118dp"
         android:id="@+id/iconoApp"
-        android:layout_alignParentTop="true"
+        android:layout_marginBottom="85dp"
+        android:layout_above="@+id/startAppBtn"
         android:layout_centerHorizontal="true" />
 
     <Button
         android:text="Iniciar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/iconoApp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="43dp"
         android:id="@+id/startAppBtn"
         android:background="#007fff"
-        android:textColor="@android:color/white"/>
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="129dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

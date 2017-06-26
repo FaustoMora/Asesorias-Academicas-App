@@ -8,7 +8,7 @@ public class MateriaClass {
     private Integer id;
     private  String nombre;
     private String icono;
-    private ArrayList<TemaClass> lstTemas;
+    private ArrayList<TemaClass> lstTemas = new ArrayList<TemaClass>();
 
     public MateriaClass(Integer id, String nombre, String icono) {
         this.id = id;
