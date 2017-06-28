@@ -29,7 +29,6 @@ public class EndingActivity extends AppCompatActivity {
         restartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
                 startActivity(new Intent(getApplicationContext(), MateriaActivity.class));
             }
         });
@@ -37,7 +36,6 @@ public class EndingActivity extends AppCompatActivity {
         repeatTestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
                 startActivity(new Intent(getApplicationContext(), TestActivity.class));
             }
         });

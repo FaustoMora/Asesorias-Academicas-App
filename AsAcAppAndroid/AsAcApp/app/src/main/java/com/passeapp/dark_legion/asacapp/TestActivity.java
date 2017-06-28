@@ -1,17 +1,21 @@
 package com.passeapp.dark_legion.asacapp;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,7 +37,7 @@ public class TestActivity extends AppCompatActivity {
     protected Button startTestBtn;
     protected ListView listTests;
     protected TextView lblTemaTest;
-    protected ImageButton formulaIcon;
+    protected ImageView formulaIcon;
     public ArrayAdapter<TestClass> adapterTests;
     private ProgressDialog progressDialog;
     public static int selectedListPos = -1;
@@ -59,8 +63,8 @@ public class TestActivity extends AppCompatActivity {
 
     protected void init(){
 
-        this.formulaIcon = (ImageButton)findViewById(R.id.formulaIcon);
-        if(!VariablesActivity.actualTema.getFormulas().isEmpty()){
+        this.formulaIcon = (ImageView) findViewById(R.id.formulaIcon);
+        if(!VariablesActivity.actualTema.getFormulas().isEmpty() && !VariablesActivity.actualTema.getFormulas().equals("null")){
             this.formulaIcon.setVisibility(View.VISIBLE);
             this.formulaIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -101,7 +105,6 @@ public class TestActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 adapterView.setSelected(true);
                 view.setSelected(true);
-
                 listTests.setSelection(i);
                 listTests.setItemChecked(i,true);
                 selectedListPos = i;
@@ -131,12 +134,29 @@ public class TestActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(ArrayList<TestClass> lstTests) {
-            VariablesActivity.lstTests = lstTests;
-            VariablesActivity.actualTema.setLstTest(lstTests);
-            VariablesActivity.lstMaterias.get(VariablesActivity.actualIndexMateria).getLstTemas().get(VariablesActivity.actualIndexTema).setLstTest(lstTests);
-            init();
-            reset_variables();
-            progressDialog.dismiss();
+            if(lstTests != null){
+                VariablesActivity.lstTests = lstTests;
+                VariablesActivity.actualTema.setLstTest(lstTests);
+                VariablesActivity.lstMaterias.get(VariablesActivity.actualIndexMateria).getLstTemas().get(VariablesActivity.actualIndexTema).setLstTest(lstTests);
+                init();
+                reset_variables();
+                progressDialog.dismiss();
+            }else{
+                reset_variables();
+                progressDialog.dismiss();
+                AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(TestActivity.this, R.style.myDialogStyle));
+                builder.setMessage("NO EXISTEN DATOS QUE PRESENTAR")
+                        .setCancelable(false)
+                        .setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //do things
+                                dialog.dismiss();
+                                finish();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
         }
 
         @Override
@@ -174,6 +194,7 @@ public class TestActivity extends AppCompatActivity {
                     list.add(aux);
                 }
 
+                return list;
             } catch (JSONException e) {
                 Log.e("JSONException",e.getLocalizedMessage());
                 e.printStackTrace();
@@ -183,7 +204,7 @@ public class TestActivity extends AppCompatActivity {
                 e.printStackTrace();
                 System.out.println("Exception::"+e.getLocalizedMessage());
             }
-            return list;
+            return null;
         }
     }
 
@@ -191,6 +212,6 @@ public class TestActivity extends AppCompatActivity {
     public void onBackPressed() {
         reset_variables();
         finish();
-        startActivity(new Intent(getApplicationContext(), TemaActivity.class));
+        //startActivity(new Intent(getApplicationContext(), TemaActivity.class));
     }
 }

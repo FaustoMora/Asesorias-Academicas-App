@@ -54,7 +54,7 @@ public class TemaClass {
     }
 
     public String getFormulas() {
-        return formulas;
+        return formulas + "?op=0";
     }
 
     public void setFormulas(String formulas) {

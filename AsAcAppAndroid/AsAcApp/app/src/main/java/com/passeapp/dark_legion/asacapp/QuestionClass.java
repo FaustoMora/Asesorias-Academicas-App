@@ -1,5 +1,7 @@
 package com.passeapp.dark_legion.asacapp;
 
+import android.graphics.Color;
+
 import java.util.ArrayList;
 
 public class QuestionClass {
@@ -9,6 +11,9 @@ public class QuestionClass {
     private String pregunta_imagen;
     private String solucion_imagen;
     private ArrayList<OptionClass> opciones = new ArrayList<>();
+    private int selectedOP = -1;
+    private boolean hasSelected = false;
+    private int selectedColorOption = Color.WHITE;
 
     public QuestionClass(Integer _id, String detalle, String link_youtube,String pregunta_imagen, String solucion_imagen) {
         this._id = _id;
@@ -61,5 +66,43 @@ public class QuestionClass {
 
     public void setOpciones(ArrayList<OptionClass> opciones) {
         this.opciones = opciones;
+    }
+
+    public String getYoutube() {
+        return youtube;
+    }
+
+    public void setYoutube(String youtube) {
+        this.youtube = youtube;
+    }
+
+    public int getSelectedOP() {
+        return selectedOP;
+    }
+
+    public void setSelectedOP(int selectedOP) {
+        this.selectedOP = selectedOP;
+    }
+
+    public boolean isHasSelected() {
+        return hasSelected;
+    }
+
+    public void setHasSelected(boolean hasSelected) {
+        this.hasSelected = hasSelected;
+    }
+
+    public int getSelectedColorOption() {
+        return selectedColorOption;
+    }
+
+    public void setSelectedColorOption(int selectedColorOption) {
+        this.selectedColorOption = selectedColorOption;
+    }
+
+    public void resetQuestionVariables(){
+        this.setSelectedOP(-1);
+        this.setHasSelected(false);
+        this.setSelectedColorOption(Color.WHITE);
     }
 }

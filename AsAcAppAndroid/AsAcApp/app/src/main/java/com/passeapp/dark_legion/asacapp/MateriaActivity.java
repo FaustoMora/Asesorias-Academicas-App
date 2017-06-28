@@ -1,14 +1,17 @@
 package com.passeapp.dark_legion.asacapp;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -110,10 +113,27 @@ public class MateriaActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(ArrayList<MateriaClass> materiaClasses) {
-            VariablesActivity.lstMaterias = materiaClasses;
-            init();
-            reset_variables();
-            progressDialog.dismiss();
+            if(materiaClasses != null) {
+                VariablesActivity.lstMaterias = materiaClasses;
+                init();
+                reset_variables();
+                progressDialog.dismiss();
+            }else{
+                reset_variables();
+                progressDialog.dismiss();
+                AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(MateriaActivity.this, R.style.myDialogStyle));
+                builder.setMessage("NO EXISTEN DATOS QUE PRESENTAR")
+                        .setCancelable(false)
+                        .setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //do things
+                                dialog.dismiss();
+                                finish();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
         }
 
         @Override
@@ -145,6 +165,7 @@ public class MateriaActivity extends AppCompatActivity {
                     materiasList.add(aux);
                 }
 
+                return materiasList;
             } catch (JSONException e) {
                 Log.e("JSONException",e.getLocalizedMessage());
                 e.printStackTrace();
@@ -154,7 +175,7 @@ public class MateriaActivity extends AppCompatActivity {
                 e.printStackTrace();
                 System.out.println("Exception::"+e.getLocalizedMessage());
             }
-            return materiasList;
+            return null;
         }
     }
 
@@ -226,6 +247,7 @@ public class MateriaActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        reset_variables();
         finish();
     }
 }

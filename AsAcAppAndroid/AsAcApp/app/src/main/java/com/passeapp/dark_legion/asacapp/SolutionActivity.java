@@ -92,6 +92,6 @@ public class SolutionActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
+        finish();
     }
 }

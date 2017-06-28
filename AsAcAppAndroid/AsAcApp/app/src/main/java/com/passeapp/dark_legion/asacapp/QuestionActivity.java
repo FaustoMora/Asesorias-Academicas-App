@@ -2,6 +2,7 @@ package com.passeapp.dark_legion.asacapp;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,12 +101,24 @@ public class QuestionActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if(extras != null) {
-            int nextIndex =  extras.getInt("nextIndex");
-            VariablesActivity.actualIndexPregunta = nextIndex + VariablesActivity.actualIndexPregunta;
+            if(getIntent().hasExtra("nextIndex")){
+                int nextIndex =  extras.getInt("nextIndex");
+                if(nextIndex > 0){
+                    VariablesActivity.pastIndexPregunta = VariablesActivity.actualIndexPregunta;
+                    VariablesActivity.actualIndexPregunta = nextIndex + VariablesActivity.actualIndexPregunta;
+                }else{
+                    VariablesActivity.pastIndexPregunta = VariablesActivity.pastIndexPregunta + nextIndex;
+                    VariablesActivity.actualIndexPregunta = nextIndex + VariablesActivity.actualIndexPregunta;
+                }
+            }
         }else{
             VariablesActivity.actualIndexPregunta = 0;
+            VariablesActivity.pastIndexPregunta = 0;
         }
         VariablesActivity.actualQuestion = VariablesActivity.lstQuestions.get(VariablesActivity.actualIndexPregunta);
+        selectedPosOption = VariablesActivity.actualQuestion.getSelectedOP();
+        hasSelectedOption = VariablesActivity.actualQuestion.isHasSelected();
+        selectedColorOption = VariablesActivity.actualQuestion.getSelectedColorOption();
 
         this.lblTemaTest = (TextView)findViewById(R.id.lblTemaTest);
         this.lblIndex = (TextView)findViewById(R.id.lblIndexPregunta);
@@ -113,23 +127,26 @@ public class QuestionActivity extends AppCompatActivity {
         this.lblIndex.setText(getIndexText());
 
         //final LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
-        this.hasSelectedOption = false;
         this.questionImage = (ImageView)findViewById(R.id.questionImage);
         this.continueTestBtn = (Button)findViewById(R.id.questionContinueBtn);
         this.continueTestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int pos = optionsList.getCheckedItemPosition();
-                if(pos > -1){
-                    OptionClass aux = VariablesActivity.actualQuestion.getOpciones().get(pos);
-                    if(aux.getEs_correcta()){
-                        VariablesActivity.scores.add(1);
-                    }else{
-                        VariablesActivity.scores.add(0);
-                    }
+                if(VariablesActivity.actualQuestion.getSelectedOP() >= 0 && (optionsList.getCheckedItemPosition() < 0)){
                     buildCustomDialog();
                 }else{
-                    Toast.makeText(getApplicationContext(),"Seleccione una respuesta para continuar",Toast.LENGTH_SHORT).show();
+                    int pos = optionsList.getCheckedItemPosition();
+                    if(pos > -1){
+                        OptionClass aux = VariablesActivity.actualQuestion.getOpciones().get(pos);
+                        if(aux.getEs_correcta()){
+                            VariablesActivity.scores.add(1);
+                        }else{
+                            VariablesActivity.scores.add(0);
+                        }
+                        buildCustomDialog();
+                    }else{
+                        Toast.makeText(getApplicationContext(),"Seleccione una respuesta para continuar",Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -165,14 +182,17 @@ public class QuestionActivity extends AppCompatActivity {
                     optionsList.setItemChecked(i, true);
                     view.setSelected(true);
                     selectedPosOption = i;
+                    VariablesActivity.actualQuestion.setSelectedOP(i);
                     if(view.isSelected() ){
                         if (op.getEs_correcta()){
                             selectedColorOption = Color.GREEN;
                         }else{
                             selectedColorOption = Color.RED;
                         }
+                        VariablesActivity.actualQuestion.setSelectedColorOption(selectedColorOption);
                     }
                     hasSelectedOption = true;
+                    VariablesActivity.actualQuestion.setHasSelected(true);
                     adapterOptions.notifyDataSetChanged();
                 }
 
@@ -205,35 +225,35 @@ public class QuestionActivity extends AppCompatActivity {
         int iconWidth;
         switch (density){
             case "0.75":
-                iconHeight = 100;
-                iconWidth = 100;
+                iconHeight = 280;
+                iconWidth = 300;
                 break;
             case "1.0":
-                iconHeight = 100;
-                iconWidth = 100;
+                iconHeight = 300;
+                iconWidth = 400;
                 break;
             case "1.5":
-                iconHeight = 100;
-                iconWidth = 100;
+                iconHeight = 320;
+                iconWidth = 500;
                 break;
             case "2.0":
-                iconHeight = 100;
-                iconWidth = 100;
+                iconHeight = 380;
+                iconWidth = 600;
                 break;
             case "3.0":
-                iconHeight = 100;
-                iconWidth = 100;
+                iconHeight = 420;
+                iconWidth = 700;
                 break;
             case "4.0":
-                iconHeight = 100;
-                iconWidth = 100;
+                iconHeight = 480;
+                iconWidth = 800;
                 break;
             default:
-                iconHeight = 100;
-                iconWidth = 100;
+                iconHeight = 420;
+                iconWidth = 700;
                 break;
         }
-        this.questionImage.setImageBitmap(Bitmap.createScaledBitmap(decodedByte, 700, 420, false));
+        this.questionImage.setImageBitmap(Bitmap.createScaledBitmap(decodedByte, iconWidth, iconHeight, false));
     }
 
 
@@ -315,10 +335,20 @@ public class QuestionActivity extends AppCompatActivity {
         protected void onPostExecute(ArrayList<QuestionClass> questionClass) {
             reset_variables();
             if (questionClass == null){
+                reset_variables();
                 progressDialog.dismiss();
-                Toast.makeText(getApplicationContext(),"NO EXISTEN DATOS PARA PRESENTAR",Toast.LENGTH_LONG).show();
-                finish();
-                startActivity(new Intent(getApplicationContext(), TestActivity.class));
+                AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(QuestionActivity.this, R.style.myDialogStyle));
+                builder.setMessage("NO EXISTEN DATOS QUE PRESENTAR")
+                        .setCancelable(false)
+                        .setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //do things
+                                dialog.dismiss();
+                                finish();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
             }else {
                 VariablesActivity.lstQuestions = questionClass;
                 VariablesActivity.lstMaterias.get(VariablesActivity.actualIndexMateria).getLstTemas().get(VariablesActivity.actualIndexTema)
@@ -410,7 +440,7 @@ public class QuestionActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            progressPDFDialog = createDialog();
+            progressPDFDialog = createProgressDialog();
         }
 
         @Override
@@ -515,7 +545,18 @@ public class QuestionActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         reset_variables();
-        finish();
-        startActivity(new Intent(getApplicationContext(), TestActivity.class));
+        if(VariablesActivity.actualIndexPregunta == 0){
+            for (QuestionClass q :VariablesActivity.lstMaterias.get(VariablesActivity.actualIndexMateria).getLstTemas().get(VariablesActivity.actualIndexTema)
+                    .getLstTest().get(VariablesActivity.actualIndexTest).getLstPreguntas()) {
+                q.resetQuestionVariables();
+            }
+            finish();
+        }else if (VariablesActivity.actualIndexPregunta > 0){
+            Intent intent = new Intent(this,QuestionActivity.class);
+            intent.putExtra("nextIndex",-1);
+            finish();
+            startActivity(intent);
+        }
+        //startActivity(new Intent(getApplicationContext(), TestActivity.class));
     }
 }

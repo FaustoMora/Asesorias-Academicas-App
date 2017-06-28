@@ -19,6 +19,7 @@ public class VariablesActivity extends AppCompatActivity {
     public static Integer actualIndexTema = null;
     public static Integer actualIndexTest = null;
     public static Integer actualIndexPregunta = null;
+    public static Integer pastIndexPregunta = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

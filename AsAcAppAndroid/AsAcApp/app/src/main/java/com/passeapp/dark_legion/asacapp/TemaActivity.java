@@ -1,11 +1,14 @@
 package com.passeapp.dark_legion.asacapp;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -116,12 +119,30 @@ public class TemaActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(ArrayList<TemaClass> temaClasses) {
-            VariablesActivity.lstTemas = temaClasses;
-            VariablesActivity.actualMateria.setLstTemas(temaClasses);
-            VariablesActivity.lstMaterias.get(VariablesActivity.actualIndexMateria).setLstTemas(temaClasses);
-            init();
-            reset_variables();
-            progressDialog.dismiss();
+            if(temaClasses != null){
+                VariablesActivity.lstTemas = temaClasses;
+                VariablesActivity.actualMateria.setLstTemas(temaClasses);
+                VariablesActivity.lstMaterias.get(VariablesActivity.actualIndexMateria).setLstTemas(temaClasses);
+                init();
+                reset_variables();
+                progressDialog.dismiss();
+            }else{
+                reset_variables();
+                progressDialog.dismiss();
+                //startActivity(new Intent(getApplicationContext(), MateriaActivity.class));
+                AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(TemaActivity.this, R.style.myDialogStyle));
+                builder.setMessage("NO EXISTEN DATOS QUE PRESENTAR")
+                        .setCancelable(false)
+                        .setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //do things
+                                dialog.dismiss();
+                                finish();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
         }
 
         @Override
@@ -159,6 +180,7 @@ public class TemaActivity extends AppCompatActivity {
                     temasList.add(auxTema);
                 }
 
+                return temasList;
             } catch (JSONException e) {
                 Log.e("JSONException",e.getLocalizedMessage());
                 e.printStackTrace();
@@ -168,7 +190,7 @@ public class TemaActivity extends AppCompatActivity {
                 e.printStackTrace();
                 System.out.println("Exception::"+e.getLocalizedMessage());
             }
-            return temasList;
+            return null;
         }
     }
 
