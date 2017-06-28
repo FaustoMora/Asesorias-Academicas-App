@@ -65,13 +65,8 @@ public class TemaActivity extends AppCompatActivity {
                     TemaClass aux = (TemaClass) listTemas.getSelectedItem();
                     TemaClass auxTema = (TemaClass) listTemas.getItemAtPosition(selectedListPos);
                     if(auxTema != null ){
-                        //TemaClass auxTema = arrayList.get(posTema);
                         VariablesActivity.actualTema = auxTema;
                         VariablesActivity.actualIndexTema = selectedListPos;
-                        //VariablesActivity.lstQuestions.clear();
-                        //Toast.makeText(getApplicationContext(),"Seleccionaste: "+auxTema.toString(),Toast.LENGTH_LONG).show();
-                        //VariablesActivity.scores.clear();
-                        finish();
                         startActivity(new Intent(getApplicationContext(), TestActivity.class));
                     }else{
                         Toast.makeText(getApplicationContext(),"Seleccione un tema para continuar",Toast.LENGTH_LONG).show();
@@ -137,10 +132,10 @@ public class TemaActivity extends AppCompatActivity {
         @Override
         protected ArrayList<TemaClass> doInBackground(Void... voids) {
             publishProgress(0);
-            if(VariablesActivity.lstTemas.isEmpty() && VariablesActivity.actualMateria.getLstTemas().isEmpty()){
+            if(VariablesActivity.lstMaterias.get(VariablesActivity.actualIndexMateria).getLstTemas().isEmpty()){
                 return getTemas();
             }else{
-                return VariablesActivity.lstTemas;
+                return VariablesActivity.lstMaterias.get(VariablesActivity.actualIndexMateria).getLstTemas();
             }
         }
 
@@ -181,7 +176,7 @@ public class TemaActivity extends AppCompatActivity {
     public void onBackPressed() {
         reset_variables();
         finish();
-        startActivity(new Intent(getApplicationContext(), MateriaActivity.class));
+        //startActivity(new Intent(getApplicationContext(), MateriaActivity.class));
     }
 
 }

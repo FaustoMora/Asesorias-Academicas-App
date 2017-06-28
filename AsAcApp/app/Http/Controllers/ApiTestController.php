@@ -47,7 +47,7 @@ class ApiTestController extends Controller
      */
     public function show(Test $test)
     {
-		return response()->json($test->with('preguntas')->has('preguntas','>=',5)->first(), 200, [], JSON_UNESCAPED_UNICODE);
+		return response()->json($test->with('preguntas')->has('preguntas','>=',5)->with('preguntas.PreguntaImagen','preguntas.SolucionImagen','preguntas.Respuestas')->first(), 200, [], JSON_UNESCAPED_UNICODE);
     }
 
     /**

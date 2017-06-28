@@ -1,6 +1,6 @@
 package com.passeapp.dark_legion.asacapp;
 
-import android.content.DialogInterface;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -43,30 +43,7 @@ public class SolutionActivity extends AppCompatActivity {
         this.nextExcludeQuestionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(VariablesActivity.scores.size()==5){
-                    /*scoreDialog = new AlertDialog.Builder(SolutionActivity.this).create();
-                    scoreDialog.setTitle("Tu score es: " + VariablesActivity.sumScore());
-                    scoreDialog.setButton(DialogInterface.BUTTON_NEUTRAL,"OK",new DialogInterface.OnClickListener(){
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            scoreDialog.dismiss();
-                            finish();
-                            startActivity(new Intent(getApplicationContext(), TemaActivity.class));
-                        }
-                    });
-                    scoreDialog.show();*/
                     finish();
-                    startActivity(new Intent(getApplicationContext(), EndingActivity.class));
-                }else{
-                    String excludedId = VariablesActivity.actualQuestion.get_id().toString();
-                    if(VariablesActivity.excludesQuestions != null && !VariablesActivity.excludesQuestions.isEmpty()){
-                        VariablesActivity.excludesQuestions = VariablesActivity.excludesQuestions + "," + excludedId;
-                    }else{
-                        VariablesActivity.excludesQuestions = "?p=" + excludedId;
-                    }
-                    finish();
-                    startActivity(new Intent(getApplicationContext(), QuestionActivity.class));
-                }
             }
         });
 

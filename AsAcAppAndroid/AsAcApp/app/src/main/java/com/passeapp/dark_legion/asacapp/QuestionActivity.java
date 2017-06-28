@@ -2,12 +2,12 @@ package com.passeapp.dark_legion.asacapp;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -21,10 +21,18 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -35,7 +43,15 @@ import org.apache.http.protocol.HttpContext;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 
 public class QuestionActivity extends AppCompatActivity {
@@ -50,12 +66,19 @@ public class QuestionActivity extends AppCompatActivity {
     public boolean hasSelectedOption = false;
     public ProgressDialog progressDialog;
     public Dialog customDialog;
+    private String density;
+    private ImageView downPDF;
+    private TextView lblTemaTest;
+    private TextView lblIndex;
+    private ProgressDialog progressPDFDialog;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
+        density = String.valueOf(getResources().getDisplayMetrics().density);
+
         //recreate();
         try{
             new HttpGET_QuestionTask().execute();
@@ -63,7 +86,7 @@ public class QuestionActivity extends AppCompatActivity {
             Log.e("error api",e.getLocalizedMessage());
             Toast.makeText(getApplicationContext(),"CONEXIÓN A INTERNET NO DISPONIBLE",Toast.LENGTH_LONG).show();
             finish();
-            startActivity(new Intent(getApplicationContext(), MateriaActivity.class));
+            startActivity(new Intent(getApplicationContext(), TestActivity.class));
         }
     }
 
@@ -73,6 +96,22 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     protected void init(){
+
+        Bundle extras = getIntent().getExtras();
+        if(extras != null) {
+            int nextIndex =  extras.getInt("nextIndex");
+            VariablesActivity.actualIndexPregunta = nextIndex + VariablesActivity.actualIndexPregunta;
+        }else{
+            VariablesActivity.actualIndexPregunta = 0;
+        }
+        VariablesActivity.actualQuestion = VariablesActivity.lstQuestions.get(VariablesActivity.actualIndexPregunta);
+
+        this.lblTemaTest = (TextView)findViewById(R.id.lblTemaTest);
+        this.lblIndex = (TextView)findViewById(R.id.lblIndexPregunta);
+
+        this.lblTemaTest.setText(VariablesActivity.actualTema.getNombre() + " -> " + VariablesActivity.actualTest.getNombre());
+        this.lblIndex.setText(getIndexText());
+
         //final LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
         this.hasSelectedOption = false;
         this.questionImage = (ImageView)findViewById(R.id.questionImage);
@@ -140,11 +179,60 @@ public class QuestionActivity extends AppCompatActivity {
             }
         });
         initialiceImage();
+
+        this.downPDF = (ImageView)findViewById(R.id.downPDF);
+        this.downPDF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try{
+                    new QuestionActivity.PDFTest().execute();
+                }catch (Exception e){
+                    Log.e("PDF",e.getLocalizedMessage());
+                    Toast.makeText(getApplicationContext(),"OCURRIO Un ERROR En LA DESCARGA",Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+    private String getIndexText(){
+        return "Pregunta " + String.valueOf(VariablesActivity.actualIndexPregunta  + 1 ) + "/" + String.valueOf(VariablesActivity.lstQuestions.size());
     }
 
     protected void initialiceImage(){
         byte[] decodedString = Base64.decode(VariablesActivity.actualQuestion.getPregunta_imagen(), Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        int iconHeight;
+        int iconWidth;
+        switch (density){
+            case "0.75":
+                iconHeight = 100;
+                iconWidth = 100;
+                break;
+            case "1.0":
+                iconHeight = 100;
+                iconWidth = 100;
+                break;
+            case "1.5":
+                iconHeight = 100;
+                iconWidth = 100;
+                break;
+            case "2.0":
+                iconHeight = 100;
+                iconWidth = 100;
+                break;
+            case "3.0":
+                iconHeight = 100;
+                iconWidth = 100;
+                break;
+            case "4.0":
+                iconHeight = 100;
+                iconWidth = 100;
+                break;
+            default:
+                iconHeight = 100;
+                iconWidth = 100;
+                break;
+        }
         this.questionImage.setImageBitmap(Bitmap.createScaledBitmap(decodedByte, 700, 420, false));
     }
 
@@ -164,17 +252,15 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 customDialog.dismiss();
-                finish();
                 startActivity(new Intent(getApplicationContext(), SolutionActivity.class));
-//                finish();
+//              finish();
             }
         });
         Button nextQuestionBtn = (Button)promptView.findViewById(R.id.nextQuestionBtn);
         nextQuestionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(VariablesActivity.scores.size()==5){
-
+                if(VariablesActivity.lstQuestions.size() == (VariablesActivity.actualIndexPregunta + 1)){
                     /*
                     scoreDialog = new AlertDialog.Builder(QuestionActivity.this).create();
                     scoreDialog.setTitle("Tu score es: " + VariablesActivity.sumScore());
@@ -192,15 +278,11 @@ public class QuestionActivity extends AppCompatActivity {
                     finish();
                     startActivity(new Intent(getApplicationContext(), EndingActivity.class));
                 }else{
-                    String excludedId = VariablesActivity.actualQuestion.get_id().toString();
-                    if(VariablesActivity.excludesQuestions != null && !VariablesActivity.excludesQuestions.isEmpty()){
-                        VariablesActivity.excludesQuestions = VariablesActivity.excludesQuestions + "," + excludedId;
-                    }else{
-                        VariablesActivity.excludesQuestions = "?p=" + excludedId;
-                    }
+                    Intent intent = new Intent(getApplicationContext(), QuestionActivity.class);
+                    intent.putExtra("nextIndex",1);
                     customDialog.dismiss();
                     finish();
-                    startActivity(new Intent(getApplicationContext(), QuestionActivity.class));
+                    startActivity(intent);
                 }
             }
         });
@@ -219,15 +301,10 @@ public class QuestionActivity extends AppCompatActivity {
         return  progressDialog;
     }
 
-    private class HttpGET_QuestionTask extends AsyncTask<String,Integer,QuestionClass> {
-        String SERVER = "http://174.138.80.160/";
-        String RESOURCE = "temas/"+VariablesActivity.actualTema.get_id()+"/pregunta/";
+    private class HttpGET_QuestionTask extends AsyncTask<String,Integer,ArrayList<QuestionClass>> {
+        String SERVER = "http://174.138.80.160";
+        String RESOURCE = "/tests/"+VariablesActivity.actualTest.get_id();
 
-        public HttpGET_QuestionTask() {
-            if(VariablesActivity.excludesQuestions != null){
-                this.RESOURCE = this.RESOURCE + VariablesActivity.excludesQuestions;
-            }
-        }
 
         @Override
         protected void onPreExecute() {
@@ -235,20 +312,21 @@ public class QuestionActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(QuestionClass questionClass) {
+        protected void onPostExecute(ArrayList<QuestionClass> questionClass) {
+            reset_variables();
             if (questionClass == null){
                 progressDialog.dismiss();
                 Toast.makeText(getApplicationContext(),"NO EXISTEN DATOS PARA PRESENTAR",Toast.LENGTH_LONG).show();
                 finish();
-                startActivity(new Intent(getApplicationContext(), TemaActivity.class));
+                startActivity(new Intent(getApplicationContext(), TestActivity.class));
             }else {
-                VariablesActivity.actualQuestion = questionClass;
-                VariablesActivity.lstQuestions.add(questionClass);
+                VariablesActivity.lstQuestions = questionClass;
+                VariablesActivity.lstMaterias.get(VariablesActivity.actualIndexMateria).getLstTemas().get(VariablesActivity.actualIndexTema)
+                        .getLstTest().get(VariablesActivity.actualIndexTest).setLstPreguntas(questionClass);
                 init();
             }
-                reset_variables();
-                progressDialog.dismiss();
-            }
+            progressDialog.dismiss();
+        }
 
         @Override
         protected void onProgressUpdate(Integer... values) {
@@ -256,15 +334,21 @@ public class QuestionActivity extends AppCompatActivity {
         }
 
         @Override
-        protected QuestionClass doInBackground(String... strings) {
+        protected ArrayList<QuestionClass> doInBackground(String... strings) {
             publishProgress(0);
-            return getPregunta();
+            if(VariablesActivity.lstMaterias.get(VariablesActivity.actualIndexMateria).getLstTemas().get(VariablesActivity.actualIndexTema)
+                    .getLstTest().get(VariablesActivity.actualIndexTest).getLstPreguntas().isEmpty()){
+                return getPreguntas();
+            }else{
+                return VariablesActivity.lstMaterias.get(VariablesActivity.actualIndexMateria).getLstTemas().get(VariablesActivity.actualIndexTema)
+                        .getLstTest().get(VariablesActivity.actualIndexTest).getLstPreguntas();
+            }
         }
 
         @Nullable
-        private QuestionClass getPregunta() {
+        private ArrayList<QuestionClass> getPreguntas() {
 
-            ArrayList<OptionClass> opList = new ArrayList<OptionClass>();
+            ArrayList<QuestionClass> qList = new ArrayList<QuestionClass>();
             HttpClient httpClient = new DefaultHttpClient();
             HttpContext localContext = new BasicHttpContext();
             HttpGet httpGet = new HttpGet(SERVER + RESOURCE);
@@ -275,16 +359,23 @@ public class QuestionActivity extends AppCompatActivity {
                 text = Util.getASCIIContentFromEntity(entity);
 
                 JSONObject jsonObject = new JSONObject(text);
-                QuestionClass auxQuestion = new QuestionClass(jsonObject.getInt("id"),jsonObject.getString("detalle"),jsonObject.getInt("tema_id"),
-                        jsonObject.getString("link_youtube") ,jsonObject.getJSONObject("pregunta_imagen").getString("bitmap"),jsonObject.getJSONObject("solucion_imagen").getString("bitmap"));
-                JSONArray opcionesJSON = jsonObject.getJSONArray("respuestas");
-                for(int i=0;i<opcionesJSON.length();i++){
-                    JSONObject opJSON = opcionesJSON.getJSONObject(i);
-                    OptionClass auxTema = new OptionClass(opJSON.getInt("id"),opJSON.getString("detalle"),opJSON.getInt("es_correcta"));
-                    opList.add(auxTema);
+                JSONArray jsonPreguntas = jsonObject.getJSONArray("preguntas");
+
+                for(int i=0;i<jsonPreguntas.length();i++){
+                    JSONObject pregJSON = jsonPreguntas.getJSONObject(i);
+                    QuestionClass auxQuestion = new QuestionClass(pregJSON.getInt("id"),pregJSON.getString("detalle"),pregJSON.getString("link_youtube") ,pregJSON.getJSONObject("pregunta_imagen").getString("bitmap"),pregJSON.getJSONObject("solucion_imagen").getString("bitmap"));
+                    JSONArray opcionesJSON = pregJSON.getJSONArray("respuestas");
+                    ArrayList<OptionClass> opList = new ArrayList<OptionClass>();
+                    for(int j=0;j<opcionesJSON.length();j++){
+                        JSONObject opJSON = opcionesJSON.getJSONObject(j);
+                        OptionClass auxTema = new OptionClass(opJSON.getInt("id"),opJSON.getString("detalle"),opJSON.getInt("es_correcta"));
+                        opList.add(auxTema);
+                    }
+                    auxQuestion.setOpciones(opList);
+                    qList.add(auxQuestion);
                 }
-                auxQuestion.setOpciones(opList);
-                return auxQuestion;
+
+                return qList;
 
             } catch (JSONException e) {
                 Log.e("JSONException",e.getLocalizedMessage());
@@ -299,10 +390,132 @@ public class QuestionActivity extends AppCompatActivity {
         }
     }
 
+
+    public ProgressDialog createProgressDialog(){
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Descargando...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        return  progressDialog;
+    }
+
+
+    public class PDFTest extends AsyncTask<String,Integer,Boolean> {
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            return createPdf();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressPDFDialog = createDialog();
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            progressPDFDialog.dismiss();
+            if(aBoolean){
+                Toast.makeText(getApplicationContext(),"DESCARGA EXITOSA",Toast.LENGTH_LONG).show();
+            }else{
+                Toast.makeText(getApplicationContext(),"OCURRIO Un ERROR En LA DESCARGA",Toast.LENGTH_LONG).show();
+            }
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+        }
+
+
+        private Boolean createPdf(){
+
+            Font titleDoc = new Font(Font.FontFamily.TIMES_ROMAN, 24, Font.BOLD, BaseColor.BLACK);
+            Font title = new Font(Font.FontFamily.TIMES_ROMAN, 20, Font.BOLD, BaseColor.BLACK);
+            Font options = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.NORMAL, BaseColor.DARK_GRAY);
+
+            try{
+                File pdfFolder = new File(Environment.getExternalStoragePublicDirectory(
+                        Environment.DIRECTORY_DOWNLOADS), "pdfTest");
+                if (!pdfFolder.exists()) {
+                    pdfFolder.mkdir();
+                    Log.i("PDF", "Pdf Directory created");
+                }
+
+                //Create time stamp
+                Date date = new Date() ;
+                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(date);
+
+                File myFile = new File(pdfFolder + timeStamp + ".pdf");
+                OutputStream output = new FileOutputStream(myFile);
+
+                Document document = new Document(PageSize.A4);
+                PdfWriter.getInstance(document, output);
+                document.open();
+
+
+                // get input stream
+                Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.espol);
+                //InputStream ims = getAssets().open("espol.png");
+                //Bitmap bmpIcon = BitmapFactory.decodeStream(ims);
+                ByteArrayOutputStream streamIcon = new ByteArrayOutputStream();
+                largeIcon.compress(Bitmap.CompressFormat.PNG, 100, streamIcon);
+                Image icon = Image.getInstance(streamIcon.toByteArray());
+                icon.scaleToFit(25f, 25f);
+                document.add(icon);
+
+                Chunk titleMateria = new Chunk(VariablesActivity.actualTema.getDescription(), titleDoc);
+                Chunk titleTema = new Chunk(VariablesActivity.actualTema.getDescription(), titleDoc);
+                Chunk titleTest = new Chunk(VariablesActivity.actualTema.getDescription(), titleDoc);
+                document.add(new Paragraph(titleMateria));
+                document.add(new Paragraph(titleTema));
+                document.add(new Paragraph(titleTest));
+                document.add(new Paragraph(""));
+
+                QuestionClass aux = VariablesActivity.actualQuestion;
+                // get input stream
+                byte[] decodedString = Base64.decode(aux.getPregunta_imagen(), Base64.DEFAULT);
+                byte[] decodedString2 = Base64.decode(aux.getSolucion_imagen(), Base64.DEFAULT);
+
+                // se debe usar para el tamano de las imgs, por defualt el decode base64 renderiza tamano original
+                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                Bitmap bmp = Bitmap.createBitmap(decodedByte);
+
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                //----------------------------------
+                Image image = Image.getInstance(decodedString);
+                image.scaleToFit(PageSize.A4.getWidth(), 250f);
+                //Image image = Image.getInstance(stream.toByteArray());
+                Image image2 = Image.getInstance(decodedString2);
+                image2.scaleToFit(PageSize.A4.getWidth()-65f, 420f);
+
+                //document.add(new Paragraph(""));
+                //Chunk text = new Chunk("Pregunta No" + i, title);
+                //document.add(new Paragraph(text));
+                document.add(image);
+                for (OptionClass op: aux.getOpciones()) {
+                    Chunk optionText = new Chunk(op.getDetalle(),options);
+                    document.add(new Paragraph(optionText));
+                }
+                document.add(image2);
+                //document.newPage();
+                document.close();
+
+                return true;
+            }catch (Exception e){
+                Log.e("PDF",e.getLocalizedMessage());
+                return false;
+            }
+
+        }
+    }
+
     @Override
     public void onBackPressed() {
-        VariablesActivity.resetQuestionvariables();
+        reset_variables();
         finish();
-        startActivity(new Intent(getApplicationContext(), TemaActivity.class));
+        startActivity(new Intent(getApplicationContext(), TestActivity.class));
     }
 }

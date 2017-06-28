@@ -15,7 +15,6 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -38,6 +37,7 @@ public class TestActivity extends AppCompatActivity {
     public ArrayAdapter<TestClass> adapterTests;
     private ProgressDialog progressDialog;
     public static int selectedListPos = -1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +82,6 @@ public class TestActivity extends AppCompatActivity {
                     if(auxTest != null ){
                         VariablesActivity.actualTest = auxTest;
                         VariablesActivity.actualIndexTest = selectedListPos;
-                        finish();
                         startActivity(new Intent(getApplicationContext(), QuestionActivity.class));
                     }else{
                         Toast.makeText(getApplicationContext(),"Seleccione un tema para continuar",Toast.LENGTH_LONG).show();
@@ -148,10 +147,10 @@ public class TestActivity extends AppCompatActivity {
         @Override
         protected ArrayList<TestClass> doInBackground(Void... voids) {
             publishProgress(0);
-            if(VariablesActivity.lstTests.isEmpty() && VariablesActivity.actualTema.getLstTest().isEmpty()){
+            if(VariablesActivity.lstMaterias.get(VariablesActivity.actualIndexMateria).getLstTemas().get(VariablesActivity.actualIndexTema).getLstTest().isEmpty()){
                 return getTests();
             }else{
-                return VariablesActivity.lstTests;
+                return VariablesActivity.lstMaterias.get(VariablesActivity.actualIndexMateria).getLstTemas().get(VariablesActivity.actualIndexTema).getLstTest();
             }
         }
 

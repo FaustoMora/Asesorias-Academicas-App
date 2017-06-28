@@ -32,7 +32,7 @@
         android:textSize="36sp" />
 
     <Button
-        android:text="Volver a Iniciar"
+        android:text="Volver al Inicio"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:id="@+id/repeatBtn"
@@ -43,13 +43,13 @@
         android:textColor="@android:color/white"/>
 
     <Button
-        android:text="DESCARGAR"
+        android:text="Realizar otro Test"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/repeatBtn"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
-        android:id="@+id/btnPDF"
+        android:id="@+id/repeatTestBtn"
         android:background="#007fff"
         android:textColor="@android:color/white"/>
 </RelativeLayout>

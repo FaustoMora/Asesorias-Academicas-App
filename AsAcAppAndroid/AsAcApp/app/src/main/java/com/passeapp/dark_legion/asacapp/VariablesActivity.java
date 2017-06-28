@@ -15,7 +15,6 @@ public class VariablesActivity extends AppCompatActivity {
     public static TestClass actualTest;
     public static QuestionClass actualQuestion;
     public static ArrayList<Integer> scores = new ArrayList<Integer>();
-    public static String excludesQuestions;
     public static Integer actualIndexMateria = null;
     public static Integer actualIndexTema = null;
     public static Integer actualIndexTest = null;
@@ -30,12 +29,10 @@ public class VariablesActivity extends AppCompatActivity {
     public static void reset_variables(){
         actualTema = null;
         actualQuestion = null;
-        excludesQuestions =null;
     }
 
     public static void resetQuestionvariables(){
         actualQuestion = null;
-        excludesQuestions =null;
         lstQuestions.clear();
         scores.clear();
     }
@@ -44,7 +41,6 @@ public class VariablesActivity extends AppCompatActivity {
         actualMateria = null;
         actualTema = null;
         actualQuestion = null;
-        excludesQuestions =null;
     }
 
     public static int sumScore(){

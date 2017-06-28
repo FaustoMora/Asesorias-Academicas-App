@@ -44,7 +44,7 @@ class PushNotificationCommand extends Command
     {
 		$user = User::find(1);
 		error_log($user->message);
-		$message = 'Bienvenido a Asesorias Acedemicas'
+		$message = 'Bienvenido a Asesorias Acedemicas';
 		if(!is_null($user->message)){
 			$message = $user->message;
 		}
