@@ -28,9 +28,10 @@ class ApiTemaController extends Controller
      */
     public function show(tema $tema)
     {
+		$pk = $tema->id;
         return response()->json($tema->with('tests')->whereHas('tests',function($q){
 			$q->has('preguntas','>=',5)->where('active',true);
-		})->first(), 200, [], JSON_UNESCAPED_UNICODE);
+		})->where('id',$pk)->first(), 200, [], JSON_UNESCAPED_UNICODE);
     }
 
 

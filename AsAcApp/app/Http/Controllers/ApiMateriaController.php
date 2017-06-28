@@ -47,9 +47,10 @@ class ApiMateriaController extends Controller
      */
     public function show(Materia $materia)
     {
+		$pk = $materia->id;
         return response()->json($materia->exclude(['icono'])->with('temas')->whereHas('temas',function($q){
 			$q->has('tests','>=',1);
-		})->first(), 200, [], JSON_UNESCAPED_UNICODE);
+		})->where('id',$pk)->first(), 200, [], JSON_UNESCAPED_UNICODE);
     }
 
     /**
