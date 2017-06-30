@@ -44,5 +44,6 @@ dependencies {
     //compile 'com.pusher:pusher-websocket-android:0.6.0'
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.github.chrisbanes:PhotoView:1.2.6'
     testCompile 'junit:junit:4.12'
 }

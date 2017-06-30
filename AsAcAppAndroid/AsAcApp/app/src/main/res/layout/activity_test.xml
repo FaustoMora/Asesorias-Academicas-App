@@ -95,6 +95,7 @@
                         android:layout_gravity="center_horizontal"
                         android:background="#007fff"
                         android:textColor="@android:color/white"
+                        android:layout_marginBottom="25dp"
                         />
                 </TableRow>
             </TableLayout>

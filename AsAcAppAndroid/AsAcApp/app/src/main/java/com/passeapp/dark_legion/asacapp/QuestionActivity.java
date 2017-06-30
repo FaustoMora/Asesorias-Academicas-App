@@ -55,6 +55,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import uk.co.senab.photoview.PhotoViewAttacher;
+
 
 public class QuestionActivity extends AppCompatActivity {
 
@@ -212,6 +214,8 @@ public class QuestionActivity extends AppCompatActivity {
                 }
             }
         });
+        PhotoViewAttacher photoView = new PhotoViewAttacher(questionImage);
+        photoView.update();
     }
 
     private String getIndexText(){
@@ -253,7 +257,7 @@ public class QuestionActivity extends AppCompatActivity {
                 iconWidth = 700;
                 break;
         }
-        this.questionImage.setImageBitmap(Bitmap.createScaledBitmap(decodedByte, iconWidth, iconHeight, false));
+        this.questionImage.setImageBitmap(decodedByte);
     }
 
 
@@ -261,7 +265,10 @@ public class QuestionActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
         View promptView = inflater.inflate(R.layout.custom_next_dialog, null);
-
+        /*ImageView solutionImage = (ImageView)promptView.findViewById(R.id.solutionImage);
+        byte[] decodedString = Base64.decode(VariablesActivity.actualQuestion.getSolucion_imagen(), Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        solutionImage.setImageBitmap(decodedByte);*/
 
         builder.setView(promptView);
 
@@ -530,6 +537,9 @@ public class QuestionActivity extends AppCompatActivity {
                     document.add(new Paragraph(optionText));
                 }
                 document.add(image2);
+                if(aux.getLink_youtube() != "null"){
+                    document.add(new Paragraph("Link del video: "+aux.getLink_youtube()));
+                }
                 //document.newPage();
                 document.close();
 
