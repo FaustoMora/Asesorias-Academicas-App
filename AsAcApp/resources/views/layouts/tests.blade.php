@@ -184,6 +184,9 @@
 } );
 
 </script>
+<script type="text/javascript">
+  $('#id_tema').select2();
+</script>
 
 @stop
 

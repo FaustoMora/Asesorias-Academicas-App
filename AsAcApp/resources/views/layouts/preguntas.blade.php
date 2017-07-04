@@ -21,7 +21,7 @@
         	<div class="col-md-12 col-sm-12 form-group row">
             <label class=" col-md-2 col-form-label">Test:</label>
             <div class="col-md-10">
-              <select class="form-control" required name="lstTests">
+              <select class="form-control" required name="lstTests" id="test_id">
                 <option value="0">--Seleccione un test--</option>
                   @foreach($tests as $test)
                       <option value="{{$test->id}}"><b>{{$test->tema->nombre}}</b> - {{$test->nombre}}</option>
@@ -95,6 +95,18 @@
                   </span>
                 </div>
               </div>
+
+			  <div class="col-md-10" style="width: 100%; margin-top:10px"><!--Div para una respuesta-->
+				<div class="input-group">
+				  <label style="float: left" class=" col-md-2">E)</label>
+				  <span style="display:table-cell;">
+					<input style="width: 100%;"type="text" name="opc5" placeholder="Opciones de respuestas" class="form-control" value="E)" required>
+				  </span>
+				  <span style="display:table-cell;" class="input-group-addon">
+					<input style="float:right" type="radio" name="correctOption" value="opc5" required>
+				  </span>
+				</div>
+			  </div>
             </div>
 
             <div class="col-md-12 col-sm-12 form-group row">
@@ -396,6 +408,9 @@
     });
 
   });
+</script>
+<script type="text/javascript">
+  $('#test_id').select2();
 </script>
   @endsection<!--Fin de la sección de Menú-->
 @endsection

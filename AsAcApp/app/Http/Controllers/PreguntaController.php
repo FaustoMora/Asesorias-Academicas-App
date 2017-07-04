@@ -75,12 +75,14 @@ class PreguntaController extends Controller
 			$resp2 = $request->input('opc2');
 			$resp3 = $request->input('opc3');
 			$resp4 = $request->input('opc4');
+			$resp5 = $request->input('opc5');
 
 			//Si son correctas
 			$corr1 = ($request->input('correctOption') == 'opc1') ? true : false;
 			$corr2 = ($request->input('correctOption') == 'opc2') ? true : false;
 			$corr3 = ($request->input('correctOption') == 'opc3') ? true : false;
 			$corr4 = ($request->input('correctOption') == 'opc4') ? true : false;
+			$corr5 = ($request->input('correctOption') == 'opc5') ? true : false;
 
 			//Imagen de pregunta
 			$imgprg = new Imagen;
@@ -123,11 +125,17 @@ class PreguntaController extends Controller
 			$r4->es_correcta = $corr4;
 			$r4->pregunta()->associate($preg);
 
+			$r5 = new Respuesta;
+			$r5->detalle = $resp5;
+			$r5->es_correcta = $corr5;
+			$r5->pregunta()->associate($preg);
+
 
 			$r1->save();
 			$r2->save();
 			$r3->save();
 			$r4->save();
+			$r5->save();
 		}
 
 		return redirect('/Preguntas');

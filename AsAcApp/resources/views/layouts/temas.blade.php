@@ -187,6 +187,9 @@
 } );
 
 </script>
+<script type="text/javascript">
+  $('#id_materia').select2();
+</script>
 
 @stop
 

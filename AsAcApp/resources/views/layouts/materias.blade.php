@@ -4,7 +4,6 @@
 @parent
 
 @section('menu')
-
 <div class="panel panel-info">
   <!-- Default panel contents -->
   <div class="panel-heading">MENU MATERIAS</div>
@@ -123,12 +122,20 @@
 </div>
 </div>
 
-
 <script type="text/javascript">
 
   $(document).ready( function () {
 
-	$('#table_id').DataTable({
+
+	/*$('#example').dataTable({
+     "aoColumns": [null, {"sType": "natural"}, null, null],
+     "aaSorting": [[ 1, "asc" ]],
+     "sScrollX": "100%",
+ })*/
+
+
+
+	$('#example').DataTable({
 		"language": {
 				"sProcessing":     "Procesando...",
 				"sLengthMenu":     "Mostrar _MENU_ registros",
@@ -148,8 +155,7 @@
 					"sNext":     "Siguiente",
 					"sPrevious": "Anterior"
 				}
-		},
-		"order": [[ 1, "asc" ]]
+		}
 	});
 
 } );
