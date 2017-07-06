@@ -2628,3 +2628,4 @@ Stack trace:
 [2017-06-26 17:10:15] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'syntax error, unexpected 'if' (T_IF)' in /home/dark-legion/Espol/AsesoriasAcademicasApp/Asesorias-Academicas-App/AsAcApp/app/Console/Commands/PushNotificationCommand.php:48
 Stack trace:
 #0 {main}  
+[2017-07-04 15:00:02] local.INFO: sending push notification  
