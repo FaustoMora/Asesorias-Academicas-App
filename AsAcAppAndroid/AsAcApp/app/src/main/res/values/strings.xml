@@ -6,4 +6,11 @@
     <string name="lblContinue">Continuar</string>
     <string name="lblStart">Comenzar</string>
     <string name="lblMateria">Mantener presionado para seleccionar</string>
+    <string name="title_activity_solution_tabeb">SolutionTabebActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="lblCustomNextDialogMessage">Al continuar ya no podra cambiar la opcion seleccionada</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

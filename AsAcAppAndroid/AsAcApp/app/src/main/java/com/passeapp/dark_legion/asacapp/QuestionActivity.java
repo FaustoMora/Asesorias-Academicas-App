@@ -118,6 +118,7 @@ public class QuestionActivity extends AppCompatActivity {
             VariablesActivity.pastIndexPregunta = 0;
         }
         VariablesActivity.actualQuestion = VariablesActivity.lstQuestions.get(VariablesActivity.actualIndexPregunta);
+        VariablesActivity.actualQuestion.setActualIndex(getIndexText());
         selectedPosOption = VariablesActivity.actualQuestion.getSelectedOP();
         hasSelectedOption = VariablesActivity.actualQuestion.isHasSelected();
         selectedColorOption = VariablesActivity.actualQuestion.getSelectedColorOption();
@@ -135,7 +136,8 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(VariablesActivity.actualQuestion.getSelectedOP() >= 0 && (optionsList.getCheckedItemPosition() < 0)){
-                    buildCustomDialog();
+                    //buildCustomDialog();
+                    redirectNextQuestion();
                 }else{
                     int pos = optionsList.getCheckedItemPosition();
                     if(pos > -1){
@@ -145,7 +147,8 @@ public class QuestionActivity extends AppCompatActivity {
                         }else{
                             VariablesActivity.scores.add(0);
                         }
-                        buildCustomDialog();
+                        //buildCustomDialog();
+                        redirectNextQuestion();
                     }else{
                         Toast.makeText(getApplicationContext(),"Seleccione una respuesta para continuar",Toast.LENGTH_SHORT).show();
                     }
@@ -187,14 +190,12 @@ public class QuestionActivity extends AppCompatActivity {
                     VariablesActivity.actualQuestion.setSelectedOP(i);
                     if(view.isSelected() ){
                         if (op.getEs_correcta()){
-                            selectedColorOption = Color.GREEN;
+                            selectedColorOption = Color.CYAN;
                         }else{
-                            selectedColorOption = Color.RED;
+                            selectedColorOption = Color.CYAN;
                         }
                         VariablesActivity.actualQuestion.setSelectedColorOption(selectedColorOption);
                     }
-                    hasSelectedOption = true;
-                    VariablesActivity.actualQuestion.setHasSelected(true);
                     adapterOptions.notifyDataSetChanged();
                 }
 
@@ -260,6 +261,20 @@ public class QuestionActivity extends AppCompatActivity {
         this.questionImage.setImageBitmap(decodedByte);
     }
 
+    public void redirectNextQuestion(){
+        hasSelectedOption = true;
+        VariablesActivity.actualQuestion.setHasSelected(true);
+        if(VariablesActivity.lstQuestions.size() == (VariablesActivity.actualIndexPregunta + 1)){
+            finish();
+            startActivity(new Intent(getApplicationContext(), EndingActivity.class));
+        }else{
+            Intent intent = new Intent(getApplicationContext(), QuestionActivity.class);
+            intent.putExtra("nextIndex",1);
+            finish();
+            startActivity(intent);
+        }
+    }
+
 
     public void buildCustomDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -274,19 +289,12 @@ public class QuestionActivity extends AppCompatActivity {
 
         customDialog = builder.create();
 
-        Button showSolutionBtn = (Button)promptView.findViewById(R.id.showSolutionBtn);
-        showSolutionBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                customDialog.dismiss();
-                startActivity(new Intent(getApplicationContext(), SolutionActivity.class));
-//              finish();
-            }
-        });
         Button nextQuestionBtn = (Button)promptView.findViewById(R.id.nextQuestionBtn);
         nextQuestionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                hasSelectedOption = true;
+                VariablesActivity.actualQuestion.setHasSelected(true);
                 if(VariablesActivity.lstQuestions.size() == (VariablesActivity.actualIndexPregunta + 1)){
                     /*
                     scoreDialog = new AlertDialog.Builder(QuestionActivity.this).create();
@@ -352,6 +360,7 @@ public class QuestionActivity extends AppCompatActivity {
                                 //do things
                                 dialog.dismiss();
                                 finish();
+                                startActivity(new Intent(getApplicationContext(), TestActivity.class));
                             }
                         });
                 AlertDialog alert = builder.create();
@@ -561,6 +570,9 @@ public class QuestionActivity extends AppCompatActivity {
                 q.resetQuestionVariables();
             }
             finish();
+            startActivity(new Intent(getApplicationContext(), TestActivity.class));
+            VariablesActivity.actualTest = null;
+            VariablesActivity.actualIndexTest = null;
         }else if (VariablesActivity.actualIndexPregunta > 0){
             Intent intent = new Intent(this,QuestionActivity.class);
             intent.putExtra("nextIndex",-1);

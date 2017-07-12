@@ -36,20 +36,33 @@
         android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:id="@+id/repeatBtn"
-        android:layout_marginTop="91dp"
-        android:layout_below="@+id/lblScore"
-        android:layout_centerHorizontal="true"
         android:background="#007fff"
-        android:textColor="@android:color/white"/>
+        android:textColor="@android:color/white"
+        android:layout_marginTop="143dp"
+        android:layout_below="@+id/lblScore"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:text="Realizar otro Test"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/repeatBtn"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="35dp"
         android:id="@+id/repeatTestBtn"
         android:background="#007fff"
-        android:textColor="@android:color/white"/>
+        android:textColor="@android:color/white"
+        android:layout_below="@+id/repeatBtn"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/btnSolucion"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblScore"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="65dp"
+        android:background="#007fff"
+        android:text="Ver Solución"
+        android:textColor="@android:color/white" />
+
+
 </RelativeLayout>

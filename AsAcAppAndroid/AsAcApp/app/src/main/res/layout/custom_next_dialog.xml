@@ -12,23 +12,16 @@
         android:scaleType="center"
         android:background="#ddf2ff" />
 
-    <Button
-        android:text="@string/lblShowSolution"
+    <TextView
+        android:text="@string/lblCustomNextDialogMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:id="@+id/showSolutionBtn"
-        android:background="#007fff"
-        android:textColor="@android:color/white" />
+        android:textColor="#007fff"
+        android:textSize="18sp"/>
 
-    <ImageButton
-        android:id="@+id/solutionImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        app:srcCompat="@mipmap/ic_launcher"
-        android:visibility="gone"/>
 
     <Button
         android:id="@+id/nextQuestionBtn"

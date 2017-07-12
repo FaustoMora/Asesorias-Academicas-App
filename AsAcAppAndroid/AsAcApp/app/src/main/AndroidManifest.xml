@@ -40,41 +40,43 @@
             android:name=".EndingActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".VariablesActivity" />
-        <activity android:name=".TestActivity"></activity>
-
+        <activity android:name=".TestActivity" />
 
         <!-- <application> -->
         <!-- Pusher's GCM listeners and services -->
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
             android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND" >
+            android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
                 <category android:name="gcm.play.android.samples.com.gcmquickstart" />
             </intent-filter>
         </receiver>
 
         <service
             android:name="com.pusher.android.notifications.gcm.PusherGCMListenerService"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
-
         <service
             android:name="com.pusher.android.notifications.gcm.GCMInstanceIDListenerService"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID"/>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
             </intent-filter>
         </service>
-
         <service
             android:name="com.pusher.android.notifications.gcm.GCMRegistrationIntentService"
-            android:exported="false">
-        </service>
+            android:exported="false"></service>
+
+        <activity
+            android:name=".SolutionTabebActivity"
+            android:label="@string/title_activity_solution_tabeb"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

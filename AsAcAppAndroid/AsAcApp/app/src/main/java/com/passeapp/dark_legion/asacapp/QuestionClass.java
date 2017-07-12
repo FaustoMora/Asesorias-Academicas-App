@@ -14,6 +14,7 @@ public class QuestionClass {
     private int selectedOP = -1;
     private boolean hasSelected = false;
     private int selectedColorOption = Color.WHITE;
+    private String actualIndex = "";
 
     public QuestionClass(Integer _id, String detalle, String link_youtube,String pregunta_imagen, String solucion_imagen) {
         this._id = _id;
@@ -104,5 +105,13 @@ public class QuestionClass {
         this.setSelectedOP(-1);
         this.setHasSelected(false);
         this.setSelectedColorOption(Color.WHITE);
+    }
+
+    public String getActualIndex() {
+        return actualIndex;
+    }
+
+    public void setActualIndex(String actualIndex) {
+        this.actualIndex = actualIndex;
     }
 }

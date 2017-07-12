@@ -76,7 +76,8 @@
                         android:paddingTop="15dp"
                         android:scrollbarStyle="outsideOverlay"
                         android:scrollbars="vertical"
-                        android:textColor="@android:color/black"/>
+                        android:textColor="@android:color/black"
+                        android:dividerHeight="2.0sp"/>
 
 
                 </TableRow>

@@ -1,11 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/activity_solution"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context="com.passeapp.dark_legion.asacapp.SolutionActivity">
+    android:layout_height="match_parent"
+    tools:context="com.passeapp.dark_legion.asacapp.SolutionFragment">
 
     <ScrollView
         android:id="@+id/layout"
@@ -21,6 +19,22 @@
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/lblIndexPregunta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp" />
+            </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
@@ -95,7 +109,8 @@
                     android:visibility="visible"/>
 
             </TableRow>
-            <TableRow
+
+            <!--<TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_horizontal"
@@ -111,10 +126,10 @@
                     android:layout_marginBottom="20dp"
                     android:background="#007fff"
                     android:textColor="@android:color/white"/>
-            </TableRow>
+            </TableRow>-->
 
         </TableLayout>
 
-        </ScrollView>
+    </ScrollView>
 
 </RelativeLayout>

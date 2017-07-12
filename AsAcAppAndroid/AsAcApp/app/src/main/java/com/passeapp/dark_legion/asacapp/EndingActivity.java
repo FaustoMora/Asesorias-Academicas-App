@@ -13,6 +13,7 @@ public class EndingActivity extends AppCompatActivity {
     private TextView lblScore;
     private Button restartBtn;
     private Button repeatTestBtn;
+    private Button solutionBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,8 @@ public class EndingActivity extends AppCompatActivity {
         restartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                resetvariables();
+                finish();
                 startActivity(new Intent(getApplicationContext(), MateriaActivity.class));
             }
         });
@@ -36,7 +39,16 @@ public class EndingActivity extends AppCompatActivity {
         repeatTestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                resetvariables();
+                finish();
                 startActivity(new Intent(getApplicationContext(), TestActivity.class));
+            }
+        });
+        solutionBtn = (Button)findViewById(R.id.btnSolucion);
+        solutionBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), SolutionTabebActivity.class));
             }
         });
     }
@@ -44,5 +56,12 @@ public class EndingActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
+    }
+
+    public void resetvariables(){
+        VariablesActivity.actualTest = null;
+        VariablesActivity.actualIndexTest = null;
+        VariablesActivity.actualQuestion = null;
+        VariablesActivity.actualIndexPregunta = null;
     }
 }

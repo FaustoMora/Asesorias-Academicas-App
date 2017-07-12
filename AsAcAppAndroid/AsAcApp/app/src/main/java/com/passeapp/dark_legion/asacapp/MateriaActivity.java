@@ -129,6 +129,8 @@ public class MateriaActivity extends AppCompatActivity {
                                 //do things
                                 dialog.dismiss();
                                 finish();
+                                startActivity(new Intent(getApplicationContext(), InitActivity.class));
+
                             }
                         });
                 AlertDialog alert = builder.create();
@@ -249,5 +251,6 @@ public class MateriaActivity extends AppCompatActivity {
     public void onBackPressed() {
         reset_variables();
         finish();
+        startActivity(new Intent(getApplicationContext(), InitActivity.class));
     }
 }

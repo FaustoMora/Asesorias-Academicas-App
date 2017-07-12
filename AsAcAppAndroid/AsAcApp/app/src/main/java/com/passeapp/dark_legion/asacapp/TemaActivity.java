@@ -53,6 +53,8 @@ public class TemaActivity extends AppCompatActivity {
 
     protected void reset_variables(){
         selectedListPos = -1;
+        VariablesActivity.actualMateria = null;
+        VariablesActivity.actualIndexMateria = null;
     }
 
     protected void init(){
@@ -70,6 +72,7 @@ public class TemaActivity extends AppCompatActivity {
                     if(auxTema != null ){
                         VariablesActivity.actualTema = auxTema;
                         VariablesActivity.actualIndexTema = selectedListPos;
+                        finish();
                         startActivity(new Intent(getApplicationContext(), TestActivity.class));
                     }else{
                         Toast.makeText(getApplicationContext(),"Seleccione un tema para continuar",Toast.LENGTH_LONG).show();
@@ -138,6 +141,7 @@ public class TemaActivity extends AppCompatActivity {
                                 //do things
                                 dialog.dismiss();
                                 finish();
+                                startActivity(new Intent(getApplicationContext(), MateriaActivity.class));
                             }
                         });
                 AlertDialog alert = builder.create();
@@ -198,7 +202,7 @@ public class TemaActivity extends AppCompatActivity {
     public void onBackPressed() {
         reset_variables();
         finish();
-        //startActivity(new Intent(getApplicationContext(), MateriaActivity.class));
+        startActivity(new Intent(getApplicationContext(), MateriaActivity.class));
     }
 
 }

@@ -59,6 +59,8 @@ public class TestActivity extends AppCompatActivity {
 
     protected void reset_variables(){
         selectedListPos = -1;
+        VariablesActivity.actualTema = null;
+        VariablesActivity.actualIndexTema = null;
     }
 
     protected void init(){
@@ -86,6 +88,7 @@ public class TestActivity extends AppCompatActivity {
                     if(auxTest != null ){
                         VariablesActivity.actualTest = auxTest;
                         VariablesActivity.actualIndexTest = selectedListPos;
+                        finish();
                         startActivity(new Intent(getApplicationContext(), QuestionActivity.class));
                     }else{
                         Toast.makeText(getApplicationContext(),"Seleccione un tema para continuar",Toast.LENGTH_LONG).show();
@@ -152,6 +155,7 @@ public class TestActivity extends AppCompatActivity {
                                 //do things
                                 dialog.dismiss();
                                 finish();
+                                startActivity(new Intent(getApplicationContext(), TemaActivity.class));
                             }
                         });
                 AlertDialog alert = builder.create();
@@ -212,6 +216,6 @@ public class TestActivity extends AppCompatActivity {
     public void onBackPressed() {
         reset_variables();
         finish();
-        //startActivity(new Intent(getApplicationContext(), TemaActivity.class));
+        startActivity(new Intent(getApplicationContext(), TemaActivity.class));
     }
 }

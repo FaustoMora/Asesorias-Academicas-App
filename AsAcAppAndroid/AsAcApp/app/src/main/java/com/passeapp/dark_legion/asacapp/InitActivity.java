@@ -2,6 +2,8 @@ package com.passeapp.dark_legion.asacapp;
 
 import android.app.DownloadManager;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -75,7 +77,6 @@ public class InitActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(OnlineConnect.isOnline(getApplicationContext())){
-                    finish();
                     startActivity(new Intent(getApplicationContext(), MateriaActivity.class));
                 }else{
                     Toast.makeText(getApplicationContext(),"No dispones de conexion a internet",Toast.LENGTH_LONG).show();
@@ -87,7 +88,16 @@ public class InitActivity extends AppCompatActivity {
         this.showDownBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS));
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                Uri selectedUri;
+                if(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) != null ){
+                    selectedUri = Uri.parse(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath());
+                    intent.setData(selectedUri);
+                    intent.setType("*/*");
+                    startActivityForResult(intent, 7);
+                }else{
+                    startActivity(new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS));
+                }
             }
         });
     }
@@ -101,7 +111,6 @@ public class InitActivity extends AppCompatActivity {
                         .show();
             } else {
                 Log.i("ERROR PUSHER", "This device is not supported.");
-                finish();
             }
             return false;
         }
