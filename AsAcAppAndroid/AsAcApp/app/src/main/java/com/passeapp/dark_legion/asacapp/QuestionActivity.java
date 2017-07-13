@@ -143,9 +143,7 @@ public class QuestionActivity extends AppCompatActivity {
                     if(pos > -1){
                         OptionClass aux = VariablesActivity.actualQuestion.getOpciones().get(pos);
                         if(aux.getEs_correcta()){
-                            VariablesActivity.scores.add(1);
-                        }else{
-                            VariablesActivity.scores.add(0);
+                            VariablesActivity.actualTest.setScore(1);
                         }
                         //buildCustomDialog();
                         redirectNextQuestion();
@@ -265,10 +263,13 @@ public class QuestionActivity extends AppCompatActivity {
         hasSelectedOption = true;
         VariablesActivity.actualQuestion.setHasSelected(true);
         if(VariablesActivity.lstQuestions.size() == (VariablesActivity.actualIndexPregunta + 1)){
+            String score = VariablesActivity.actualTest.displayedScore();
             finish();
-            startActivity(new Intent(getApplicationContext(), EndingActivity.class));
+            Intent solution = new Intent(QuestionActivity.this, EndingActivity.class);
+            solution.putExtra("score",score);
+            startActivity(solution);
         }else{
-            Intent intent = new Intent(getApplicationContext(), QuestionActivity.class);
+            Intent intent = new Intent(QuestionActivity.this, QuestionActivity.class);
             intent.putExtra("nextIndex",1);
             finish();
             startActivity(intent);
@@ -561,6 +562,11 @@ public class QuestionActivity extends AppCompatActivity {
         }
     }
 
+    protected void resetGlobalVariables(){
+        VariablesActivity.actualTest = null;
+        VariablesActivity.actualIndexTest = null;
+    }
+
     @Override
     public void onBackPressed() {
         reset_variables();
@@ -569,10 +575,9 @@ public class QuestionActivity extends AppCompatActivity {
                     .getLstTest().get(VariablesActivity.actualIndexTest).getLstPreguntas()) {
                 q.resetQuestionVariables();
             }
+            resetGlobalVariables();
             finish();
             startActivity(new Intent(getApplicationContext(), TestActivity.class));
-            VariablesActivity.actualTest = null;
-            VariablesActivity.actualIndexTest = null;
         }else if (VariablesActivity.actualIndexPregunta > 0){
             Intent intent = new Intent(this,QuestionActivity.class);
             intent.putExtra("nextIndex",-1);

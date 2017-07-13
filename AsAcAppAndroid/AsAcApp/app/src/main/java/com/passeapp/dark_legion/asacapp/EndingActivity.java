@@ -25,7 +25,10 @@ public class EndingActivity extends AppCompatActivity {
 
     public void init(){
         lblScore = (TextView)findViewById(R.id.lblScore);
-        lblScore.setText(VariablesActivity.displayedScore());
+        if(getIntent().hasExtra("score")){
+            String score = getIntent().getStringExtra("score");
+            lblScore.setText(score);
+        }
         restartBtn = (Button)findViewById(R.id.repeatBtn);
         restartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,9 +62,15 @@ public class EndingActivity extends AppCompatActivity {
     }
 
     public void resetvariables(){
+        for (QuestionClass q :VariablesActivity.lstMaterias.get(VariablesActivity.actualIndexMateria).getLstTemas().get(VariablesActivity.actualIndexTema)
+                .getLstTest().get(VariablesActivity.actualIndexTest).getLstPreguntas()) {
+            q.resetQuestionVariables();
+        }
+        
         VariablesActivity.actualTest = null;
         VariablesActivity.actualIndexTest = null;
         VariablesActivity.actualQuestion = null;
         VariablesActivity.actualIndexPregunta = null;
     }
+
 }

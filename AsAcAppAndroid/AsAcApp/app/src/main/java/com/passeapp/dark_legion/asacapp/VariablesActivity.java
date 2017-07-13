@@ -14,7 +14,6 @@ public class VariablesActivity extends AppCompatActivity {
     public static TemaClass actualTema;
     public static TestClass actualTest;
     public static QuestionClass actualQuestion;
-    public static ArrayList<Integer> scores = new ArrayList<Integer>();
     public static Integer actualIndexMateria = null;
     public static Integer actualIndexTema = null;
     public static Integer actualIndexTest = null;
@@ -35,7 +34,6 @@ public class VariablesActivity extends AppCompatActivity {
     public static void resetQuestionvariables(){
         actualQuestion = null;
         lstQuestions.clear();
-        scores.clear();
     }
 
     public static void resetAllvariables(){
@@ -44,22 +42,10 @@ public class VariablesActivity extends AppCompatActivity {
         actualQuestion = null;
     }
 
-    public static int sumScore(){
-        int aux=0;
-        for (int i: scores ) {
-            aux += i;
-        }
-        return aux;
-    }
-
     public static void reset_list(){
         lstMaterias.clear();
         lstTemas.clear();
         lstQuestions.clear();
-    }
-
-    public static String displayedScore(){
-        return String.valueOf(sumScore()) + "/" + String.valueOf(scores.size());
     }
 
     public static Object getElementForArrayListById(ArrayList list, int pk){

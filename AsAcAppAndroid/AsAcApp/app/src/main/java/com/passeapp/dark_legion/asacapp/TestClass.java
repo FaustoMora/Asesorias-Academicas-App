@@ -8,6 +8,7 @@ public class TestClass {
     private Integer _id;
     private String nombre;
     private ArrayList<QuestionClass> lstPreguntas = new ArrayList<QuestionClass>();
+    private Integer score = 0;
 
     public TestClass(Integer _id, String nombre) {
         this._id = _id;
@@ -36,5 +37,22 @@ public class TestClass {
 
     public void setLstPreguntas(ArrayList<QuestionClass> lstPreguntas) {
         this.lstPreguntas = lstPreguntas;
+    }
+
+    public Integer getScore() {
+        if(!this.getLstPreguntas().isEmpty()){
+            return score;
+        }
+        return null;
+    }
+
+    public void setScore(Integer score) {
+        if(!this.getLstPreguntas().isEmpty()){
+            this.score++;
+        }
+    }
+
+    public String displayedScore(){
+        return String.valueOf(this.getScore()) + "/" + String.valueOf(this.getLstPreguntas().size());
     }
 }

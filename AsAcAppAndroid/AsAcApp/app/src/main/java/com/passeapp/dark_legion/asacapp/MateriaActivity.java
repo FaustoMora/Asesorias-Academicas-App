@@ -66,6 +66,7 @@ public class MateriaActivity extends AppCompatActivity {
                     if(aux != null){
                         VariablesActivity.actualMateria = aux;
                         VariablesActivity.actualIndexMateria = i;
+                        finish();
                         startActivity(new Intent(getApplicationContext(), TemaActivity.class));
                     }
                 }else {
@@ -130,7 +131,6 @@ public class MateriaActivity extends AppCompatActivity {
                                 dialog.dismiss();
                                 finish();
                                 startActivity(new Intent(getApplicationContext(), InitActivity.class));
-
                             }
                         });
                 AlertDialog alert = builder.create();

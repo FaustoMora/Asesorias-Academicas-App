@@ -59,6 +59,9 @@ public class TestActivity extends AppCompatActivity {
 
     protected void reset_variables(){
         selectedListPos = -1;
+    }
+
+    protected void resetGlobalVariables(){
         VariablesActivity.actualTema = null;
         VariablesActivity.actualIndexTema = null;
     }
@@ -214,7 +217,7 @@ public class TestActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        reset_variables();
+        resetGlobalVariables();
         finish();
         startActivity(new Intent(getApplicationContext(), TemaActivity.class));
     }

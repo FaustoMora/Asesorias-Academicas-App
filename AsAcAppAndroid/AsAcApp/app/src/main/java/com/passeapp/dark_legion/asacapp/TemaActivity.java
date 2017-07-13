@@ -53,6 +53,9 @@ public class TemaActivity extends AppCompatActivity {
 
     protected void reset_variables(){
         selectedListPos = -1;
+    }
+
+    protected void resetGlobalVariables(){
         VariablesActivity.actualMateria = null;
         VariablesActivity.actualIndexMateria = null;
     }
@@ -126,8 +129,8 @@ public class TemaActivity extends AppCompatActivity {
                 VariablesActivity.lstTemas = temaClasses;
                 VariablesActivity.actualMateria.setLstTemas(temaClasses);
                 VariablesActivity.lstMaterias.get(VariablesActivity.actualIndexMateria).setLstTemas(temaClasses);
-                init();
                 reset_variables();
+                init();
                 progressDialog.dismiss();
             }else{
                 reset_variables();
@@ -200,7 +203,7 @@ public class TemaActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        reset_variables();
+        resetGlobalVariables();
         finish();
         startActivity(new Intent(getApplicationContext(), MateriaActivity.class));
     }

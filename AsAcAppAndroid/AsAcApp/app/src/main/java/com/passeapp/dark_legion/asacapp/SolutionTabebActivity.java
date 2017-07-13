@@ -108,6 +108,7 @@ public class SolutionTabebActivity extends AppCompatActivity implements Solution
                 .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        fragments.clear();
                         dialogInterface.dismiss();
                         finish();
                     }
