@@ -72,9 +72,10 @@ public class QuestionActivity extends AppCompatActivity {
     public Dialog customDialog;
     private String density;
     private ImageView downPDF;
-    private TextView lblTemaTest;
+    private TextView lblTema;
     private TextView lblIndex;
     private ProgressDialog progressPDFDialog;
+    private TextView lblTest;
 
 
     @Override
@@ -123,10 +124,12 @@ public class QuestionActivity extends AppCompatActivity {
         hasSelectedOption = VariablesActivity.actualQuestion.isHasSelected();
         selectedColorOption = VariablesActivity.actualQuestion.getSelectedColorOption();
 
-        this.lblTemaTest = (TextView)findViewById(R.id.lblTemaTest);
+        this.lblTema = (TextView)findViewById(R.id.lblTema);
+        this.lblTest = (TextView)findViewById(R.id.lblTest);
         this.lblIndex = (TextView)findViewById(R.id.lblIndexPregunta);
 
-        this.lblTemaTest.setText(VariablesActivity.actualTema.getNombre() + " -> " + VariablesActivity.actualTest.getNombre());
+        this.lblTema.setText(VariablesActivity.actualTema.getNombre());
+        this.lblTest.setText(VariablesActivity.actualTest.getNombre());
         this.lblIndex.setText(getIndexText());
 
         //final LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
@@ -512,12 +515,14 @@ public class QuestionActivity extends AppCompatActivity {
                 icon.scaleToFit(25f, 25f);
                 document.add(icon);
 
-                Chunk titleMateria = new Chunk(VariablesActivity.actualTema.getDescription(), titleDoc);
-                Chunk titleTema = new Chunk(VariablesActivity.actualTema.getDescription(), titleDoc);
-                Chunk titleTest = new Chunk(VariablesActivity.actualTema.getDescription(), titleDoc);
+                Chunk titleMateria = new Chunk(VariablesActivity.actualMateria.getNombre(), titleDoc);
+                Chunk titleTema = new Chunk(VariablesActivity.actualTema.getDescription(), title);
+                Chunk titleTest = new Chunk(VariablesActivity.actualTest.getNombre(), title);
+                Chunk tittleQuestion = new Chunk(VariablesActivity.actualQuestion.getActualIndex(), options);
                 document.add(new Paragraph(titleMateria));
                 document.add(new Paragraph(titleTema));
                 document.add(new Paragraph(titleTest));
+                document.add(new Paragraph(tittleQuestion));
                 document.add(new Paragraph(""));
 
                 QuestionClass aux = VariablesActivity.actualQuestion;
@@ -533,7 +538,7 @@ public class QuestionActivity extends AppCompatActivity {
                 bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
                 //----------------------------------
                 Image image = Image.getInstance(decodedString);
-                image.scaleToFit(PageSize.A4.getWidth(), 250f);
+                image.scaleToFit(PageSize.A4.getWidth()-65f, 250f);
                 //Image image = Image.getInstance(stream.toByteArray());
                 Image image2 = Image.getInstance(decodedString2);
                 image2.scaleToFit(PageSize.A4.getWidth()-65f, 420f);
