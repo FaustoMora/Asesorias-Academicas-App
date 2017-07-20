@@ -3,6 +3,7 @@ package com.passeapp.dark_legion.asacapp;
 
 import android.content.DialogInterface;
 import android.net.Uri;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.Fragment;
@@ -11,8 +12,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
-
 import java.util.ArrayList;
+
 
 public class SolutionTabebActivity extends AppCompatActivity implements SolutionFragment.OnFragmentInteractionListener{
 
@@ -45,6 +46,8 @@ public class SolutionTabebActivity extends AppCompatActivity implements Solution
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabDots);
+        tabLayout.setupWithViewPager(mViewPager, true);
 
         if(getActionBar() != null){
             getActionBar().hide();
