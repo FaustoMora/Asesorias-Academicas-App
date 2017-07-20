@@ -1,16 +1,21 @@
 package com.passeapp.dark_legion.asacapp;
 
+import android.*;
+import android.Manifest;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -48,7 +53,6 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -76,6 +80,8 @@ public class QuestionActivity extends AppCompatActivity {
     private TextView lblIndex;
     private ProgressDialog progressPDFDialog;
     private TextView lblTest;
+    String[] permissions = new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private static final int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
 
     @Override
@@ -208,16 +214,71 @@ public class QuestionActivity extends AppCompatActivity {
         this.downPDF.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try{
-                    new QuestionActivity.PDFTest().execute();
-                }catch (Exception e){
-                    Log.e("PDF",e.getLocalizedMessage());
-                    Toast.makeText(getApplicationContext(),"OCURRIO Un ERROR En LA DESCARGA",Toast.LENGTH_LONG).show();
+                if(hasPermissions()){
+                    downloadQuestionPDF();
+                }else{
+                    requestPerm();
                 }
             }
         });
         PhotoViewAttacher photoView = new PhotoViewAttacher(questionImage);
         photoView.update();
+    }
+
+    public void downloadQuestionPDF(){
+        try{
+            new QuestionActivity.PDFTest().execute();
+        }catch (Exception e){
+            Log.e("PDF",e.getLocalizedMessage());
+            Toast.makeText(getApplicationContext(),"OCURRIO Un ERROR En LA DESCARGA",Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+    public boolean hasPermissions(){
+        int res=0;
+
+        for(String perms : permissions){
+            res = this.checkCallingOrSelfPermission(perms);
+            if(!(res== PackageManager.PERMISSION_GRANTED)){
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public void requestPerm(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            requestPermissions(permissions,REQUEST_CODE_ASK_PERMISSIONS);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        boolean allowed = true;
+
+        switch (requestCode){
+            case REQUEST_CODE_ASK_PERMISSIONS:
+                for(int res : grantResults){
+                    allowed = allowed && (res == PackageManager.PERMISSION_GRANTED);
+                }
+                break;
+            default:
+                allowed = false;
+                break;
+        }
+
+        if(allowed){
+            downloadQuestionPDF();
+        }else{
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                if(shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+                    View parentLayout = findViewById(android.R.id.content);
+                    Snackbar.make(parentLayout,"Se requiere permiso para descargar",Snackbar.LENGTH_LONG).show();
+                }
+            }
+        }
     }
 
     private String getIndexText(){
@@ -497,7 +558,7 @@ public class QuestionActivity extends AppCompatActivity {
                 Date date = new Date() ;
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(date);
 
-                File myFile = new File(pdfFolder + timeStamp + ".pdf");
+                File myFile = new File(pdfFolder + "/" + timeStamp + ".pdf");
                 OutputStream output = new FileOutputStream(myFile);
 
                 Document document = new Document(PageSize.A4);
@@ -512,7 +573,7 @@ public class QuestionActivity extends AppCompatActivity {
                 ByteArrayOutputStream streamIcon = new ByteArrayOutputStream();
                 largeIcon.compress(Bitmap.CompressFormat.PNG, 100, streamIcon);
                 Image icon = Image.getInstance(streamIcon.toByteArray());
-                icon.scaleToFit(25f, 25f);
+                icon.scaleToFit(40f, 40f);
                 document.add(icon);
 
                 Chunk titleMateria = new Chunk(VariablesActivity.actualMateria.getNombre(), titleDoc);
