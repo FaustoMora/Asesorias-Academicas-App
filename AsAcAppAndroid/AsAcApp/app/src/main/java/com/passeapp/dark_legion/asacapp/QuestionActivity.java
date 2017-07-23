@@ -1,6 +1,6 @@
 package com.passeapp.dark_legion.asacapp;
 
-import android.*;
+
 import android.Manifest;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
@@ -28,10 +29,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.github.chrisbanes.photoview.PhotoView;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -58,8 +61,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
-
-import uk.co.senab.photoview.PhotoViewAttacher;
 
 
 public class QuestionActivity extends AppCompatActivity {
@@ -100,6 +101,13 @@ public class QuestionActivity extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), TestActivity.class));
         }
     }
+
+    /*
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }*/
 
     protected void reset_variables(){
         selectedPosOption = -1;
@@ -175,6 +183,12 @@ public class QuestionActivity extends AppCompatActivity {
             public View getView(int position, View convertView, ViewGroup parent) {
 
                 View view = super.getView(position, convertView, parent);
+
+                if (view instanceof CheckedTextView) {
+                    Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/Mermaid1001.ttf");
+                    ((CheckedTextView)view).setTypeface(tf);
+                }
+
                 if (position != selectedPosOption) {
                     view.setBackgroundColor(Color.WHITE);
                 } else {
@@ -221,8 +235,6 @@ public class QuestionActivity extends AppCompatActivity {
                 }
             }
         });
-        PhotoViewAttacher photoView = new PhotoViewAttacher(questionImage);
-        photoView.update();
     }
 
     public void downloadQuestionPDF(){
@@ -320,7 +332,10 @@ public class QuestionActivity extends AppCompatActivity {
                 iconWidth = 700;
                 break;
         }
-        this.questionImage.setImageBitmap(decodedByte);
+        //this.questionImage.setImageBitmap(decodedByte);
+
+        PhotoView photoView = (PhotoView) findViewById(R.id.questionImage);
+        photoView.setImageBitmap(decodedByte);
     }
 
     public void redirectNextQuestion(){

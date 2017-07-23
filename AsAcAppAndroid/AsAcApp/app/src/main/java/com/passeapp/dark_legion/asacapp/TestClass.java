@@ -52,6 +52,10 @@ public class TestClass {
         }
     }
 
+    public void clearScore(){
+        this.score = 0;
+    }
+
     public String displayedScore(){
         return String.valueOf(this.getScore()) + "/" + String.valueOf(this.getLstPreguntas().size());
     }

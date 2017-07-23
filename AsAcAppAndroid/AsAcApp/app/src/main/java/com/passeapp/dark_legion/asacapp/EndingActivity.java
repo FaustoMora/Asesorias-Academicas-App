@@ -66,7 +66,8 @@ public class EndingActivity extends AppCompatActivity {
                 .getLstTest().get(VariablesActivity.actualIndexTest).getLstPreguntas()) {
             q.resetQuestionVariables();
         }
-        
+        VariablesActivity.lstMaterias.get(VariablesActivity.actualIndexMateria).getLstTemas().get(VariablesActivity.actualIndexTema)
+                .getLstTest().get(VariablesActivity.actualIndexTest).clearScore();
         VariablesActivity.actualTest = null;
         VariablesActivity.actualIndexTest = null;
         VariablesActivity.actualQuestion = null;

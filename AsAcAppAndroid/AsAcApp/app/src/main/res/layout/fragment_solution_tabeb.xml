@@ -28,7 +28,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center">
 
-                <TextView
+                <com.passeapp.dark_legion.asacapp.MyTextView
                     android:id="@+id/lblIndexPregunta"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ImageButton
+                <com.github.chrisbanes.photoview.PhotoView
                     android:id="@+id/solutionQuestionImage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal">
 
-                <ImageButton
+                <com.github.chrisbanes.photoview.PhotoView
                     android:id="@+id/solutionImage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -96,11 +96,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:gravity="center">
+                android:gravity="center"
+                android:layout_marginBottom="20dp">
 
                 <ImageView
                     android:textColor="@android:color/black"
-                    android:layout_margin="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="25dp"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:id="@+id/youtube"

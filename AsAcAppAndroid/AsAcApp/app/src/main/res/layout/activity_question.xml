@@ -27,7 +27,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center">
 
-                <TextView
+                <com.passeapp.dark_legion.asacapp.MyTextView
                     android:id="@+id/lblTema"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center">
 
-                <TextView
+                <com.passeapp.dark_legion.asacapp.MyTextView
                     android:id="@+id/lblTest"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center">
 
-                <TextView
+                <com.passeapp.dark_legion.asacapp.MyTextView
                     android:id="@+id/lblIndexPregunta"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -90,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" >
 
-                <ImageButton
+                <com.github.chrisbanes.photoview.PhotoView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"

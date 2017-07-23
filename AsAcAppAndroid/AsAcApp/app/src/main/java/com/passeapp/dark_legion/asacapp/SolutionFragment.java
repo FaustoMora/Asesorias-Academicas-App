@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,12 +15,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import uk.co.senab.photoview.PhotoViewAttacher;
+import com.github.chrisbanes.photoview.PhotoView;
+
+//import uk.co.senab.photoview.PhotoViewAttacher;
 
 
 /**
@@ -147,6 +151,12 @@ public class SolutionFragment extends Fragment {
             public View getView(int position, View convertView, ViewGroup parent) {
                 View row = super.getView(position, convertView, parent);
                 OptionClass op = getItem(position);
+
+                if (row instanceof CheckedTextView) {
+                    Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/Mermaid1001.ttf");
+                    ((CheckedTextView)row).setTypeface(tf);
+                }
+
                 if(op.getEs_correcta())
                 {
                     // do something change color
@@ -165,7 +175,7 @@ public class SolutionFragment extends Fragment {
         });
 
 
-        initialiceImage(actualQuestion);
+        initialiceImage(actualQuestion,fragmentView);
         this.solutionYoutube.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -174,35 +184,44 @@ public class SolutionFragment extends Fragment {
 
                 if(linkYoutube != "null"){
                     try{
-                        Intent videoIntent = new Intent(Intent.ACTION_VIEW,Uri.parse(linkYoutube));
+                        Intent videoIntent = new Intent(Intent.ACTION_VIEW,Uri.parse("vnd.youtube://" + linkYoutube.replace("https://www.youtube.com/watch?v=","")));
                         startActivity(videoIntent);
                     }catch (Exception e){
-                        Log.e("youtube error", e.getLocalizedMessage());
                         Toast.makeText(getContext(),"NO TIENES INSTALADO YOUTUBE APP",Toast.LENGTH_LONG).show();
+                        Intent videoIntent = new Intent(Intent.ACTION_VIEW,Uri.parse(linkYoutube));
+                        startActivity(videoIntent);
+                        Log.e("youtube error", e.getLocalizedMessage());
                     }
                 }
             }
         });
+        /*
         PhotoViewAttacher photoView = new PhotoViewAttacher(solutionImage);
         photoView.update();
 
         PhotoViewAttacher photoView2 = new PhotoViewAttacher(solutionQuestionImage);
-        photoView2.update();
+        photoView2.update();*/
     }
 
-    protected void initialiceImage(QuestionClass actualQuestion){
+    protected void initialiceImage(QuestionClass actualQuestion, View fragmentView){
         byte[] decodedString = Base64.decode(actualQuestion.getPregunta_imagen(), Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        this.solutionQuestionImage.setImageBitmap(Bitmap.createScaledBitmap(decodedByte, 700, 420, false));
+        //this.solutionQuestionImage.setImageBitmap(Bitmap.createScaledBitmap(decodedByte, 700, 420, false));
+        PhotoView photoView = (PhotoView) fragmentView.findViewById(R.id.solutionQuestionImage);
+        photoView.setImageBitmap(Bitmap.createScaledBitmap(decodedByte, 700, 420, false));
 
         decodedString = Base64.decode(actualQuestion.getSolucion_imagen(), Base64.DEFAULT);
         decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        this.solutionImage.setImageBitmap(Bitmap.createScaledBitmap(decodedByte, 700, 420, false));
+        //this.solutionImage.setImageBitmap(Bitmap.createScaledBitmap(decodedByte, 700, 420, false));
+        PhotoView photoView2 = (PhotoView) fragmentView.findViewById(R.id.solutionImage);
+        photoView2.setImageBitmap(Bitmap.createScaledBitmap(decodedByte, 700, 420, false));
 
         String linkYoutube = actualQuestion.getLink_youtube();
 
-        if(linkYoutube != "null"){
+        if(linkYoutube != null && linkYoutube != "null"){
             this.solutionYoutube.setVisibility(View.VISIBLE);
+        }else{
+            this.solutionYoutube.setVisibility(View.GONE);
         }
     }
 }

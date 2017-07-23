@@ -4,7 +4,7 @@ package com.passeapp.dark_legion.asacapp;
 public class OptionClass {
     private Integer _id;
     private String detalle;
-    private Boolean es_correcta;
+    private Boolean es_correcta = false;
     private Integer pregunta_id;
 
     public OptionClass(Integer _id, String detalle, Integer es_correcta) {
