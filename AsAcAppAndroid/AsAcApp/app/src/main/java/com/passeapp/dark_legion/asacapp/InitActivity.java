@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.tasks.RuntimeExecutionException;
 import com.pusher.android.PusherAndroid;
 import com.pusher.android.notifications.ManifestValidator;
 import com.pusher.android.notifications.PushNotificationRegistration;
@@ -40,8 +41,10 @@ public class InitActivity extends AppCompatActivity {
 
                 try {
                     nativePusher.registerGCM(this, defaultSenderId);
+                    Log.d("Pusher", "Success register GCM");
                 } catch (ManifestValidator.InvalidManifestException e) {
                     e.printStackTrace();
+                    Log.d("Pusher", e.getLocalizedMessage());
                 }
 
 
@@ -110,11 +113,10 @@ public class InitActivity extends AppCompatActivity {
         int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
         if (resultCode != ConnectionResult.SUCCESS) {
             if (apiAvailability.isUserResolvableError(resultCode)) {
-                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
-                        .show();
+                //apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST).show();
+                Log.i("playservices", "apiAvailability.getErrorDialog");
             } else {
-                Log.i("pusher", "This device is not supported.");
-                finish();
+                Log.i("playservices", "This device is not supported.");
             }
             return false;
         }

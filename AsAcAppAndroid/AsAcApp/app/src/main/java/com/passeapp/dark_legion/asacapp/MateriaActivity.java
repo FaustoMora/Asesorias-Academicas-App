@@ -35,14 +35,14 @@ public class MateriaActivity extends AppCompatActivity {
 
     GridView gridView;
     private ProgressDialog progressDialog;
-    private String density;
+    private Float density;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_materia);
 
-        density = String.valueOf(getResources().getDisplayMetrics().density);
+        density = getResources().getDisplayMetrics().density;
 
 
         try{
@@ -218,31 +218,32 @@ public class MateriaActivity extends AppCompatActivity {
             // 2.0 if it's XHDPI
             // 3.0 if it's XXHDPI
             // 4.0 if it's XXXHDPI
-            int iconSize;
-            switch (density){
-                case "0.75":
-                    iconSize = 100;
-                    break;
-                case "1.0":
-                    iconSize = 150;
-                    break;
-                case "1.5":
-                    iconSize = 225;
-                    break;
-                case "2.0":
-                    iconSize = 275;
-                    break;
-                case "3.0":
-                    iconSize = 350;
-                    break;
-                case "4.0":
-                    iconSize = 400;
-                    break;
-                default:
-                    iconSize = 275;
-                    break;
+            int iconSizeHeight;
+            int iconSizeWidth;
+            if(density <= 0.75f){
+                iconSizeHeight = 170;
+                iconSizeWidth = 100;
+            }else if( density > 0.75f && density <= 1.0f){
+                iconSizeHeight = 200;
+                iconSizeWidth = 150;
+            }else if( density > 1.0f && density <= 1.5f){
+                iconSizeHeight = 220;
+                iconSizeWidth = 165;
+            }else if( density > 1.5f && density <= 2.0f){
+                iconSizeHeight = 340;
+                iconSizeWidth = 260;
+            }else if( density > 2.0f && density <= 3.0f){
+                iconSizeHeight = 440;
+                iconSizeWidth = 350;
+            }else if( density > 3.0f && density <= 4.0f){
+                iconSizeHeight = 500;
+                iconSizeWidth = 400;
+            }else{
+                iconSizeHeight = 450;
+                iconSizeWidth = 345;
             }
-            icon.setImageBitmap(Bitmap.createScaledBitmap(decodedByte, iconSize, iconSize, false));
+
+            icon.setImageBitmap(Bitmap.createScaledBitmap(decodedByte, iconSizeWidth, iconSizeHeight, false));
             return view;
         }
     }
