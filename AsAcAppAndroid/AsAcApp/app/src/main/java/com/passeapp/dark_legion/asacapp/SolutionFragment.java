@@ -167,7 +167,7 @@ public class SolutionFragment extends Fragment {
                     if(position == actualQuestion.getSelectedOP()){
                         row.setBackgroundColor (Color.RED);
                     }else{
-                        row.setBackgroundColor (Color.WHITE);
+                        row.setBackgroundColor (Color.TRANSPARENT);
                     }
                 }
                 return row;

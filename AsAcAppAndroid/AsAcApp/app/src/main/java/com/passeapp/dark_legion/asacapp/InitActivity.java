@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
@@ -22,7 +23,7 @@ import com.pusher.android.notifications.interests.InterestSubscriptionChangeList
 
 public class InitActivity extends AppCompatActivity {
 
-    Button initBtn;
+    ImageButton initBtn;
     ImageView icono;
     ImageView showDownBtn;
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
@@ -78,7 +79,7 @@ public class InitActivity extends AppCompatActivity {
 
     public void init(){
         this.icono = (ImageView)findViewById(R.id.iconoApp);
-        this.initBtn = (Button)findViewById(R.id.startAppBtn);
+        this.initBtn = (ImageButton)findViewById(R.id.startAppBtn);
         this.initBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -34,7 +34,7 @@ import java.util.ArrayList;
 
 public class TestActivity extends AppCompatActivity {
 
-    protected Button startTestBtn;
+    protected ImageButton startTestBtn;
     protected ListView listTests;
     protected TextView lblTemaTest;
     protected ImageView formulaIcon;
@@ -82,7 +82,7 @@ public class TestActivity extends AppCompatActivity {
         this.lblTemaTest = (TextView)findViewById(R.id.lblTemaTest);
         this.lblTemaTest.setText(VariablesActivity.actualTema.getNombre());
 
-        this.startTestBtn = (Button)findViewById(R.id.startTestBtn);
+        this.startTestBtn = (ImageButton)findViewById(R.id.startTestBtn);
         this.startTestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

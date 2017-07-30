@@ -30,6 +30,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckedTextView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -65,7 +66,7 @@ import java.util.Locale;
 
 public class QuestionActivity extends AppCompatActivity {
 
-    protected Button continueTestBtn;
+    protected ImageButton continueTestBtn;
     protected ListView optionsList;
     public ArrayAdapter<OptionClass> adapterOptions;
     public AlertDialog scoreDialog;
@@ -148,7 +149,7 @@ public class QuestionActivity extends AppCompatActivity {
 
         //final LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
         this.questionImage = (ImageView)findViewById(R.id.questionImage);
-        this.continueTestBtn = (Button)findViewById(R.id.questionContinueBtn);
+        this.continueTestBtn = (ImageButton)findViewById(R.id.questionContinueBtn);
         this.continueTestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -190,7 +191,7 @@ public class QuestionActivity extends AppCompatActivity {
                 }
 
                 if (position != selectedPosOption) {
-                    view.setBackgroundColor(Color.WHITE);
+                    view.setBackgroundColor(Color.TRANSPARENT);
                 } else {
                     view.setBackgroundColor(selectedColorOption);
                 }

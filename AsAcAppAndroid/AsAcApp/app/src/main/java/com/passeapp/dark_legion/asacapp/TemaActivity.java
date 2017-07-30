@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,7 +31,7 @@ import java.util.ArrayList;
 
 public class TemaActivity extends AppCompatActivity {
 
-    protected Button startTestBtn;
+    protected ImageButton startTestBtn;
     protected ListView listTemas;
     protected TextView lblMateriaTema;
     public ArrayAdapter<TemaClass> adapterTemas;
@@ -65,7 +66,7 @@ public class TemaActivity extends AppCompatActivity {
         this.lblMateriaTema = (TextView)findViewById(R.id.lblMateriaTema);
         this.lblMateriaTema.setText(VariablesActivity.actualMateria.getNombre());
 
-        this.startTestBtn = (Button)findViewById(R.id.startTestBtn);
+        this.startTestBtn = (ImageButton)findViewById(R.id.startTestBtn);
         this.startTestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

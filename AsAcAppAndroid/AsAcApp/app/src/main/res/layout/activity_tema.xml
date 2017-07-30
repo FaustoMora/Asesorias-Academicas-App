@@ -5,13 +5,14 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#ddf2ff"
+    android:background="@drawable/fondo"
     tools:context="com.passeapp.dark_legion.asacapp.TemaActivity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical">
+        android:scrollbars="vertical"
+        android:background="@null">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,7 +22,7 @@
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#ddf2ff">
+                android:background="@null">
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -77,7 +78,8 @@
                         android:scrollbarStyle="outsideOverlay"
                         android:scrollbars="vertical"
                         android:textColor="@android:color/black"
-                        android:dividerHeight="2.0sp"/>
+                        android:dividerHeight="2.0sp"
+                        android:background="@null"/>
 
 
                 </TableRow>
@@ -90,14 +92,13 @@
                     android:layout_weight="1"
                     >
 
-                    <Button
-                        android:text="@string/lblStart"
+                    <ImageButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/startTestBtn"
                         android:layout_gravity="center_horizontal"
-                        android:background="#007fff"
-                        android:textColor="@android:color/white"
+                        android:background="@null"
+                        android:src="@drawable/continuar"
                         android:layout_marginBottom="25dp"
                         />
                 </TableRow>
