@@ -16,14 +16,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.github.chrisbanes.photoview.PhotoView;
-
-//import uk.co.senab.photoview.PhotoViewAttacher;
 
 
 /**
@@ -50,7 +48,7 @@ public class SolutionFragment extends Fragment {
     protected ListView solutionList;
     private ImageView solutionImage;
     private ImageView solutionQuestionImage;
-    private ImageView solutionYoutube;
+    private ImageButton solutionYoutube;
     private TextView lblIndexPregunta;
 
     public SolutionFragment() {
@@ -143,7 +141,7 @@ public class SolutionFragment extends Fragment {
         this.lblIndexPregunta.setText(actualQuestion.getActualIndex());
         this.solutionQuestionImage = (ImageView)fragmentView.findViewById(R.id.solutionQuestionImage);
         this.solutionImage = (ImageView)fragmentView.findViewById(R.id.solutionImage);
-        this.solutionYoutube = (ImageView) fragmentView.findViewById(R.id.youtube);
+        this.solutionYoutube = (ImageButton) fragmentView.findViewById(R.id.youtube);
         this.solutionList = (ListView)fragmentView.findViewById(R.id.solutionList);
 
         this.solutionList.setAdapter(new ArrayAdapter<OptionClass>(getContext(), android.R.layout.simple_list_item_1, actualQuestion.getOpciones()) {
@@ -221,7 +219,7 @@ public class SolutionFragment extends Fragment {
         if(linkYoutube != null && linkYoutube != "null"){
             this.solutionYoutube.setVisibility(View.VISIBLE);
         }else{
-            this.solutionYoutube.setVisibility(View.GONE);
+            this.solutionYoutube.setVisibility(View.INVISIBLE);
         }
     }
 }

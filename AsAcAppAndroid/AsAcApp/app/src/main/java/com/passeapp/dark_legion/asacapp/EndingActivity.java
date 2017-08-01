@@ -4,16 +4,16 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 
 public class EndingActivity extends AppCompatActivity {
 
     private TextView lblScore;
-    private Button restartBtn;
-    private Button repeatTestBtn;
-    private Button solutionBtn;
+    private ImageButton restartBtn;
+    private ImageButton repeatTestBtn;
+    private ImageButton solutionBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +29,7 @@ public class EndingActivity extends AppCompatActivity {
             String score = getIntent().getStringExtra("score");
             lblScore.setText(score);
         }
-        restartBtn = (Button)findViewById(R.id.repeatBtn);
+        restartBtn = (ImageButton)findViewById(R.id.repeatBtn);
         restartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -38,7 +38,7 @@ public class EndingActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), MateriaActivity.class));
             }
         });
-        repeatTestBtn = (Button)findViewById(R.id.repeatTestBtn);
+        repeatTestBtn = (ImageButton)findViewById(R.id.repeatTestBtn);
         repeatTestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,7 +47,7 @@ public class EndingActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), TestActivity.class));
             }
         });
-        solutionBtn = (Button)findViewById(R.id.btnSolucion);
+        solutionBtn = (ImageButton)findViewById(R.id.btnSolucion);
         solutionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

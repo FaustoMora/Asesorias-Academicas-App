@@ -13,18 +13,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Toast;
-
-//import uk.co.senab.photoview.PhotoViewAttacher;
 
 
 public class SolutionActivity extends AppCompatActivity {
 
     protected Button nextExcludeQuestionBtn;
-    protected ListView solutionList;
     private ImageView solutionImage;
-    private ImageView solutionQuestionImage;
     private ImageView solutionYoutube;
     public AlertDialog scoreDialog;
 
