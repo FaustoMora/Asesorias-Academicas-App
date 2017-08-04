@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Asesorias Academicas</string>
+    <string name="app_name">Teacher\'s Aid</string>
     <string name="lblSelectTema">Seleccione un Tema:</string>
     <string name="lblShowSolution">Ver Solución</string>
     <string name="lblNextQuestion">Siguiente</string>
