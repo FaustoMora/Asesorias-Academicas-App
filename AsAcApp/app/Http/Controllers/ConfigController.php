@@ -103,7 +103,7 @@ class ConfigController extends Controller
 					'gcm' => array(
 					  'notification' => array(
 						'title' => $message,
-						'icon' => 'logoasac'
+						'icon' => 'logoasac_noti'
 					  ),
 					),
 				  )

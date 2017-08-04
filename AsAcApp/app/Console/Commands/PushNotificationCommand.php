@@ -54,7 +54,7 @@ class PushNotificationCommand extends Command
 			'gcm' => array(
 			  'notification' => array(
 				'title' => $message,
-				'icon' => 'logoasac'
+				'icon' => 'logoasac_noti'
 			  ),
 			),
 		  )

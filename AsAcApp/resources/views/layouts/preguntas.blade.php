@@ -217,7 +217,7 @@
                                     <h5 class="panel-title" style="margin-top:5px;">
                                        <?php
                                           if($pregunta->link_youtube != null){
-                                            echo "<b> Video Solución: </b><a href=\"http://$pregunta->link_youtube\">".$pregunta->link_youtube."</a>";
+                                            echo "<b> Video Solución: </b><a href="$pregunta->link_youtube">".$pregunta->link_youtube."</a>";
                                           }else{
                                             echo "<b> Video Solución: Esta pregunta no contiene video solución </b>";
                                           }

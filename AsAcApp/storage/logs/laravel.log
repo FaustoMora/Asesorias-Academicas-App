@@ -2630,3 +2630,5 @@ Stack trace:
 #0 {main}  
 [2017-07-04 15:00:02] local.INFO: sending push notification  
 [2017-07-09 15:00:02] local.INFO: sending push notification  
+[2017-07-22 15:00:03] local.INFO: sending push notification  
+[2017-07-23 15:00:03] local.INFO: sending push notification  
