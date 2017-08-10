@@ -18,10 +18,12 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.github.chrisbanes.photoview.PhotoView;
+import com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView;
 
 
 /**
@@ -45,7 +47,7 @@ public class SolutionFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     public QuestionClass fragmentQuestion;
-    protected ListView solutionList;
+    protected ExpandableHeightListView solutionList;
     private ImageView solutionImage;
     private ImageView solutionQuestionImage;
     private ImageButton solutionYoutube;
@@ -142,7 +144,7 @@ public class SolutionFragment extends Fragment {
         this.solutionQuestionImage = (ImageView)fragmentView.findViewById(R.id.solutionQuestionImage);
         this.solutionImage = (ImageView)fragmentView.findViewById(R.id.solutionImage);
         this.solutionYoutube = (ImageButton) fragmentView.findViewById(R.id.youtube);
-        this.solutionList = (ListView)fragmentView.findViewById(R.id.solutionList);
+        this.solutionList = (ExpandableHeightListView)fragmentView.findViewById(R.id.solutionList);
 
         this.solutionList.setAdapter(new ArrayAdapter<OptionClass>(getContext(), android.R.layout.simple_list_item_1, actualQuestion.getOpciones()) {
             @Override
@@ -153,6 +155,9 @@ public class SolutionFragment extends Fragment {
                 if (row instanceof CheckedTextView) {
                     Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/Mermaid1001.ttf");
                     ((CheckedTextView)row).setTypeface(tf);
+                    ((CheckedTextView) row).setSingleLine(false);
+                    row.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                    row.setPadding(10,10,10,10);
                 }
 
                 if(op.getEs_correcta())
@@ -171,6 +176,8 @@ public class SolutionFragment extends Fragment {
                 return row;
             }
         });
+
+        solutionList.setExpanded(true);
 
 
         initialiceImage(actualQuestion,fragmentView);
@@ -202,17 +209,21 @@ public class SolutionFragment extends Fragment {
     }
 
     protected void initialiceImage(QuestionClass actualQuestion, View fragmentView){
-        byte[] decodedString = Base64.decode(actualQuestion.getPregunta_imagen(), Base64.DEFAULT);
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        //this.solutionQuestionImage.setImageBitmap(Bitmap.createScaledBitmap(decodedByte, 700, 420, false));
-        PhotoView photoView = (PhotoView) fragmentView.findViewById(R.id.solutionQuestionImage);
-        photoView.setImageBitmap(Bitmap.createScaledBitmap(decodedByte, 700, 420, false));
+        if(!actualQuestion.getPregunta_imagen().isEmpty() && actualQuestion.getPregunta_imagen() != null){
+            byte[] decodedString = Base64.decode(actualQuestion.getPregunta_imagen(), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            //this.solutionQuestionImage.setImageBitmap(Bitmap.createScaledBitmap(decodedByte, 700, 420, false));
+            PhotoView photoView = (PhotoView) fragmentView.findViewById(R.id.solutionQuestionImage);
+            photoView.setImageBitmap(decodedByte);
+        }
 
-        decodedString = Base64.decode(actualQuestion.getSolucion_imagen(), Base64.DEFAULT);
-        decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        //this.solutionImage.setImageBitmap(Bitmap.createScaledBitmap(decodedByte, 700, 420, false));
-        PhotoView photoView2 = (PhotoView) fragmentView.findViewById(R.id.solutionImage);
-        photoView2.setImageBitmap(Bitmap.createScaledBitmap(decodedByte, 700, 420, false));
+        if(!actualQuestion.getSolucion_imagen().isEmpty() && actualQuestion.getSolucion_imagen() != null) {
+            byte[] decodedString = Base64.decode(actualQuestion.getSolucion_imagen(), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            //this.solutionImage.setImageBitmap(Bitmap.createScaledBitmap(decodedByte, 700, 420, false));
+            PhotoView photoView2 = (PhotoView) fragmentView.findViewById(R.id.solutionImage);
+            photoView2.setImageBitmap(decodedByte);
+        }
 
         String linkYoutube = actualQuestion.getLink_youtube();
 

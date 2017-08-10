@@ -32,10 +32,12 @@ import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.github.chrisbanes.photoview.PhotoView;
+import com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -67,7 +69,7 @@ import java.util.Locale;
 public class QuestionActivity extends AppCompatActivity {
 
     protected ImageButton continueTestBtn;
-    protected ListView optionsList;
+    protected ExpandableHeightListView optionsList;
     public ArrayAdapter<OptionClass> adapterOptions;
     public AlertDialog scoreDialog;
     private ImageView questionImage;
@@ -172,8 +174,8 @@ public class QuestionActivity extends AppCompatActivity {
             }
         });
 
-        this.optionsList = (ListView)findViewById(R.id.optionsList);
-        this.adapterOptions = new ArrayAdapter<OptionClass>(this,android.R.layout.simple_list_item_single_choice,VariablesActivity.actualQuestion.getOpciones()){
+        this.optionsList = (ExpandableHeightListView)findViewById(R.id.optionsList);
+        this.adapterOptions = new ArrayAdapter<OptionClass>(this,android.R.layout.simple_list_item_1,VariablesActivity.actualQuestion.getOpciones()){
             @Override
             public boolean isEnabled(int position) {
                 return !hasSelectedOption;
@@ -185,14 +187,20 @@ public class QuestionActivity extends AppCompatActivity {
 
                 View view = super.getView(position, convertView, parent);
 
-                if (view instanceof CheckedTextView) {
+                if (view instanceof TextView) {
                     Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/Mermaid1001.ttf");
-                    ((CheckedTextView)view).setTypeface(tf);
+                    ((TextView)view).setTypeface(tf);
+                    //((CheckedTextView) view).setSingleLine(false);
+                    view.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                    view.setPadding(10,10,10,10);
                 }
 
                 if (position != selectedPosOption) {
                     view.setBackgroundColor(Color.TRANSPARENT);
+                    view.setPressed(false);
                 } else {
+                    //((TextView)view).setPressed(true);
+                    //((TextView)view).setChecked(true);
                     view.setBackgroundColor(selectedColorOption);
                 }
                 return view;
@@ -223,6 +231,8 @@ public class QuestionActivity extends AppCompatActivity {
 
             }
         });
+        optionsList.setExpanded(true);
+
         initialiceImage();
 
         this.downPDF = (ImageView)findViewById(R.id.downPDF);
