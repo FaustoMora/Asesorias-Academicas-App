@@ -47,7 +47,7 @@ class ApiPreguntaController extends Controller
      */
     public function show(Pregunta $pregunta)
     {
-        return response()->json($pregunta->with('PreguntaImagen','SolucionImagen','Respuestas')->first(), 200, [], JSON_UNESCAPED_UNICODE);
+        return response()->json($pregunta->with('PreguntaImagen','SolucionImagen','Respuestas')->where('id',$pregunta->id)->first(), 200, [], JSON_UNESCAPED_UNICODE);
     }
 
     /**

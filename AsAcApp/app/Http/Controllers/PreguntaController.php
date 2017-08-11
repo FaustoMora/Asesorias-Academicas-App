@@ -55,10 +55,17 @@ class PreguntaController extends Controller
 			$desc = $request->input('descPreg');
 
 			//Subida de imagen de pregunta
-			$encoded_preg = null;
+			$uriPreg = null;
+			$uriSol = null;
 			if ($request->hasFile('subirImgPreg')) {
 				$solucionpreg = $request->file('subirImgPreg');
 				$encoded_preg = base64_encode(file_get_contents("/".$solucionpreg, FILE_USE_INCLUDE_PATH,NULL));
+
+				//guardando imagen en directorio
+				$name = $solucionpreg->getClientOriginalName();
+				$docName = ''.str_random(20).'_pregunta.'.$solucionpreg->getClientOriginalExtension();
+				$solucionpreg->move('uploads/preguntas/',$docName);
+				$uriPreg = 'uploads/preguntas/'.$docName;
 			}
 
 	/*		//Subida de imagen de pregunta
@@ -66,8 +73,16 @@ class PreguntaController extends Controller
 			$encoded_preg = base64_encode(file_get_contents("/".$solucionpreg, FILE_USE_INCLUDE_PATH,NULL));
 	*/
 			//Subida de imagen de solución
-			$solucion = $request->file('subirSolución');
-			$encoded_sol = base64_encode(file_get_contents("/".$solucion, FILE_USE_INCLUDE_PATH,NULL));
+			if ($request->hasFile('subirSolución')) {
+				$solucion = $request->file('subirSolución');
+				$encoded_sol = base64_encode(file_get_contents("/".$solucion, FILE_USE_INCLUDE_PATH,NULL));
+
+				//guardando imagen en directorio
+				$name = $solucion->getClientOriginalName();
+				$docName = ''.str_random(20).'_solucion.'.$solucion->getClientOriginalExtension();
+				$solucion->move('uploads/soluciones/',$docName);
+				$uriSol = 'uploads/soluciones/'.$docName;
+			}
 
 			$youtube = $request->input('youtube');
 			//Parte de respuestas
@@ -87,11 +102,13 @@ class PreguntaController extends Controller
 			//Imagen de pregunta
 			$imgprg = new Imagen;
 			$imgprg->bitmap = $encoded_preg;
+			$imgprg->uri_directory = $uriPreg;
 			$imgprg->save();
 
 			//Imagen de la solución
 			$imgsol = new Imagen;
 			$imgsol->bitmap = $encoded_sol;
+			$imgsol->uri_directory = $uriSol;
 			$imgsol->save();
 
 			//Creo la pregunta en base

@@ -12,4 +12,7 @@ Homestead.yaml
 /vendor/composer/*.php
 /config/database.php
 public/uploads/*
+public/uploads/docs/*
+/public/uploads/*
+/public/uploads/docs/*
 storage/logs/laravel.log
