@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 
 public class EndingActivity extends AppCompatActivity {
 
@@ -62,10 +64,12 @@ public class EndingActivity extends AppCompatActivity {
     }
 
     public void resetvariables(){
-        for (QuestionClass q :VariablesActivity.lstMaterias.get(VariablesActivity.actualIndexMateria).getLstTemas().get(VariablesActivity.actualIndexTema)
-                .getLstTest().get(VariablesActivity.actualIndexTest).getLstPreguntas()) {
+        /*for (QuestionClass q :VariablesActivity.lstMaterias.get(VariablesActivity.actualIndexMateria).getLstTemas().get(VariablesActivity.actualIndexTema)
+                .getLstTest().get(VariablesActivity.actualIndexTest).setLstPreguntas(new ArrayList<QuestionClass>());) {
             q.resetQuestionVariables();
-        }
+        }*/
+        VariablesActivity.lstMaterias.get(VariablesActivity.actualIndexMateria).getLstTemas().get(VariablesActivity.actualIndexTema)
+                .getLstTest().get(VariablesActivity.actualIndexTest).setLstPreguntas(new ArrayList<QuestionClass>());
         VariablesActivity.lstMaterias.get(VariablesActivity.actualIndexMateria).getLstTemas().get(VariablesActivity.actualIndexTema)
                 .getLstTest().get(VariablesActivity.actualIndexTest).clearScore();
         VariablesActivity.actualTest = null;

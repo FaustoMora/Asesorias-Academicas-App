@@ -175,7 +175,7 @@ public class QuestionActivity extends AppCompatActivity {
         });
 
         this.optionsList = (ExpandableHeightListView)findViewById(R.id.optionsList);
-        this.adapterOptions = new ArrayAdapter<OptionClass>(this,android.R.layout.simple_list_item_1,VariablesActivity.actualQuestion.getOpciones()){
+        this.adapterOptions = new ArrayAdapter<OptionClass>(this,R.layout.custom_row,VariablesActivity.actualQuestion.getOpciones()){
             @Override
             public boolean isEnabled(int position) {
                 return !hasSelectedOption;
@@ -183,17 +183,35 @@ public class QuestionActivity extends AppCompatActivity {
 
             @NonNull
             @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
+            public View getView(int position, View view, ViewGroup parent) {
 
-                View view = super.getView(position, convertView, parent);
+                OptionClass op = getItem(position);
 
-                if (view instanceof TextView) {
+                if(view == null){
+                    view = getLayoutInflater().inflate(R.layout.custom_row,parent,false);
+                }
+
+                //View view = super.getView(position, convertView, parent);
+
+                MyTextView textView = (MyTextView)view.findViewById(R.id.lblText);
+                ImageView imageView = (ImageView)view.findViewById(R.id.iconFolder);
+
+                Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/Mermaid1001.ttf");
+                textView.setTypeface(tf);
+                textView.setText(op.getDetalle());
+                textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                textView.setPadding(10,10,10,10);
+
+                imageView.setImageResource(R.drawable.indicador_de_respuesta);
+
+
+                /*if (view instanceof TextView) {
                     Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/Mermaid1001.ttf");
                     ((TextView)view).setTypeface(tf);
                     //((CheckedTextView) view).setSingleLine(false);
                     view.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                     view.setPadding(10,10,10,10);
-                }
+                }*/
 
                 if (position != selectedPosOption) {
                     view.setBackgroundColor(Color.TRANSPARENT);
