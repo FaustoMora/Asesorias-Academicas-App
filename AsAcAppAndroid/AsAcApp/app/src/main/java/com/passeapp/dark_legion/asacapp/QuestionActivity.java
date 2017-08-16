@@ -135,7 +135,7 @@ public class QuestionActivity extends AppCompatActivity {
             VariablesActivity.actualIndexPregunta = 0;
             VariablesActivity.pastIndexPregunta = 0;
         }
-        VariablesActivity.actualQuestion = VariablesActivity.lstQuestions.get(VariablesActivity.actualIndexPregunta);
+        VariablesActivity.actualQuestion = VariablesActivity.getQuestionForIndexList(VariablesActivity.actualIndexPregunta);
         VariablesActivity.actualQuestion.setActualIndex(getIndexText());
         selectedPosOption = VariablesActivity.actualQuestion.getSelectedOP();
         hasSelectedOption = VariablesActivity.actualQuestion.isHasSelected();
@@ -323,7 +323,7 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     private String getIndexText(){
-        return "Pregunta " + String.valueOf(VariablesActivity.actualIndexPregunta  + 1 ) + "/" + String.valueOf(VariablesActivity.lstQuestions.size());
+        return "Pregunta " + String.valueOf(VariablesActivity.actualIndexPregunta  + 1 ) + "/" + String.valueOf(VariablesActivity.getQuestionListSize());
     }
 
     protected void initialiceImage(){
@@ -370,7 +370,7 @@ public class QuestionActivity extends AppCompatActivity {
     public void redirectNextQuestion(){
         hasSelectedOption = true;
         VariablesActivity.actualQuestion.setHasSelected(true);
-        if(VariablesActivity.lstQuestions.size() == (VariablesActivity.actualIndexPregunta + 1)){
+        if(VariablesActivity.getQuestionListSize() == (VariablesActivity.actualIndexPregunta + 1)){
             String score = VariablesActivity.actualTest.displayedScore();
             finish();
             Intent solution = new Intent(QuestionActivity.this, EndingActivity.class);
@@ -404,7 +404,7 @@ public class QuestionActivity extends AppCompatActivity {
             public void onClick(View view) {
                 hasSelectedOption = true;
                 VariablesActivity.actualQuestion.setHasSelected(true);
-                if(VariablesActivity.lstQuestions.size() == (VariablesActivity.actualIndexPregunta + 1)){
+                if(VariablesActivity.getQuestionListSize() == (VariablesActivity.actualIndexPregunta + 1)){
                     /*
                     scoreDialog = new AlertDialog.Builder(QuestionActivity.this).create();
                     scoreDialog.setTitle("Tu score es: " + VariablesActivity.sumScore());
@@ -459,7 +459,6 @@ public class QuestionActivity extends AppCompatActivity {
         protected void onPostExecute(ArrayList<QuestionClass> questionClass) {
             reset_variables();
             if (questionClass == null){
-                reset_variables();
                 progressDialog.dismiss();
                 AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(QuestionActivity.this, R.style.myDialogStyle));
                 builder.setMessage("NO EXISTEN DATOS QUE PRESENTAR")
@@ -475,7 +474,6 @@ public class QuestionActivity extends AppCompatActivity {
                 AlertDialog alert = builder.create();
                 alert.show();
             }else {
-                VariablesActivity.lstQuestions = questionClass;
                 VariablesActivity.lstMaterias.get(VariablesActivity.actualIndexMateria).getLstTemas().get(VariablesActivity.actualIndexTema)
                         .getLstTest().get(VariablesActivity.actualIndexTest).setLstPreguntas(questionClass);
                 init();

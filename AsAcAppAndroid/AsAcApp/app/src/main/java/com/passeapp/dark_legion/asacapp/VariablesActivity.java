@@ -9,7 +9,6 @@ public class VariablesActivity extends AppCompatActivity {
     public static ArrayList<MateriaClass> lstMaterias = new ArrayList<MateriaClass>();
     public static ArrayList<TemaClass> lstTemas = new ArrayList<TemaClass>();
     public static ArrayList<TestClass> lstTests = new ArrayList<TestClass>();
-    public static ArrayList<QuestionClass> lstQuestions = new ArrayList<QuestionClass>();
     public static MateriaClass actualMateria;
     public static TemaClass actualTema;
     public static TestClass actualTest;
@@ -26,6 +25,16 @@ public class VariablesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_variables);
     }
 
+    public static QuestionClass getQuestionForIndexList(int index){
+        return lstMaterias.get(VariablesActivity.actualIndexMateria).getLstTemas().get(VariablesActivity.actualIndexTema)
+                .getLstTest().get(VariablesActivity.actualIndexTest).getLstPreguntas().get(index);
+    }
+
+    public static int getQuestionListSize(){
+        return lstMaterias.get(VariablesActivity.actualIndexMateria).getLstTemas().get(VariablesActivity.actualIndexTema)
+                .getLstTest().get(VariablesActivity.actualIndexTest).getLstPreguntas().size();
+    }
+
     public static void reset_variables(){
         actualTema = null;
         actualQuestion = null;
@@ -33,7 +42,7 @@ public class VariablesActivity extends AppCompatActivity {
 
     public static void resetQuestionvariables(){
         actualQuestion = null;
-        lstQuestions.clear();
+        //lstQuestions.clear();
     }
 
     public static void resetAllvariables(){
@@ -45,7 +54,7 @@ public class VariablesActivity extends AppCompatActivity {
     public static void reset_list(){
         lstMaterias.clear();
         lstTemas.clear();
-        lstQuestions.clear();
+        //lstQuestions.clear();
     }
 
     public static Object getElementForArrayListById(ArrayList list, int pk){
