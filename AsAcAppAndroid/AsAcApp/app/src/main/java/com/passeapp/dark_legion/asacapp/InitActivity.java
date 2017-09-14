@@ -3,6 +3,7 @@ package com.passeapp.dark_legion.asacapp;
 import android.app.DownloadManager;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,7 +25,6 @@ public class InitActivity extends AppCompatActivity {
     ImageButton initBtn;
     ImageView icono;
     ImageView showDownBtn;
-    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,41 +34,42 @@ public class InitActivity extends AppCompatActivity {
 
         if (playServicesAvailable()) {
             try{
-                PusherAndroid pusher = new PusherAndroid("e3c974561ec35f9b5b88");
-                PushNotificationRegistration nativePusher = pusher.nativePusher();
-                String defaultSenderId = getString(R.string.gcm_defaultSenderId); // fetched from your google-services.json
+                if(Build.VERSION.SDK_INT != Build.VERSION_CODES.M){
+                    PusherAndroid pusher = new PusherAndroid("e3c974561ec35f9b5b88");
+                    PushNotificationRegistration nativePusher = pusher.nativePusher();
+                    String defaultSenderId = getString(R.string.gcm_defaultSenderId); // fetched from your google-services.json
 
-                try {
-                    nativePusher.registerGCM(this, defaultSenderId);
-                    Log.d("Pusher", "Success register GCM");
-                } catch (ManifestValidator.InvalidManifestException e) {
-                    e.printStackTrace();
-                    Log.d("Pusher", e.getLocalizedMessage());
+                    try {
+                        nativePusher.registerGCM(this, defaultSenderId);
+                        Log.d("Pusher", "Success register GCM");
+                    } catch (ManifestValidator.InvalidManifestException e) {
+                        e.printStackTrace();
+                        Log.d("Pusher", e.getLocalizedMessage());
+                    }
+
+
+                    nativePusher.subscribe("asacapp", new InterestSubscriptionChangeListener() {
+                        @Override
+                        public void onSubscriptionChangeSucceeded() {
+                            System.out.println("Success! I love donuts!");
+                        }
+
+                        @Override
+                        public void onSubscriptionChangeFailed(int statusCode, String response) {
+                            System.out.println(":(: received " + statusCode + " with" + response);
+                        }
+                    });
+
+                    nativePusher.setGCMListener(new GCMPushNotificationReceivedListener() {
+                        @Override
+                        public void onMessageReceived(String from, Bundle data) {
+                            // do something magical 🔮
+                            String message = data.getString("tittle");
+                            Log.d("GCMListener", "Received push notification from: " + from);
+                            Log.d("GCMListener", "Message: " + message);
+                        }
+                    });
                 }
-
-
-                nativePusher.subscribe("asacapp", new InterestSubscriptionChangeListener() {
-                    @Override
-                    public void onSubscriptionChangeSucceeded() {
-                        System.out.println("Success! I love donuts!");
-                    }
-
-                    @Override
-                    public void onSubscriptionChangeFailed(int statusCode, String response) {
-                        System.out.println(":(: received " + statusCode + " with" + response);
-                    }
-                });
-
-                nativePusher.setGCMListener(new GCMPushNotificationReceivedListener() {
-                    @Override
-                    public void onMessageReceived(String from, Bundle data) {
-                        // do something magical 🔮
-                        String message = data.getString("tittle");
-                        Log.d("GCMListener", "Received push notification from: " + from);
-                        Log.d("GCMListener", "Message: " + message);
-                    }
-                });
-
             }catch (Exception e){
                 Log.e("init pusher error",e.getLocalizedMessage());
             }
