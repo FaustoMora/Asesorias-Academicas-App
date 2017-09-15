@@ -2,6 +2,7 @@ package com.passeapp.dark_legion.asacapp;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,27 +13,33 @@ import java.util.ArrayList;
 
 public class TemaCustomAdapter extends ArrayAdapter<TemaClass>{
 
+    private Context context;
+
     public TemaCustomAdapter(Context context, ArrayList<TemaClass> objects) {
         super(context, R.layout.custom_row, objects);
+        this.context = context;
     }
 
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = LayoutInflater.from(getContext());
-        View customView = inflater.inflate(R.layout.custom_row,parent,false);
+
+        if(convertView == null){
+            LayoutInflater inflater = LayoutInflater.from(context);
+            convertView = inflater.inflate(R.layout.custom_row,parent,false);
+        }
 
         TemaClass contact = getItem(position);
-        TextView contactName = (TextView) customView.findViewById(R.id.lblText);
+        TextView contactName = (TextView) convertView.findViewById(R.id.lblText);
         //ImageView icon = (ImageView)customView.findViewById(R.id.iconFolder);
         contactName.setText(contact.getNombre());
         //icon.setImageResource(R.drawable.folder);
 
         if (position == TemaActivity.selectedListPos) {
-            customView.setBackgroundResource(R.color.pressed_color);
+            convertView.setBackgroundResource(R.color.pressed_color);
         }
 
-        return customView;
+        return convertView;
 
         /*ViewHolderItem viewHolder;
 

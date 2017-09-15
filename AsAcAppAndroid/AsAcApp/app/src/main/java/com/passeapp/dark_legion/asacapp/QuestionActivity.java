@@ -590,7 +590,7 @@ public class QuestionActivity extends AppCompatActivity {
 
             try{
                 File pdfFolder = new File(Environment.getExternalStoragePublicDirectory(
-                        Environment.DIRECTORY_DOWNLOADS), "pdfTest");
+                        Environment.DIRECTORY_DOWNLOADS), "TeachersAid");
                 if (!pdfFolder.exists()) {
                     pdfFolder.mkdir();
                     Log.i("PDF", "Pdf Directory created");

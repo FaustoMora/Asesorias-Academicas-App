@@ -6,8 +6,9 @@
     <item
         android:state_pressed="true"
         android:drawable="@color/selected_color" />
+
     <item
-        android:drawable="@color/default_color" />
+        android:drawable="@color/pressed_color" />
 
     <item android:drawable="@color/default_color" android:state_activated="false"/>
     <item android:drawable="@color/default_color" android:state_activated="false" android:state_pressed="false"/>
