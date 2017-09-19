@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -152,25 +155,33 @@ public class SolutionFragment extends Fragment {
                 View row = super.getView(position, convertView, parent);
                 OptionClass op = getItem(position);
 
-                if (row instanceof CheckedTextView) {
+                if (row instanceof TextView) {
                     Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/Mermaid1001.ttf");
-                    ((CheckedTextView)row).setTypeface(tf);
-                    ((CheckedTextView) row).setSingleLine(false);
+                    ((TextView)row).setTypeface(tf);
+                    ((TextView) row).setSingleLine(false);
                     row.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                     row.setPadding(10,10,10,10);
                 }
 
                 if(op.getEs_correcta())
                 {
+                    ((TextView)row).setTypeface(((TextView)row).getTypeface(), Typeface.BOLD);
+                    ((TextView)row).setTextColor(ContextCompat.getColor(getContext(), R.color.correct_answers_green));
                     // do something change color
-                    row.setBackgroundColor (Color.GREEN); // some color
+                    //row.setBackgroundColor (Color.GREEN); // some color
                 }
                 else
                 {
                     if(position == actualQuestion.getSelectedOP()){
-                        row.setBackgroundColor (Color.RED);
+                        //row.setBackgroundColor (Color.RED);
+                        ((TextView)row).setTypeface(((TextView)row).getTypeface(), Typeface.NORMAL);
+                        ((TextView)row).setPaintFlags(((TextView)row).getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                        ((TextView)row).setTextColor(ContextCompat.getColor(getContext(), R.color.wrong_answer_red));
                     }else{
-                        row.setBackgroundColor (Color.TRANSPARENT);
+                        //row.setBackgroundColor (Color.TRANSPARENT);
+                        ((TextView)row).setPaintFlags( ((TextView)row).getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
+                        ((TextView)row).setTypeface(((TextView)row).getTypeface(), Typeface.NORMAL);
+                        ((TextView)row).setTextColor(Color.BLACK);
                     }
                 }
                 return row;

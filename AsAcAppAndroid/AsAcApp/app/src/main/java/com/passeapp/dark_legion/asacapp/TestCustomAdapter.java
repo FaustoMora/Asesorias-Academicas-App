@@ -36,10 +36,6 @@ public class TestCustomAdapter extends ArrayAdapter<TestClass> {
         contactName.setText(contact.getNombre());
         icon.setImageResource(R.drawable.check2);
 
-        if (position == TestActivity.selectedListPos) {
-            convertView.setBackgroundResource(R.color.pressed_color);
-        }
-
 
         return convertView;
     }

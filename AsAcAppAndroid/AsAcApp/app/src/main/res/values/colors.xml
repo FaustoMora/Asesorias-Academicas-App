@@ -7,4 +7,7 @@
     <color name="default_color">#ffffff</color>
     <color name="selected_color">#b3b3b3</color>
     <color name="blue_asac">#0F458D</color>
+    <color name="wrong_answer_red">#FF0000</color>
+    <color name="correct_answers_green">#00CC00</color>
+    <color name="answer_select_highlight">#649EEE</color>
 </resources>

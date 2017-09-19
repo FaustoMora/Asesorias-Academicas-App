@@ -2,15 +2,15 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:state_selected="true"
-        android:drawable="@color/pressed_color"/>
+        android:drawable="@color/answer_select_highlight"/>
     <item
         android:state_pressed="true"
         android:drawable="@color/selected_color" />
 
     <item
-        android:drawable="@color/pressed_color" />
+        android:drawable="@color/answer_select_highlight" />
 
     <item android:drawable="@color/default_color" android:state_activated="false"/>
     <item android:drawable="@color/default_color" android:state_activated="false" android:state_pressed="false"/>
-    <item android:drawable="@color/pressed_color" android:state_activated="true"/>
+    <item android:drawable="@color/answer_select_highlight" android:state_activated="true"/>
 </selector>

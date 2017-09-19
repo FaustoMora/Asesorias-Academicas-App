@@ -29,23 +29,24 @@
                 android:text="TU PUNTUACIÓN ES:"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="58dp"
+                android:layout_marginTop="40dp"
                 android:id="@+id/textView2"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:textSize="18sp"
-                android:textColor="@android:color/black"/>
+                android:textSize="26sp"
+                android:textColor="@color/blue_asac"/>
 
             <com.passeapp.dark_legion.asacapp.MyTextView
+                android:text="3/5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="77dp"
+                android:layout_marginTop="50dp"
                 android:id="@+id/lblScore"
                 android:layout_below="@+id/textView2"
                 android:layout_centerHorizontal="true"
-                android:textSize="40sp"
-                android:layout_marginBottom="40dp"
-                android:textColor="@color/colorPrimary"/>
+                android:textSize="64sp"
+                android:layout_marginBottom="30dp"
+                android:textColor="@color/blue_asac"/>
 
             <ImageButton
                 android:id="@+id/btnSolucion"

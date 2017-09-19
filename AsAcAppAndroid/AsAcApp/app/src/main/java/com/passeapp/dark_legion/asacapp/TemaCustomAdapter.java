@@ -34,10 +34,6 @@ public class TemaCustomAdapter extends ArrayAdapter<TemaClass>{
         contactName.setText(contact.getNombre());
         //icon.setImageResource(R.drawable.folder);
 
-        if (position == TemaActivity.selectedListPos) {
-            convertView.setBackgroundResource(R.color.pressed_color);
-        }
-
         return convertView;
 
         /*ViewHolderItem viewHolder;
