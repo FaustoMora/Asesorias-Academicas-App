@@ -2,7 +2,6 @@ package com.passeapp.dark_legion.asacapp;
 
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;

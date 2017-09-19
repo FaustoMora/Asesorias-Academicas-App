@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import java.util.ArrayList;
 
@@ -106,7 +107,7 @@ public class SolutionTabebActivity extends AppCompatActivity implements Solution
 
     @Override
     public void onBackPressed() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(SolutionTabebActivity.this, R.style.myDialogStyle));
         builder.setMessage("Deseas salir de la solución?")
                 .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                     @Override
