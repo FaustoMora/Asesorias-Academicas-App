@@ -11,6 +11,6 @@
         android:drawable="@color/answer_select_highlight" />
 
     <item android:drawable="@color/default_color" android:state_activated="false"/>
-    <item android:drawable="@color/default_color" android:state_activated="false" android:state_pressed="false"/>
-    <item android:drawable="@color/answer_select_highlight" android:state_activated="true"/>
+    <item android:drawable="@color/answer_select_highlight" android:state_activated="false" android:state_pressed="false"/>
+    <item android:drawable="@color/answer_select_highlight" android:state_activated="true" android:state_pressed="true"/>
 </selector>

@@ -122,4 +122,5 @@ public class InitActivity extends AppCompatActivity {
         }
         return true;
     }
+
 }

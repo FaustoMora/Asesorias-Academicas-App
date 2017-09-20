@@ -17,6 +17,7 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -40,10 +41,19 @@ import com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.ColumnText;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfGState;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfStamper;
 import com.itextpdf.text.pdf.PdfWriter;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -58,6 +68,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -198,8 +209,8 @@ public class QuestionActivity extends AppCompatActivity {
                 Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/Mermaid1001.ttf");
                 textView.setTypeface(tf);
                 textView.setText(op.getDetalle());
-                textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                textView.setPadding(10,10,10,10);
+                //textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                //textView.setPadding(10,15,10,10);
 
                 imageView.setImageResource(R.drawable.indicador_de_respuesta);
 
@@ -218,7 +229,7 @@ public class QuestionActivity extends AppCompatActivity {
                 } else {
                     //((TextView)view).setPressed(true);
                     //((TextView)view).setChecked(true);
-                    view.setBackgroundColor(selectedColorOption);
+                    view.setBackgroundColor(ContextCompat.getColor(QuestionActivity.this, R.color.answer_select_highlight));
                 }
                 return view;
             }
@@ -608,13 +619,13 @@ public class QuestionActivity extends AppCompatActivity {
 
 
                 // get input stream
-                Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.espol);
+                Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.encabezado_de_pdf);
                 //InputStream ims = getAssets().open("espol.png");
                 //Bitmap bmpIcon = BitmapFactory.decodeStream(ims);
                 ByteArrayOutputStream streamIcon = new ByteArrayOutputStream();
                 largeIcon.compress(Bitmap.CompressFormat.PNG, 100, streamIcon);
                 Image icon = Image.getInstance(streamIcon.toByteArray());
-                icon.scaleToFit(40f, 40f);
+                icon.scaleToFit(100f,50f);
                 document.add(icon);
 
                 Chunk titleMateria = new Chunk(VariablesActivity.actualMateria.getNombre(), titleDoc);
@@ -660,12 +671,54 @@ public class QuestionActivity extends AppCompatActivity {
                 //document.newPage();
                 document.close();
 
+                try{
+                    manipulatePdf(myFile.getAbsolutePath(),myFile.getAbsolutePath());
+                }catch (Exception e){
+                    Log.e("error watermark",e.getLocalizedMessage());
+                }
+
                 return true;
             }catch (Exception e){
                 Log.e("PDF",e.getLocalizedMessage());
                 return false;
             }
 
+        }
+
+
+        public void manipulatePdf(String src, String dest) throws IOException, DocumentException {
+            PdfReader reader = new PdfReader(src);
+            int n = reader.getNumberOfPages();
+            PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(dest));
+            stamper.setRotateContents(false);
+            // image watermark
+            Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.fondopdf);
+            ByteArrayOutputStream streamIcon = new ByteArrayOutputStream();
+            largeIcon.compress(Bitmap.CompressFormat.PNG, 100, streamIcon);
+
+            Image img = Image.getInstance(streamIcon.toByteArray());
+            float w = img.getScaledWidth();
+            float h = img.getScaledHeight();
+            // transparency
+            PdfGState gs1 = new PdfGState();
+            gs1.setFillOpacity(0.5f);
+            // properties
+            PdfContentByte over;
+            Rectangle pagesize;
+            float x, y;
+            // loop over every page
+            for (int i = 1; i <= n; i++) {
+                pagesize = reader.getPageSize(i);
+                x = (pagesize.getLeft() + pagesize.getRight()) / 2;
+                y = (pagesize.getTop() + pagesize.getBottom()) / 2;
+                over = stamper.getOverContent(i);
+                over.saveState();
+                over.setGState(gs1);
+                over.addImage(img, w, 0, 0, h, x - (w / 2), y - (h / 2));
+                over.restoreState();
+            }
+            stamper.close();
+            reader.close();
         }
     }
 

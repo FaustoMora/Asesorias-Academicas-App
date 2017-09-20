@@ -1,8 +1,11 @@
 package com.passeapp.dark_legion.asacapp;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +38,14 @@ public class TestCustomAdapter extends ArrayAdapter<TestClass> {
         ImageView icon = (ImageView)convertView.findViewById(R.id.iconFolder);
         contactName.setText(contact.getNombre());
         icon.setImageResource(R.drawable.check2);
+
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
+            if (position == TestActivity.selectedListPos) {
+                convertView.setBackgroundColor(ContextCompat.getColor(context, R.color.answer_select_highlight));
+            }else{
+                convertView.setBackgroundColor(Color.TRANSPARENT);
+            }
+        }
 
 
         return convertView;

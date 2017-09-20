@@ -2,7 +2,10 @@ package com.passeapp.dark_legion.asacapp;
 
 
 import android.content.Context;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +36,14 @@ public class TemaCustomAdapter extends ArrayAdapter<TemaClass>{
         //ImageView icon = (ImageView)customView.findViewById(R.id.iconFolder);
         contactName.setText(contact.getNombre());
         //icon.setImageResource(R.drawable.folder);
+
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
+            if (position == TemaActivity.selectedListPos) {
+                convertView.setBackgroundColor(ContextCompat.getColor(context, R.color.answer_select_highlight));
+            }else{
+                convertView.setBackgroundColor(Color.TRANSPARENT);
+            }
+        }
 
         return convertView;
 
