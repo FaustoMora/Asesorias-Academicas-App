@@ -25,6 +25,7 @@ public class InitActivity extends AppCompatActivity {
     ImageButton initBtn;
     ImageView icono;
     ImageView showDownBtn;
+    ImageView btnTutors;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +79,7 @@ public class InitActivity extends AppCompatActivity {
 
     public void init(){
         this.icono = (ImageView)findViewById(R.id.iconoApp);
+        this.btnTutors = (ImageView)findViewById(R.id.btnTutors);
         this.initBtn = (ImageButton)findViewById(R.id.startAppBtn);
         this.initBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,6 +107,20 @@ public class InitActivity extends AppCompatActivity {
                     startActivity(new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS));
                 }
             }
+        });
+
+        this.btnTutors.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try{
+                    Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(VariablesActivity.TUTORS_URL));
+                    startActivity(intent);
+                }catch (Exception e){
+                    Log.e("visit us","error abrir link en google");
+
+                }
+            }
+
         });
     }
 

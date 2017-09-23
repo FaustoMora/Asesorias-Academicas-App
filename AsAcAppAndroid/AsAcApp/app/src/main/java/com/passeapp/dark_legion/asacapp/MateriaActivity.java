@@ -58,23 +58,6 @@ public class MateriaActivity extends AppCompatActivity {
     public void init(){
         this.gridView = (GridView)findViewById(R.id.gridViewMaterias);
         this.gridView.setAdapter(new GridAdapter());
-        this.gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if(OnlineConnect.isOnline(getApplicationContext())){
-                    MateriaClass aux = VariablesActivity.lstMaterias.get(i);
-                    if(aux != null){
-                        VariablesActivity.actualMateria = aux;
-                        VariablesActivity.actualIndexMateria = i;
-                        finish();
-                        startActivity(new Intent(getApplicationContext(), TemaActivity.class));
-                    }
-                }else {
-                    Toast.makeText(getApplicationContext(), "CONEXION A INTERNET NO DISPONIBLE", Toast.LENGTH_LONG).show();
-                }
-                return false;
-            }
-        });
     }
 
     public void reset_variables(){
@@ -242,6 +225,25 @@ public class MateriaActivity extends AppCompatActivity {
                 iconSizeHeight = 450;
                 iconSizeWidth = 345;
             }
+
+            final int index = i;
+
+            icon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(OnlineConnect.isOnline(getApplicationContext())){
+                        MateriaClass aux = VariablesActivity.lstMaterias.get(index);
+                        if(aux != null){
+                            VariablesActivity.actualMateria = aux;
+                            VariablesActivity.actualIndexMateria = index;
+                            finish();
+                            startActivity(new Intent(getApplicationContext(), TemaActivity.class));
+                        }
+                    }else {
+                        Toast.makeText(getApplicationContext(), "CONEXION A INTERNET NO DISPONIBLE", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
 
             icon.setImageBitmap(Bitmap.createScaledBitmap(decodedByte, iconSizeWidth, iconSizeHeight, false));
             return view;

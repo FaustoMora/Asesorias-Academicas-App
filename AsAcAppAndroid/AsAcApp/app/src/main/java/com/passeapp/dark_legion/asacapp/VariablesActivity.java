@@ -19,6 +19,8 @@ public class VariablesActivity extends AppCompatActivity {
     public static Integer actualIndexPregunta = null;
     public static Integer pastIndexPregunta = null;
 
+    public static final String TUTORS_URL = "https://teachersaidmath.wixsite.com/teachersaid/tutores";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
