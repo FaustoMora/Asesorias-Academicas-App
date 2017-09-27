@@ -152,10 +152,6 @@ public class QuestionActivity extends AppCompatActivity {
 
         this.optionsList = (ExpandableHeightListView)findViewById(R.id.optionsList);
         this.adapterOptions = new ArrayAdapter<OptionClass>(this,R.layout.custom_row,VariablesActivity.actualQuestion.getOpciones()){
-            @Override
-            public boolean isEnabled(int position) {
-                return !hasSelectedOption;
-            }
 
             @NonNull
             @Override
@@ -191,7 +187,7 @@ public class QuestionActivity extends AppCompatActivity {
 
                 if (position != selectedPosOption) {
                     view.setBackgroundColor(Color.TRANSPARENT);
-                    view.setPressed(false);
+                    //view.setPressed(false);
                 } else {
                     //((TextView)view).setPressed(true);
                     //((TextView)view).setChecked(true);
@@ -208,8 +204,8 @@ public class QuestionActivity extends AppCompatActivity {
                 OptionClass op = (OptionClass) adapterView.getItemAtPosition(i);
 
                 if(!hasSelectedOption){
-                    optionsList.setItemChecked(i, true);
-                    view.setSelected(true);
+                    //optionsList.setItemChecked(i, true);
+                    //view.setSelected(true);
                     selectedPosOption = i;
                     VariablesActivity.actualQuestion.setSelectedOP(i);
                     if(view.isSelected() ){
@@ -220,7 +216,7 @@ public class QuestionActivity extends AppCompatActivity {
                         }
                         VariablesActivity.actualQuestion.setSelectedColorOption(selectedColorOption);
                     }
-                    adapterOptions.notifyDataSetChanged();
+                    //adapterOptions.notifyDataSetChanged();
                 }
 
             }

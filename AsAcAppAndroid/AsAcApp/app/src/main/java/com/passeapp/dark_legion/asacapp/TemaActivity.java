@@ -93,11 +93,11 @@ public class TemaActivity extends AppCompatActivity {
         this.listTemas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                adapterView.setSelected(true);
-                view.setSelected(true);
+                //adapterView.setSelected(true);
+                //view.setSelected(true);
 
-                listTemas.setSelection(i);
-                listTemas.setItemChecked(i,true);
+                //listTemas.setSelection(i);
+                //listTemas.setItemChecked(i,true);
                 selectedListPos = i;
             }
         });

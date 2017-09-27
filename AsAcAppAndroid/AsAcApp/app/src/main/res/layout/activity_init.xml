@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/logo"
         android:id="@+id/iconoApp"
-        android:layout_marginBottom="85dp"
+        android:layout_marginBottom="100dp"
         android:layout_above="@+id/optionLayout"
         android:layout_centerHorizontal="true" />
 

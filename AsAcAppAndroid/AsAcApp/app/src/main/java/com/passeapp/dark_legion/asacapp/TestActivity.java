@@ -108,10 +108,10 @@ public class TestActivity extends AppCompatActivity {
         this.listTests.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                adapterView.setSelected(true);
-                view.setSelected(true);
-                listTests.setSelection(i);
-                listTests.setItemChecked(i,true);
+                //adapterView.setSelected(true);
+                //view.setSelected(true);
+                //listTests.setSelection(i);
+                //listTests.setItemChecked(i,true);
                 selectedListPos = i;
             }
         });
