@@ -5,7 +5,7 @@
         android:drawable="@color/answer_select_highlight"/>
     <item
         android:state_pressed="true"
-        android:drawable="@color/selected_color" />
+        android:drawable="@color/answer_select_highlight" />
 
     <item
         android:drawable="@color/answer_select_highlight" />

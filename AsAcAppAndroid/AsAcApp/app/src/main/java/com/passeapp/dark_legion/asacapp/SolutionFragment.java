@@ -188,7 +188,6 @@ public class SolutionFragment extends Fragment {
                     Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/Mermaid1001.ttf");
                     ((TextView)row).setTypeface(tf);
                     ((TextView) row).setSingleLine(false);
-                    row.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                     row.setPadding(10,10,10,10);
                 }
 
@@ -388,7 +387,7 @@ public class SolutionFragment extends Fragment {
 
             Font titleDoc = new Font(Font.FontFamily.TIMES_ROMAN, 24, Font.BOLD, BaseColor.BLACK);
             Font title = new Font(Font.FontFamily.TIMES_ROMAN, 20, Font.BOLD, BaseColor.BLACK);
-            Font options = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.NORMAL, BaseColor.DARK_GRAY);
+            Font options = new Font(Font.FontFamily.TIMES_ROMAN, 20, Font.NORMAL, BaseColor.BLACK);
 
             try{
                 File pdfFolder = new File(Environment.getExternalStoragePublicDirectory(
@@ -417,11 +416,11 @@ public class SolutionFragment extends Fragment {
                 ByteArrayOutputStream streamIcon = new ByteArrayOutputStream();
                 largeIcon.compress(Bitmap.CompressFormat.PNG, 100, streamIcon);
                 Image icon = Image.getInstance(streamIcon.toByteArray());
-                icon.scaleToFit(100f,50f);
+                icon.scaleToFit(200f,150f);
                 document.add(icon);
 
                 Chunk titleMateria = new Chunk(VariablesActivity.actualMateria.getNombre(), titleDoc);
-                Chunk titleTema = new Chunk(VariablesActivity.actualTema.getDescription(), title);
+                Chunk titleTema = new Chunk(VariablesActivity.actualTema.getNombre(), title);
                 Chunk titleTest = new Chunk(VariablesActivity.actualTest.getNombre(), title);
                 Chunk tittleQuestion = new Chunk(VariablesActivity.actualQuestion.getActualIndex(), options);
                 document.add(new Paragraph(titleMateria));
@@ -463,11 +462,11 @@ public class SolutionFragment extends Fragment {
                 //document.newPage();
                 document.close();
 
-                try{
+                /*try{
                     manipulatePdf(myFile.getAbsolutePath(),myFile.getAbsolutePath());
                 }catch (Exception e){
                     Log.e("error watermark",e.getLocalizedMessage());
-                }
+                }*/
 
                 return true;
             }catch (Exception e){

@@ -37,16 +37,14 @@ public class SolutionTabebActivity extends AppCompatActivity implements Solution
      */
     private ViewPager mViewPager;
     private ArrayList<SolutionFragment> fragments;
-    public MyTextView tabTitle;
+    public TextView tabTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solution_tabeb);
         initializeFragmentTabs();
-        this.tabTitle = (MyTextView)findViewById(R.id.tabTitle);
-        tabTitle.setText(VariablesActivity.lstMaterias.get(VariablesActivity.actualIndexMateria).getLstTemas().get(VariablesActivity.actualIndexTema)
-                .getLstTest().get(VariablesActivity.actualIndexTest).getLstPreguntas().get(0).getActualIndex());
+        this.tabTitle = (TextView)findViewById(R.id.tabTitle);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -56,7 +54,8 @@ public class SolutionTabebActivity extends AppCompatActivity implements Solution
         mViewPager.setAdapter(mSectionsPagerAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabDots);
         tabLayout.setupWithViewPager(mViewPager, true);
-
+        tabTitle.setText(VariablesActivity.lstMaterias.get(VariablesActivity.actualIndexMateria).getLstTemas().get(VariablesActivity.actualIndexTema)
+                .getLstTest().get(VariablesActivity.actualIndexTest).getLstPreguntas().get(0).getActualIndex());
 
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager){
             @Override

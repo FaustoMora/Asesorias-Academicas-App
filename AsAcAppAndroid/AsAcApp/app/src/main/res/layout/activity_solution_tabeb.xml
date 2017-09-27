@@ -8,7 +8,7 @@
     android:fitsSystemWindows="true"
     tools:context="com.passeapp.dark_legion.asacapp.SolutionTabebActivity">
 
-    <com.passeapp.dark_legion.asacapp.MyTextView
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
