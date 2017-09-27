@@ -27,22 +27,6 @@
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center">
-
-                <com.passeapp.dark_legion.asacapp.MyTextView
-                    android:id="@+id/lblIndexPregunta"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:gravity="center"
-                    android:text=""
-                    android:textColor="@android:color/black"
-                    android:textSize="20sp" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <com.github.chrisbanes.photoview.PhotoView
@@ -116,11 +100,27 @@
                     app:srcCompat="@mipmap/white_square" />
 
             </TableRow>
+
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:layout_margin="20dp">
+                android:layout_margin="10dp">
+
+                <ImageButton
+                    android:id="@+id/downPDF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/guardar_pregunta"
+                    android:background="@null"
+                    android:layout_gravity="center"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_margin="10dp">
 
                 <ImageButton
                     android:layout_height="wrap_content"

@@ -13,7 +13,11 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
 import android.view.Menu;
+import android.widget.TextView;
+
 import java.util.ArrayList;
+
+import static com.passeapp.dark_legion.asacapp.VariablesActivity.actualQuestion;
 
 
 public class SolutionTabebActivity extends AppCompatActivity implements SolutionFragment.OnFragmentInteractionListener{
@@ -33,13 +37,16 @@ public class SolutionTabebActivity extends AppCompatActivity implements Solution
      */
     private ViewPager mViewPager;
     private ArrayList<SolutionFragment> fragments;
+    public MyTextView tabTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solution_tabeb);
         initializeFragmentTabs();
-
+        this.tabTitle = (MyTextView)findViewById(R.id.tabTitle);
+        tabTitle.setText(VariablesActivity.lstMaterias.get(VariablesActivity.actualIndexMateria).getLstTemas().get(VariablesActivity.actualIndexTema)
+                .getLstTest().get(VariablesActivity.actualIndexTest).getLstPreguntas().get(0).getActualIndex());
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -49,6 +56,32 @@ public class SolutionTabebActivity extends AppCompatActivity implements Solution
         mViewPager.setAdapter(mSectionsPagerAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabDots);
         tabLayout.setupWithViewPager(mViewPager, true);
+
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager){
+            @Override
+            public void onTabSelected(TabLayout.Tab tab){
+                int position = tab.getPosition();
+                tabTitle.setText(VariablesActivity.lstMaterias.get(VariablesActivity.actualIndexMateria).getLstTemas().get(VariablesActivity.actualIndexTema)
+                        .getLstTest().get(VariablesActivity.actualIndexTest).getLstPreguntas().get(position).getActualIndex());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                int position = tab.getPosition();
+                tabTitle.setText(VariablesActivity.lstMaterias.get(VariablesActivity.actualIndexMateria).getLstTemas().get(VariablesActivity.actualIndexTema)
+                        .getLstTest().get(VariablesActivity.actualIndexTest).getLstPreguntas().get(position).getActualIndex());
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                int position = tab.getPosition();
+                tabTitle.setText(VariablesActivity.lstMaterias.get(VariablesActivity.actualIndexMateria).getLstTemas().get(VariablesActivity.actualIndexTema)
+                        .getLstTest().get(VariablesActivity.actualIndexTest).getLstPreguntas().get(position).getActualIndex());
+            }
+        });
+
+
 
         if(getActionBar() != null){
             getActionBar().hide();
@@ -97,7 +130,6 @@ public class SolutionTabebActivity extends AppCompatActivity implements Solution
         public int getCount() {
             return fragments.size();
         }
-
     }
 
     @Override

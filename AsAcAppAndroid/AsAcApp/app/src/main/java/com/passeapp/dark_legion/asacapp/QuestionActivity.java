@@ -1,22 +1,17 @@
 package com.passeapp.dark_legion.asacapp;
 
 
-import android.Manifest;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
-import android.os.Build;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -32,29 +27,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView;
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Chunk;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.pdf.ColumnText;
-import com.itextpdf.text.pdf.PdfContentByte;
-import com.itextpdf.text.pdf.PdfGState;
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.PdfStamper;
-import com.itextpdf.text.pdf.PdfWriter;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -65,15 +42,8 @@ import org.apache.http.protocol.HttpContext;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
+
 
 
 public class QuestionActivity extends AppCompatActivity {
@@ -89,13 +59,9 @@ public class QuestionActivity extends AppCompatActivity {
     public ProgressDialog progressDialog;
     public Dialog customDialog;
     private String density;
-    private ImageView downPDF;
     private TextView lblTema;
     private TextView lblIndex;
-    private ProgressDialog progressPDFDialog;
     private TextView lblTest;
-    String[] permissions = new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
-    private static final int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
 
     @Override
@@ -262,74 +228,6 @@ public class QuestionActivity extends AppCompatActivity {
         optionsList.setExpanded(true);
 
         initialiceImage();
-
-        this.downPDF = (ImageView)findViewById(R.id.downPDF);
-        this.downPDF.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(hasPermissions()){
-                    downloadQuestionPDF();
-                }else{
-                    requestPerm();
-                }
-            }
-        });
-    }
-
-    public void downloadQuestionPDF(){
-        try{
-            new QuestionActivity.PDFTest().execute();
-        }catch (Exception e){
-            Log.e("PDF",e.getLocalizedMessage());
-            Toast.makeText(getApplicationContext(),"OCURRIO Un ERROR En LA DESCARGA",Toast.LENGTH_LONG).show();
-        }
-    }
-
-
-    public boolean hasPermissions(){
-        int res=0;
-
-        for(String perms : permissions){
-            res = this.checkCallingOrSelfPermission(perms);
-            if(!(res== PackageManager.PERMISSION_GRANTED)){
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    public void requestPerm(){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            requestPermissions(permissions,REQUEST_CODE_ASK_PERMISSIONS);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        boolean allowed = true;
-
-        switch (requestCode){
-            case REQUEST_CODE_ASK_PERMISSIONS:
-                for(int res : grantResults){
-                    allowed = allowed && (res == PackageManager.PERMISSION_GRANTED);
-                }
-                break;
-            default:
-                allowed = false;
-                break;
-        }
-
-        if(allowed){
-            downloadQuestionPDF();
-        }else{
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                if(shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
-                    View parentLayout = findViewById(android.R.id.content);
-                    Snackbar.make(parentLayout,"Se requiere permiso para descargar",Snackbar.LENGTH_LONG).show();
-                }
-            }
-        }
     }
 
     private String getIndexText(){
@@ -553,174 +451,6 @@ public class QuestionActivity extends AppCompatActivity {
         }
     }
 
-
-    public ProgressDialog createProgressDialog(){
-        ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Descargando...");
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-        return  progressDialog;
-    }
-
-
-    public class PDFTest extends AsyncTask<String,Integer,Boolean> {
-
-        @Override
-        protected Boolean doInBackground(String... strings) {
-            return createPdf();
-        }
-
-        @Override
-        protected void onPreExecute() {
-            progressPDFDialog = createProgressDialog();
-        }
-
-        @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            progressPDFDialog.dismiss();
-            if(aBoolean){
-                Toast.makeText(getApplicationContext(),"DESCARGA EXITOSA",Toast.LENGTH_LONG).show();
-            }else{
-                Toast.makeText(getApplicationContext(),"OCURRIO Un ERROR En LA DESCARGA",Toast.LENGTH_LONG).show();
-            }
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
-        }
-
-
-        private Boolean createPdf(){
-
-            Font titleDoc = new Font(Font.FontFamily.TIMES_ROMAN, 24, Font.BOLD, BaseColor.BLACK);
-            Font title = new Font(Font.FontFamily.TIMES_ROMAN, 20, Font.BOLD, BaseColor.BLACK);
-            Font options = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.NORMAL, BaseColor.DARK_GRAY);
-
-            try{
-                File pdfFolder = new File(Environment.getExternalStoragePublicDirectory(
-                        Environment.DIRECTORY_DOWNLOADS), "TeachersAid");
-                if (!pdfFolder.exists()) {
-                    pdfFolder.mkdir();
-                    Log.i("PDF", "Pdf Directory created");
-                }
-
-                //Create time stamp
-                Date date = new Date() ;
-                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(date);
-
-                File myFile = new File(pdfFolder + "/" + timeStamp + ".pdf");
-                OutputStream output = new FileOutputStream(myFile);
-
-                Document document = new Document(PageSize.A4);
-                PdfWriter.getInstance(document, output);
-                document.open();
-
-
-                // get input stream
-                Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.encabezado_de_pdf);
-                //InputStream ims = getAssets().open("espol.png");
-                //Bitmap bmpIcon = BitmapFactory.decodeStream(ims);
-                ByteArrayOutputStream streamIcon = new ByteArrayOutputStream();
-                largeIcon.compress(Bitmap.CompressFormat.PNG, 100, streamIcon);
-                Image icon = Image.getInstance(streamIcon.toByteArray());
-                icon.scaleToFit(100f,50f);
-                document.add(icon);
-
-                Chunk titleMateria = new Chunk(VariablesActivity.actualMateria.getNombre(), titleDoc);
-                Chunk titleTema = new Chunk(VariablesActivity.actualTema.getDescription(), title);
-                Chunk titleTest = new Chunk(VariablesActivity.actualTest.getNombre(), title);
-                Chunk tittleQuestion = new Chunk(VariablesActivity.actualQuestion.getActualIndex(), options);
-                document.add(new Paragraph(titleMateria));
-                document.add(new Paragraph(titleTema));
-                document.add(new Paragraph(titleTest));
-                document.add(new Paragraph(tittleQuestion));
-                document.add(new Paragraph(""));
-
-                QuestionClass aux = VariablesActivity.actualQuestion;
-                // get input stream
-                byte[] decodedString = Base64.decode(aux.getPregunta_imagen(), Base64.DEFAULT);
-                byte[] decodedString2 = Base64.decode(aux.getSolucion_imagen(), Base64.DEFAULT);
-
-                // se debe usar para el tamano de las imgs, por defualt el decode base64 renderiza tamano original
-                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                Bitmap bmp = Bitmap.createBitmap(decodedByte);
-
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                //----------------------------------
-                Image image = Image.getInstance(decodedString);
-                image.scaleToFit(PageSize.A4.getWidth()-65f, 250f);
-                //Image image = Image.getInstance(stream.toByteArray());
-                Image image2 = Image.getInstance(decodedString2);
-                image2.scaleToFit(PageSize.A4.getWidth()-65f, 420f);
-
-                //document.add(new Paragraph(""));
-                //Chunk text = new Chunk("Pregunta No" + i, title);
-                //document.add(new Paragraph(text));
-                document.add(image);
-                for (OptionClass op: aux.getOpciones()) {
-                    Chunk optionText = new Chunk(op.getDetalle(),options);
-                    document.add(new Paragraph(optionText));
-                }
-                document.add(image2);
-                if(aux.getLink_youtube() != "null"){
-                    document.add(new Paragraph("Link del video: "+aux.getLink_youtube()));
-                }
-                //document.newPage();
-                document.close();
-
-                try{
-                    manipulatePdf(myFile.getAbsolutePath(),myFile.getAbsolutePath());
-                }catch (Exception e){
-                    Log.e("error watermark",e.getLocalizedMessage());
-                }
-
-                return true;
-            }catch (Exception e){
-                Log.e("PDF",e.getLocalizedMessage());
-                return false;
-            }
-
-        }
-
-
-        public void manipulatePdf(String src, String dest) throws IOException, DocumentException {
-            PdfReader reader = new PdfReader(src);
-            int n = reader.getNumberOfPages();
-            PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(dest));
-            stamper.setRotateContents(false);
-            // image watermark
-            Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.fondopdf);
-            ByteArrayOutputStream streamIcon = new ByteArrayOutputStream();
-            largeIcon.compress(Bitmap.CompressFormat.PNG, 100, streamIcon);
-
-            Image img = Image.getInstance(streamIcon.toByteArray());
-            float w = img.getScaledWidth();
-            float h = img.getScaledHeight();
-            // transparency
-            PdfGState gs1 = new PdfGState();
-            gs1.setFillOpacity(0.5f);
-            // properties
-            PdfContentByte over;
-            Rectangle pagesize;
-            float x, y;
-            // loop over every page
-            for (int i = 1; i <= n; i++) {
-                pagesize = reader.getPageSize(i);
-                x = (pagesize.getLeft() + pagesize.getRight()) / 2;
-                y = (pagesize.getTop() + pagesize.getBottom()) / 2;
-                over = stamper.getOverContent(i);
-                over.saveState();
-                over.setGState(gs1);
-                over.addImage(img, w, 0, 0, h, x - (w / 2), y - (h / 2));
-                over.restoreState();
-            }
-            stamper.close();
-            reader.close();
-        }
-    }
 
     protected void resetGlobalVariables(){
         VariablesActivity.actualTest = null;

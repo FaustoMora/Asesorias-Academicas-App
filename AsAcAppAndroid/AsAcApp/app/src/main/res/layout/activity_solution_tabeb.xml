@@ -8,21 +8,36 @@
     android:fitsSystemWindows="true"
     tools:context="com.passeapp.dark_legion.asacapp.SolutionTabebActivity">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/container"
+    <com.passeapp.dark_legion.asacapp.MyTextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:id="@+id/tabTitle"
+        android:layout_margin="10dp"/>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tabDots"
+        android:textAlignment="@null"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabBackground="@drawable/tab_selector"
         app:tabGravity="center"
-        app:tabIndicatorHeight="0dp"/>
+        app:tabIndicatorHeight="0dp"
+        android:layout_margin="20dp"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    </android.support.v4.view.ViewPager>
+
+
+
 
 
 </android.support.design.widget.CoordinatorLayout>

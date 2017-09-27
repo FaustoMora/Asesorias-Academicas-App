@@ -23,9 +23,6 @@
             android:name=".QuestionActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SolutionActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".MateriaActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -42,6 +39,12 @@
             android:screenOrientation="portrait" />
         <activity android:name=".VariablesActivity" />
         <activity android:name=".TestActivity" />
+
+        <activity
+            android:name=".SolutionTabebActivity"
+            android:label="@string/title_activity_solution_tabeb"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait" />
 
         <!-- <application> -->
         <!-- Pusher's GCM listeners and services -->
@@ -74,11 +77,6 @@
             android:name="com.pusher.android.notifications.gcm.GCMRegistrationIntentService"
             android:exported="false"/>
 
-        <activity
-            android:name=".SolutionTabebActivity"
-            android:label="@string/title_activity_solution_tabeb"
-            android:theme="@style/AppTheme"
-            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

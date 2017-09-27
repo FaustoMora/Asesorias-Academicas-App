@@ -75,21 +75,6 @@
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="end">
-
-                <ImageView
-                    android:id="@+id/downPDF"
-                    android:layout_width="15dp"
-                    android:layout_height="20dp"
-                    app:srcCompat="@drawable/guardar"
-                    android:layout_gravity="end"
-                    android:clickable="true"/>
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
                 android:layout_height="match_parent" >
 
                 <com.github.chrisbanes.photoview.PhotoView
