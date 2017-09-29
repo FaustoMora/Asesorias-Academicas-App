@@ -153,6 +153,15 @@ class PreguntaController extends Controller
 			$r3->save();
 			$r4->save();
 			$r5->save();
+
+			if($request->hasFile('pdf')){
+				$file = $request->file('pdf');
+				$name = 'pregunta'.$preg->id;
+				$docName = ''.str_random(10).'_'.$name.'.'.$file->getClientOriginalExtension();
+				$file->move('uploads/docs/preguntas/',$docName);
+				$preg->pdf = 'uploads/docs/preguntas/'.$docName;
+				$preg->save();
+			}
 		}
 
 		return redirect('/Preguntas');
@@ -211,6 +220,15 @@ class PreguntaController extends Controller
 			$respuesta->detalle = $resp;
 			$respuesta->es_correcta = ($request->input('updateCorrectOption') == $respuesta->id) ? true : false;
 			$respuesta->save();
+		}
+
+		if($request->hasFile('pdf')){
+			$file = $request->file('pdf');
+			$name = 'pregunta'.$preg->id;
+			$docName = ''.str_random(10).'_'.$name.'.'.$file->getClientOriginalExtension();
+			$file->move('uploads/docs/preguntas/',$docName);
+			$preg->pdf = 'uploads/docs/preguntas/'.$docName;
+			$preg->save();
 		}
 
 		return redirect('/Preguntas');

@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('push:notification')->dailyAt('15:00');
+        //$schedule->command('push:notification')->dailyAt('15:00');
 		//$schedule->command('push:notification')->everyMinute();
     }
 
