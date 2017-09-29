@@ -318,12 +318,6 @@
 					<input type="file" name="pdf" class="form-control" accept="application/pdf">
 					<br>
 				  </div>
-				  <div class="col-md-12 col-sm-12 form-group row">
-					<label style="float: left" class=" col-md-2">PDF Solución</label>
-					<div class="col-md-10">
-					  <input type="file" name="pdf" class="form-control" accept="application/pdf">
-					</div>
-				  </div>
                 </div><!--Fin del form del modal-->
                 <div style="clear:both;"></div>
 
