@@ -35,42 +35,40 @@ public class InitActivity extends AppCompatActivity {
 
         if (playServicesAvailable()) {
             try{
-                if(Build.VERSION.SDK_INT != Build.VERSION_CODES.M){
-                    PusherAndroid pusher = new PusherAndroid("e3c974561ec35f9b5b88");
-                    PushNotificationRegistration nativePusher = pusher.nativePusher();
-                    String defaultSenderId = getString(R.string.gcm_defaultSenderId); // fetched from your google-services.json
+                PusherAndroid pusher = new PusherAndroid("e3c974561ec35f9b5b88");
+                PushNotificationRegistration nativePusher = pusher.nativePusher();
+                String defaultSenderId = getString(R.string.gcm_defaultSenderId); // fetched from your google-services.json
 
-                    try {
-                        nativePusher.registerGCM(this, defaultSenderId);
-                        Log.d("Pusher", "Success register GCM");
-                    } catch (ManifestValidator.InvalidManifestException e) {
-                        e.printStackTrace();
-                        Log.d("Pusher", e.getLocalizedMessage());
+                try {
+                    nativePusher.registerGCM(this, defaultSenderId);
+                    Log.d("Pusher", "Success register GCM");
+                } catch (ManifestValidator.InvalidManifestException e) {
+                    e.printStackTrace();
+                    Log.d("Pusher", e.getLocalizedMessage());
+                }
+
+
+                nativePusher.subscribe("asacapp", new InterestSubscriptionChangeListener() {
+                    @Override
+                    public void onSubscriptionChangeSucceeded() {
+                        System.out.println("Success! I love donuts!");
                     }
 
+                    @Override
+                    public void onSubscriptionChangeFailed(int statusCode, String response) {
+                        System.out.println(":(: received " + statusCode + " with" + response);
+                    }
+                });
 
-                    nativePusher.subscribe("asacapp", new InterestSubscriptionChangeListener() {
-                        @Override
-                        public void onSubscriptionChangeSucceeded() {
-                            System.out.println("Success! I love donuts!");
-                        }
-
-                        @Override
-                        public void onSubscriptionChangeFailed(int statusCode, String response) {
-                            System.out.println(":(: received " + statusCode + " with" + response);
-                        }
-                    });
-
-                    nativePusher.setGCMListener(new GCMPushNotificationReceivedListener() {
-                        @Override
-                        public void onMessageReceived(String from, Bundle data) {
-                            // do something magical 🔮
-                            String message = data.getString("tittle");
-                            Log.d("GCMListener", "Received push notification from: " + from);
-                            Log.d("GCMListener", "Message: " + message);
-                        }
-                    });
-                }
+                nativePusher.setGCMListener(new GCMPushNotificationReceivedListener() {
+                    @Override
+                    public void onMessageReceived(String from, Bundle data) {
+                        // do something magical 🔮
+                        String message = data.getString("tittle");
+                        Log.d("GCMListener", "Received push notification from: " + from);
+                        Log.d("GCMListener", "Message: " + message);
+                    }
+                });
             }catch (Exception e){
                 Log.e("init pusher error",e.getLocalizedMessage());
             }
