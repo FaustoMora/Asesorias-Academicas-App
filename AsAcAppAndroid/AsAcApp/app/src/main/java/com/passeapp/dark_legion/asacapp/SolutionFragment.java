@@ -40,9 +40,12 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfGState;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -405,9 +408,8 @@ public class SolutionFragment extends Fragment {
                 OutputStream output = new FileOutputStream(myFile);
 
                 Document document = new Document(PageSize.A4);
-                PdfWriter.getInstance(document, output);
+                PdfWriter writer = PdfWriter.getInstance(document, output);
                 document.open();
-
 
                 // get input stream
                 Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.encabezado_de_pdf);
@@ -474,6 +476,38 @@ public class SolutionFragment extends Fragment {
                 return false;
             }
 
+        }
+
+        private void addHeader(final Document document, Image logo, File filename){
+            try {
+                PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(filename));
+                PdfPTable header = new PdfPTable(2);
+                // set defaults
+                header.setWidths(new int[]{2, 24});
+                header.setTotalWidth(527);
+                header.setLockedWidth(true);
+                header.getDefaultCell().setFixedHeight(40);
+                header.getDefaultCell().setBorder(Rectangle.BOTTOM);
+                header.getDefaultCell().setBorderColor(BaseColor.LIGHT_GRAY);
+
+                // add image
+                header.addCell(logo);
+
+                // add text
+                /*PdfPCell text = new PdfPCell();
+                text.setPaddingBottom(15);
+                text.setPaddingLeft(10);
+                text.setBorder(Rectangle.BOTTOM);
+                text.setBorderColor(BaseColor.LIGHT_GRAY);
+                text.addElement(new Phrase("iText PDF Header Footer Example", new Font(Font.FontFamily.HELVETICA, 12)));
+                text.addElement(new Phrase("http://memorynotfound.com", new Font(Font.FontFamily.HELVETICA, 8)));
+                header.addCell(text);*/
+
+                // write content
+                header.writeSelectedRows(0, -1, 34, 803, writer.getDirectContent());
+            } catch(Exception e) {
+                Log.e("PDF",e.getLocalizedMessage());
+            }
         }
 
 
