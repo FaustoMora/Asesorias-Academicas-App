@@ -2,6 +2,7 @@ package com.passeapp.dark_legion.asacapp;
 
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AlertDialog;
@@ -14,10 +15,8 @@ import android.os.Bundle;
 import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 
-import static com.passeapp.dark_legion.asacapp.VariablesActivity.actualQuestion;
 
 
 public class SolutionTabebActivity extends AppCompatActivity implements SolutionFragment.OnFragmentInteractionListener{
@@ -35,7 +34,7 @@ public class SolutionTabebActivity extends AppCompatActivity implements Solution
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    private ViewPager mViewPager;
+    private HackyViewPager mViewPager;
     private ArrayList<SolutionFragment> fragments;
     public TextView tabTitle;
 
@@ -50,7 +49,7 @@ public class SolutionTabebActivity extends AppCompatActivity implements Solution
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = (HackyViewPager)findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabDots);
         tabLayout.setupWithViewPager(mViewPager, true);
@@ -98,12 +97,16 @@ public class SolutionTabebActivity extends AppCompatActivity implements Solution
 
     public void initializeFragmentTabs(){
         fragments = new ArrayList<>();
-        for (QuestionClass aux: VariablesActivity.actualTest.getLstPreguntas()) {
-            SolutionFragment fragment = new SolutionFragment();
-            fragment.setActualQuestion(aux);
-            fragments.add(fragment);
+        if(VariablesActivity.actualTest == null || VariablesActivity.actualTest.getLstPreguntas() == null){
+            finish();
+            startActivity(new Intent(SolutionTabebActivity.this,InitActivity.class));
+        }else{
+            for (QuestionClass aux: VariablesActivity.actualTest.getLstPreguntas()) {
+                SolutionFragment fragment = new SolutionFragment();
+                fragment.setActualQuestion(aux);
+                fragments.add(fragment);
+            }
         }
-
     }
 
 
@@ -129,6 +132,7 @@ public class SolutionTabebActivity extends AppCompatActivity implements Solution
         public int getCount() {
             return fragments.size();
         }
+
     }
 
     @Override
@@ -155,4 +159,5 @@ public class SolutionTabebActivity extends AppCompatActivity implements Solution
                     }
                 }).show();
     }
+
 }

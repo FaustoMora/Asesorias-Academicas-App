@@ -20,8 +20,8 @@ android {
         applicationId "com.passeapp.dark_legion.asacapp"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 3
-        versionName "1.1"
+        versionCode 4
+        versionName "1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -42,8 +42,8 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:25.3.1'
 
-    compile 'com.google.firebase:firebase-messaging:9.8.0'
-    compile 'com.google.firebase:firebase-core:9.8.0'
+    //compile 'com.google.firebase:firebase-messaging:9.8.0'
+    //compile 'com.google.firebase:firebase-core:9.8.0'
     compile 'com.google.android.gms:play-services-gcm:9.8.0'
     compile 'com.pusher:pusher-websocket-android:0.5.0'
 

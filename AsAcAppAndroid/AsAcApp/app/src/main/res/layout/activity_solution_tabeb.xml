@@ -29,13 +29,21 @@
         app:tabIndicatorHeight="0dp"
         android:layout_marginTop="25dp"/>
 
-    <android.support.v4.view.ViewPager
+    <!--<android.support.v4.view.ViewPager
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    </android.support.v4.view.ViewPager>
+    </android.support.v4.view.ViewPager>-->
+
+    <com.passeapp.dark_legion.asacapp.HackyViewPager
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    </com.passeapp.dark_legion.asacapp.HackyViewPager>
 
 
 

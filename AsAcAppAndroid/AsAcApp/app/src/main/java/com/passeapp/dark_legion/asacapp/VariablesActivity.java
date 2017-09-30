@@ -19,6 +19,7 @@ public class VariablesActivity extends AppCompatActivity {
     public static Integer actualIndexPregunta = null;
     public static Integer pastIndexPregunta = null;
 
+    public static final String SERVER = "http://174.138.80.160/";
     public static final String TUTORS_URL = "https://teachersaidmath.wixsite.com/teachersaid/tutores";
 
     @Override

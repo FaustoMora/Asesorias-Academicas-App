@@ -420,7 +420,7 @@ public class QuestionActivity extends AppCompatActivity {
 
                 for(int i=0;i<jsonPreguntas.length();i++){
                     JSONObject pregJSON = jsonPreguntas.getJSONObject(i);
-                    QuestionClass auxQuestion = new QuestionClass(pregJSON.getInt("id"),pregJSON.getString("detalle"),pregJSON.getString("link_youtube") ,pregJSON.getJSONObject("pregunta_imagen").getString("bitmap"),pregJSON.getJSONObject("solucion_imagen").getString("bitmap"));
+                    QuestionClass auxQuestion = new QuestionClass(pregJSON.getInt("id"),pregJSON.getString("detalle"),pregJSON.getString("link_youtube") ,pregJSON.getJSONObject("pregunta_imagen").getString("bitmap"),pregJSON.getJSONObject("solucion_imagen").getString("bitmap"),pregJSON.getString("pdf"));
                     JSONArray opcionesJSON = pregJSON.getJSONArray("respuestas");
                     ArrayList<OptionClass> opList = new ArrayList<OptionClass>();
                     for(int j=0;j<opcionesJSON.length();j++){

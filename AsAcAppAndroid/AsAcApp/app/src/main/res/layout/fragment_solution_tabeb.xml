@@ -105,7 +105,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:layout_margin="10dp">
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="25dp">
 
                 <ImageButton
                     android:id="@+id/downPDF"
@@ -113,14 +114,16 @@
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/guardar_pregunta"
                     android:background="@null"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:visibility="gone"/>
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:layout_margin="10dp">
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="25dp">
 
                 <ImageButton
                     android:layout_height="wrap_content"
@@ -130,7 +133,7 @@
                     android:layout_marginBottom="25dp"
                     android:src="@drawable/ver_video"
                     android:layout_gravity="center"
-                    android:visibility="invisible"
+                    android:visibility="gone"
                     android:background="@null"/>
 
             </TableRow>

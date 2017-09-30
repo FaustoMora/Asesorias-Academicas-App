@@ -1,9 +1,7 @@
 package com.passeapp.dark_legion.asacapp;
 
-import android.app.DownloadManager;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +17,8 @@ import com.pusher.android.notifications.ManifestValidator;
 import com.pusher.android.notifications.PushNotificationRegistration;
 import com.pusher.android.notifications.gcm.GCMPushNotificationReceivedListener;
 import com.pusher.android.notifications.interests.InterestSubscriptionChangeListener;
+
+import java.io.File;
 
 public class InitActivity extends AppCompatActivity {
 
@@ -94,16 +94,24 @@ public class InitActivity extends AppCompatActivity {
         this.showDownBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                Uri uri = Uri.parse(Environment.getExternalStorageDirectory().getPath()
+                        +  File.separator + Environment.DIRECTORY_DOWNLOADS + File.separator + "TeachersAid" + File.separator);
+                intent.setDataAndType(uri, "*/*");
+                startActivity(Intent.createChooser(intent, "Abrir con"));
+
+                /*
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 Uri selectedUri;
                 if(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) != null ){
                     selectedUri = Uri.parse(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath());
                     intent.setData(selectedUri);
-                    intent.setType("*/*");
+                    intent.setType("resource/folder");
                     startActivityForResult(intent, 7);
                 }else{
                     startActivity(new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS));
-                }
+                }*/
             }
         });
 

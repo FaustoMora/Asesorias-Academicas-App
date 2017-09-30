@@ -1,6 +1,7 @@
 package com.passeapp.dark_legion.asacapp;
 
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -68,12 +69,22 @@ public class TestActivity extends AppCompatActivity {
     protected void init(){
 
         this.formulaIcon = (ImageView) findViewById(R.id.formulaIcon);
-        if(!VariablesActivity.actualTema.getFormulas().isEmpty() && !VariablesActivity.actualTema.getFormulas().equals("null")){
+        if(VariablesActivity.actualTema.getFormulas() != null && !VariablesActivity.actualTema.getFormulas().equals("null")){
             this.formulaIcon.setVisibility(View.VISIBLE);
             this.formulaIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse("http://174.138.80.160/"+VariablesActivity.actualTema.getFormulas())));
+                    String url = "http://174.138.80.160/"+VariablesActivity.actualTema.getFormulas();
+                    Uri uri = Uri.parse("googlechrome://navigate?url=" + url);
+                    try {
+                        Intent i = new Intent(Intent.ACTION_VIEW, uri);
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(i);
+                    } catch (ActivityNotFoundException e) {
+                        Toast.makeText(TestActivity.this,"CHROME NO INSTALADO",Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(Intent.ACTION_VIEW).setData(uri));
+                    }
+
                 }
             });
         }

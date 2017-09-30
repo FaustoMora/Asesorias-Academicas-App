@@ -54,7 +54,11 @@ public class TemaClass {
     }
 
     public String getFormulas() {
-        return formulas + "?op=0";
+        if(formulas != null  && formulas != "" && formulas != "null"){
+            return formulas + "?op=0";
+        }else{
+            return null;
+        }
     }
 
     public void setFormulas(String formulas) {

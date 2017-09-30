@@ -10,18 +10,20 @@ public class QuestionClass {
     private String youtube;
     private String pregunta_imagen;
     private String solucion_imagen;
+    private String pdf;
     private ArrayList<OptionClass> opciones = new ArrayList<>();
     private int selectedOP = -1;
     private boolean hasSelected = false;
     private int selectedColorOption = Color.WHITE;
     private String actualIndex = "";
 
-    public QuestionClass(Integer _id, String detalle, String link_youtube,String pregunta_imagen, String solucion_imagen) {
+    public QuestionClass(Integer _id, String detalle, String link_youtube,String pregunta_imagen, String solucion_imagen,String pdf) {
         this._id = _id;
         this.detalle = detalle;
         this.youtube = link_youtube;
         this.pregunta_imagen = pregunta_imagen;
         this.solucion_imagen = solucion_imagen;
+        this.pdf = pdf;
     }
 
     public Integer get_id() {
@@ -41,7 +43,13 @@ public class QuestionClass {
     }
 
 
-    public String getLink_youtube(){ return youtube; }
+    public String getLink_youtube(){
+        if(youtube != null && youtube != "null" && youtube != ""){
+            return youtube;
+        }else {
+            return null;
+        }
+    }
 
     public void setLink_youtube(String link_youtube){ this.youtube = link_youtube; }
 
@@ -113,5 +121,17 @@ public class QuestionClass {
 
     public void setActualIndex(String actualIndex) {
         this.actualIndex = actualIndex;
+    }
+
+    public String getPdf() {
+        if(pdf != null && pdf != "null" && pdf != ""){
+            return pdf;
+        }else {
+            return null;
+        }
+    }
+
+    public void setPdf(String pdf) {
+        this.pdf = pdf;
     }
 }
