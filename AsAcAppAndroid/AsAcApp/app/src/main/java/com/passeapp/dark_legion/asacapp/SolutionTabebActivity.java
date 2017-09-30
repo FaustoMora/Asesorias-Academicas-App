@@ -3,6 +3,7 @@ package com.passeapp.dark_legion.asacapp;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AlertDialog;
@@ -44,6 +45,8 @@ public class SolutionTabebActivity extends AppCompatActivity implements Solution
         setContentView(R.layout.activity_solution_tabeb);
         initializeFragmentTabs();
         this.tabTitle = (TextView)findViewById(R.id.tabTitle);
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/Mermaid1001.ttf");
+        tabTitle.setTypeface(tf);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());

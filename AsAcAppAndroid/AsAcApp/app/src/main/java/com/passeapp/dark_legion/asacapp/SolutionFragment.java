@@ -32,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 
@@ -344,7 +345,6 @@ public class SolutionFragment extends Fragment {
             request.allowScanningByMediaScanner();
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
             request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS + "/TeachersAid/", nameOfFile);
-
             DownloadManager manager = (DownloadManager)getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
             manager.enqueue(request);
         }
