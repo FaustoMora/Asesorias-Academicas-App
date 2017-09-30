@@ -1,5 +1,6 @@
 package com.passeapp.dark_legion.asacapp;
 
+import android.app.DownloadManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
@@ -95,11 +96,11 @@ public class InitActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                Uri uri = Uri.parse(Environment.getExternalStorageDirectory().getPath()
-                        +  File.separator + Environment.DIRECTORY_DOWNLOADS + File.separator + "TeachersAid" + File.separator);
-                intent.setDataAndType(uri, "*/*");
-                startActivity(Intent.createChooser(intent, "Abrir con"));
+                startActivity(new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS));
+                //Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                //Uri uri = Uri.parse(Environment.getExternalStorageDirectory().getPath() +  File.separator + Environment.DIRECTORY_DOWNLOADS + File.separator + "TeachersAid" + File.separator);
+                //intent.setDataAndType(uri, "*/*");
+                //startActivity(Intent.createChooser(intent, "Abrir con"));
 
                 /*
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
