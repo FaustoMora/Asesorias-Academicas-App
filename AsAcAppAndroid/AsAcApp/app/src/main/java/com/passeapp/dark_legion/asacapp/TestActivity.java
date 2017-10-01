@@ -81,6 +81,7 @@ public class TestActivity extends AppCompatActivity {
                         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
                     } catch (ActivityNotFoundException e) {
+                        uri = Uri.parse(url);
                         Toast.makeText(TestActivity.this,"CHROME NO INSTALADO",Toast.LENGTH_LONG).show();
                         startActivity(new Intent(Intent.ACTION_VIEW).setData(uri));
                     }
