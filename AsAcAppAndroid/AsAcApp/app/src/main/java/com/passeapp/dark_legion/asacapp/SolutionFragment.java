@@ -352,7 +352,12 @@ public class SolutionFragment extends Fragment {
 
 
     public void downloadQuestionPDF(){
-        this.downloadQuestionPDFWithDownManager();
+        try {
+            this.downloadQuestionPDFWithDownManager();
+        }catch (Exception e){
+            Log.e("pdf down ERROR",e.getLocalizedMessage());
+            Toast.makeText(getContext(),"OCURRIO UN ERROR AL DESCARGAR EL PDF",Toast.LENGTH_LONG).show();
+        }
     }
 
 }
