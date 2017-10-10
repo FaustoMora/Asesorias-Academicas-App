@@ -19,6 +19,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -35,7 +38,7 @@ import java.util.ArrayList;
 public class TestActivity extends AppCompatActivity {
 
     protected ImageButton startTestBtn;
-    protected ListView listTests;
+    protected ExpandableHeightListView listTests;
     protected TextView lblTemaTest;
     protected ImageView formulaIcon;
     public ArrayAdapter<TestClass> adapterTests;
@@ -113,7 +116,7 @@ public class TestActivity extends AppCompatActivity {
             }
         });
 
-        this.listTests = (ListView)findViewById(R.id.listTest);
+        this.listTests = (ExpandableHeightListView)findViewById(R.id.listTest);
         this.adapterTests = new TestCustomAdapter(this,VariablesActivity.lstTests);
         this.listTests.setAdapter(this.adapterTests);
         this.listTests.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
@@ -127,6 +130,7 @@ public class TestActivity extends AppCompatActivity {
                 selectedListPos = i;
             }
         });
+        listTests.setExpanded(true);
 
     }
 

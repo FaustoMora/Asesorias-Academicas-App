@@ -16,6 +16,9 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -31,7 +34,7 @@ import java.util.ArrayList;
 public class TemaActivity extends AppCompatActivity {
 
     protected ImageButton startTestBtn;
-    protected ListView listTemas;
+    protected ExpandableHeightListView listTemas;
     protected TextView lblMateriaTema;
     public ArrayAdapter<TemaClass> adapterTemas;
     private ProgressDialog progressDialog;
@@ -86,7 +89,7 @@ public class TemaActivity extends AppCompatActivity {
             }
         });
 
-        this.listTemas = (ListView)findViewById(R.id.listTemas);
+        this.listTemas = (ExpandableHeightListView)findViewById(R.id.listTemas);
         this.adapterTemas = new TemaCustomAdapter(this,VariablesActivity.lstTemas);
         this.listTemas.setAdapter(this.adapterTemas);
         this.listTemas.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
@@ -101,6 +104,7 @@ public class TemaActivity extends AppCompatActivity {
                 selectedListPos = i;
             }
         });
+        listTemas.setExpanded(true);
 
     }
 

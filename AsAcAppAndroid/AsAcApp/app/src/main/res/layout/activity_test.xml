@@ -61,7 +61,7 @@
                     android:orientation="vertical"
                     android:minHeight="400dp">
 
-                    <ListView
+                    <com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView
                         android:id="@+id/listTest"
                         android:layout_width="match_parent"
                         android:layout_margin="20dp"
