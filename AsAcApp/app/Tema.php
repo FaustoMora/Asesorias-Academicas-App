@@ -19,7 +19,11 @@ class Tema extends Model{
 	}
 
 	public function Tests(){
-		return $this->hasMany('App\Test', 'fk_tema', 'id');
+		return $this->hasMany('App\Test', 'fk_tema', 'id')->where('active',1)->has('preguntas','>=',5);
+	}
+
+	public function validTests(){
+		return $this->Tests()->where('active',1)->has('preguntas','>=',5);
 	}
 
 }
