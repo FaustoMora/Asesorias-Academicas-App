@@ -3,8 +3,10 @@ package com.passeapp.dark_legion.asacapp;
 
 import android.app.DownloadManager;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -32,6 +34,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 
@@ -65,6 +70,14 @@ public class SolutionFragment extends Fragment {
     private ProgressDialog progressPDFDialog;
     String[] permissions = new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private static final int REQUEST_CODE_ASK_PERMISSIONS = 123;
+    private AdView mAdView;
+
+
+    BroadcastReceiver onComplete = new BroadcastReceiver() {
+        public void onReceive(Context ctxt, Intent intent) {
+            Toast.makeText(ctxt,"DESCARGA COMPLETA",Toast.LENGTH_SHORT).show();
+        }
+    };
 
     public SolutionFragment() {
         // Required empty public constructor
@@ -99,6 +112,8 @@ public class SolutionFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        getContext().registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
     }
 
     @Override
@@ -109,6 +124,13 @@ public class SolutionFragment extends Fragment {
         if(fragmentQuestion != null) {
             init(view, fragmentQuestion);
         }
+
+        // ID del bloque de anuncios: ca-app-pub-5442937502585048/2636089322
+        mAdView = (AdView) view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
+
         return view;
     }
 
@@ -328,6 +350,7 @@ public class SolutionFragment extends Fragment {
 
     public void downloadQuestionPDFWithDownManager(){
         if(this.fragmentQuestion.getPdf()!= null){
+            Toast.makeText(getContext(),"INICIANDO DESCARGA",Toast.LENGTH_SHORT).show();
             File pdfFolder = new File(Environment.getExternalStoragePublicDirectory(
                     Environment.DIRECTORY_DOWNLOADS), "TeachersAid");
             if (!pdfFolder.exists()) {
@@ -360,4 +383,9 @@ public class SolutionFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onDestroy() {
+        getContext().unregisterReceiver(onComplete);
+        super.onDestroy();
+    }
 }

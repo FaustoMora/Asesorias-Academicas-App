@@ -20,10 +20,27 @@
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="60dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@null">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="1">
+
+                <com.google.android.gms.ads.AdView
+                    xmlns:ads="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/adView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    ads:adSize="BANNER"
+                    ads:adUnitId="@string/BANNER_ID_DEV">
+                </com.google.android.gms.ads.AdView>
+
+            </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"

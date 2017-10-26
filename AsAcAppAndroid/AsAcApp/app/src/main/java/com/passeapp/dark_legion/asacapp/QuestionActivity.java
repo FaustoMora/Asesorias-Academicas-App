@@ -32,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView;
+import com.google.android.gms.ads.AdView;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -43,6 +44,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
+import com.google.android.gms.ads.AdRequest;
 
 
 
@@ -62,6 +64,7 @@ public class QuestionActivity extends AppCompatActivity {
     private TextView lblTema;
     private TextView lblIndex;
     private TextView lblTest;
+    private AdView mAdView;
 
 
     @Override
@@ -69,6 +72,10 @@ public class QuestionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
         density = String.valueOf(getResources().getDisplayMetrics().density);
+
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         //recreate();
         try{
@@ -79,6 +86,8 @@ public class QuestionActivity extends AppCompatActivity {
             finish();
             startActivity(new Intent(getApplicationContext(), TestActivity.class));
         }
+
+
     }
 
     /*
@@ -457,19 +466,36 @@ public class QuestionActivity extends AppCompatActivity {
     public void onBackPressed() {
         reset_variables();
         if(VariablesActivity.actualIndexPregunta == 0){
-            for (QuestionClass q :VariablesActivity.lstMaterias.get(VariablesActivity.actualIndexMateria).getLstTemas().get(VariablesActivity.actualIndexTema)
-                    .getLstTest().get(VariablesActivity.actualIndexTest).getLstPreguntas()) {
-                q.resetQuestionVariables();
-            }
-            resetGlobalVariables();
-            finish();
-            startActivity(new Intent(getApplicationContext(), TestActivity.class));
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(new ContextThemeWrapper(QuestionActivity.this, R.style.myDialogStyle));
+            alertDialogBuilder.setTitle("");
+            alertDialogBuilder
+                    .setMessage("Está seguro de querer abandonar la prueba?")
+                    .setCancelable(false)
+                    .setPositiveButton("Continuar",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+                            for (QuestionClass q :VariablesActivity.lstMaterias.get(VariablesActivity.actualIndexMateria).getLstTemas().get(VariablesActivity.actualIndexTema)
+                                    .getLstTest().get(VariablesActivity.actualIndexTest).getLstPreguntas()) {
+                                q.resetQuestionVariables();
+                            }
+                            resetGlobalVariables();
+                            dialog.dismiss();
+                            QuestionActivity.this.finish();
+                            startActivity(new Intent(getApplicationContext(), TestActivity.class));
+                        }
+                    })
+                    .setNegativeButton("Cancelar",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+                            dialog.dismiss();
+                        }
+                    });
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+
         }else if (VariablesActivity.actualIndexPregunta > 0){
             Intent intent = new Intent(this,QuestionActivity.class);
             intent.putExtra("nextIndex",-1);
             finish();
             startActivity(intent);
         }
-        //startActivity(new Intent(getApplicationContext(), TestActivity.class));
     }
 }

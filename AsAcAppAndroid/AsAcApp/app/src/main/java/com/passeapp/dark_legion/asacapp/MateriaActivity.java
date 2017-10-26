@@ -52,6 +52,7 @@ public class MateriaActivity extends AppCompatActivity {
             finish();
             startActivity(new Intent(getApplicationContext(), InitActivity.class));
         }
+
     }
 
     public void init(){

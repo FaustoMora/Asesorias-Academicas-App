@@ -22,6 +22,12 @@ public class VariablesActivity extends AppCompatActivity {
     public static final String SERVER = "http://174.138.80.160/";
     public static final String TUTORS_URL = "https://teachersaidmath.wixsite.com/teachersaid/tutores";
 
+    // DEV
+    public static final String APP_ID = "ca-app-pub-3940256099942544~3347511713";
+    // PROD
+    //public static final String APP_ID = "ca-app-pub-5442937502585048~9781052374";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
