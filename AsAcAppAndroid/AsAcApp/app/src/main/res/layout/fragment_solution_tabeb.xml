@@ -27,23 +27,6 @@
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="1">
-
-                <com.google.android.gms.ads.AdView
-                    xmlns:ads="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/adView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    ads:adSize="BANNER"
-                    ads:adUnitId="@string/BANNER_ID_DEV">
-                </com.google.android.gms.ads.AdView>
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <com.github.chrisbanes.photoview.PhotoView
@@ -139,15 +122,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginBottom="25dp">
 
                 <ImageButton
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:id="@+id/youtube"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="25dp"
                     android:src="@drawable/ver_video"
                     android:layout_gravity="center"
                     android:visibility="gone"
@@ -155,23 +136,24 @@
 
             </TableRow>
 
-            <!--<TableRow
+            <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_horizontal"
-                android:layout_weight="1"
-                >
-                <Button
-                    android:text="@string/lblContinue"
-                    android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:paddingBottom="40dp">
+
+                <com.google.android.gms.ads.AdView
+                    xmlns:ads="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/adView"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/nextExcludeQuestionBtn"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="#007fff"
-                    android:textColor="@android:color/white"/>
-            </TableRow>-->
+                    android:layout_weight="1"
+                    ads:adSize="BANNER"
+                    ads:adUnitId="@string/BANNER_ID_2">
+                </com.google.android.gms.ads.AdView>
+
+            </TableRow>
+
 
         </TableLayout>
 

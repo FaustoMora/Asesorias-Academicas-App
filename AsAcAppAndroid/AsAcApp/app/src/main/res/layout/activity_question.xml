@@ -147,7 +147,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     ads:adSize="BANNER"
-                    ads:adUnitId="@string/BANNER_ID_DEV">
+                    ads:adUnitId="@string/BANNER_ID_1">
                 </com.google.android.gms.ads.AdView>
 
             </TableRow>
